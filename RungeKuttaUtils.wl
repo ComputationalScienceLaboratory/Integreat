@@ -6,6 +6,7 @@ BeginPackage["CSL`RungeKuttaUtils`"];
 CSL`RungeKuttaUtils::usage = "Package containing utility functions for analyzing Runge-Kutta methods";
 
 TableauPattern::usage = "Creates a Butcher tableau from a pattern matrix.  A False in the pattern matrix indicates a 0, a True indicates an indexed entry, and anything else will be copied";
+TableauZeros::usage = "Creates a Butcher tableau of zeros";
 TableauExplicit::usage = "Creates an explicit Butcher tableau";
 TableauFIRK::usage = "Creates a fully implicit Butcher tableau";
 TableauDIRK::usage = "Creates a DIRK Butcher tableau";
@@ -35,17 +36,19 @@ Needs["NumericalDifferentialEquationAnalysis`"];
 RowSum[A_] := A.ConstantArray[1, {Length[A], 1}];
 
 
-TableauPattern[pattern_, entry_:"a"] := MapIndexed[Switch[#1, True, Subscript[entry, First[#2], Last[#2]], False, 0, _, #1] &, pattern, {2}];
-TableauExplicit[s_Integer, t_Integer, entry_:"a"] := LowerTriangularize[Table[Subscript[entry, i,j], {i, s}, {j, t}], -1];
-TableauFIRK[s_Integer, t_Integer, entry_:"a"] := Table[Subscript[entry, i,j], {i, s}, {j, t}];
-TableauDIRK[s_Integer, t_Integer, entry_:"a"] := LowerTriangularize[Table[Subscript[entry, i,j], {i, s}, {j, t}]];
-TableauEDIRK[s_Integer, t_Integer, entry_:"a"] := Table[If[i==1 || j>i, 0, Subscript[entry, i,j]], {i, s}, {j, t}];
-TableauSDIRK[s_Integer, t_Integer, entry_:"a", diagEntry_:"\[Gamma]"] := LowerTriangularize[Table[If[i==j, diagEntry, Subscript[entry, i,j]], {i, s}, {j, t}]];
-TableauESDIRK[s_Integer, t_Integer, entry_:"a", diagEntry_:"\[Gamma]"] := LowerTriangularize[Table[Switch[i, 1, 0, j, diagEntry, _, Subscript[entry, i,j]], {i, s}, {j, t}]];
+TableauPattern[pattern_, entry_:Global`a] := MapIndexed[Switch[#1, True, Subscript[entry, First[#2], Last[#2]], False, 0, _, #1] &, pattern, {2}];
+TableauZeros[s_Integer, t_Integer, entry_:Global`a] := ConstantArray[0, {s, t}];
+TableauExplicit[s_Integer, t_Integer, entry_:Global`a] := LowerTriangularize[Table[Subscript[entry, i,j], {i, s}, {j, t}], -1];
+TableauFIRK[s_Integer, t_Integer, entry_:Global`a] := Table[Subscript[entry, i,j], {i, s}, {j, t}];
+TableauDIRK[s_Integer, t_Integer, entry_:Global`a] := LowerTriangularize[Table[Subscript[entry, i,j], {i, s}, {j, t}]];
+TableauEDIRK[s_Integer, t_Integer, entry_:Global`a] := Table[If[i==1 || j>i, 0, Subscript[entry, i,j]], {i, s}, {j, t}];
+TableauSDIRK[s_Integer, t_Integer, entry_:Global`a, diagEntry_:Global`\[Gamma]] := LowerTriangularize[Table[If[i==j, diagEntry, Subscript[entry, i,j]], {i, s}, {j, t}]];
+TableauESDIRK[s_Integer, t_Integer, entry_:Global`a, diagEntry_:Global`\[Gamma]] := LowerTriangularize[Table[Switch[i, 1, 0, j, diagEntry, _, Subscript[entry, i,j]], {i, s}, {j, t}]];
 
 
-RKStability[z_Complex, A_, b_] := (1+z*Total[b\[Transpose].Inverse[IdentityMatrix[Dimensions[A]]-z*A], 2]);
-RKInternalStability[z_Complex, A_, b_] := Inverse[IdentityMatrix[Dimensions[A]]-z*A].ConstantArray[1, {Length[A], 1}];
+(*This appears to be slightly inefficient*)
+RKStability[z_, A_, b_] := (1+z*Total[b\[Transpose].Inverse[IdentityMatrix[Dimensions[A]]-z*A], 2]);
+RKInternalStability[z_, A_] := Inverse[IdentityMatrix[Dimensions[A]]-z*A].ConstantArray[1, {Length[A], 1}];
 RKStabilityPlot[A_, b_, {xMin_, xMax_}, {yMin_, yMax_}, args___] := RegionPlot[Abs[RKStability[realPart+imagPart*I, A, b]] <= 1, {realPart, xMin, xMax}, {imagPart, yMin, yMax}, args];
 
 
@@ -58,10 +61,11 @@ RKReplace[expr_, A_, b_] := With[{
 ];
 
 
+RealNorm[x_]:=Sqrt[Total[x^2,-1]];
 RKMetricA[A_, b_, p_] := With[{
 		s = Length[A]
 	},
-	Norm[RKReplace[ButcherPrincipalError[p-1, s], A, b]]
+	RealNorm[RKReplace[ButcherPrincipalError[p-1, s], A, b]]
 ];
 
 RKMetricB[A_, bHat_, pHat_] := RKMetricA[A, bHat, pHat] / RKMetricA[A, bHat, pHat - 1];
@@ -69,7 +73,7 @@ RKMetricB[A_, bHat_, pHat_] := RKMetricA[A, bHat, pHat] / RKMetricA[A, bHat, pHa
 RKMetricC[A_, b_, bHat_, pHat_] := With[{
 		s = Length[A]
 	},
-	Norm[RKReplace[ButcherPrincipalError[pHat-1, s], A, b] - RKReplace[ButcherPrincipalError[pHat-1, s], A, bHat]] / RKMetricA[A, bHat, pHat - 1]
+	RealNorm[RKReplace[ButcherPrincipalError[pHat-1, s], A, b] - RKReplace[ButcherPrincipalError[pHat-1, s], A, bHat]] / RKMetricA[A, bHat, pHat - 1]
 ];
 
 RKMetricD[A_, b_, bHat_:{}] := Max[Abs[A], Abs[b], Abs[RowSum[A]], Abs[bHat]];
@@ -242,7 +246,28 @@ RKCatalog=<|
  {-85/12},
  {23/80}
 }],
-"ESDIRK4(3)6"->MethodAssociation[1, 2, 3]
+"ESDIRK4(3)6"->MethodAssociation[{
+ {0, 0, 0, 0, 0, 0},
+ {1/4, 1/4, 0, 0, 0, 0},
+ {1/8 (1-Sqrt[2]), 1/8 (1-Sqrt[2]), 1/4, 0, 0, 0},
+ {1/400 (67+50 Sqrt[2]-Sqrt[7 (2827+1500 Sqrt[2])]), 1/400 (67+50 Sqrt[2]-Sqrt[7 (2827+1500 Sqrt[2])]), 1/200 (-77-55 Sqrt[2]+Sqrt[36479+25470 Sqrt[2]]), 1/4, 0, 0},
+ {1/240 (36-47 Sqrt[2]-7 Sqrt[186+64 Sqrt[2]]), 1/240 (36-47 Sqrt[2]-7 Sqrt[186+64 Sqrt[2]]), (3497+3413 Sqrt[2]+7 Sqrt[390783+276278 Sqrt[2]])/10680, (7 (187+110 Sqrt[2]+Sqrt[548669-136860 Sqrt[2]]))/10680, 1/4, 0},
+ {1/42 (18+Sqrt[2]-Sqrt[186+64 Sqrt[2]]), 1/42 (18+Sqrt[2]-Sqrt[186+64 Sqrt[2]]), (-187-199 Sqrt[2]+Sqrt[390783+276278 Sqrt[2]])/1869, (187+110 Sqrt[2]+Sqrt[548669-136860 Sqrt[2]])/1869, -(3/28), 1/4}
+}, {
+ {1/42 (18+Sqrt[2]-Sqrt[186+64 Sqrt[2]])},
+ {1/42 (18+Sqrt[2]-Sqrt[186+64 Sqrt[2]])},
+ {(-187-199 Sqrt[2]+Sqrt[390783+276278 Sqrt[2]])/1869},
+ {(187+110 Sqrt[2]+Sqrt[548669-136860 Sqrt[2]])/1869},
+ {-(3/28)},
+ {1/4}
+}, {
+ {-(1/32)},
+ {-(1/32)},
+ {(4788+4497 Sqrt[2]-Sqrt[344173082-228700008 Sqrt[2]])/17088},
+ {(97199-47886 Sqrt[2]+Sqrt[7494059143-2444946678 Sqrt[2]])/179424},
+ {(1322+75 Sqrt[2]-5 Sqrt[7074526-4914300 Sqrt[2]])/6048},
+ {(38-15 Sqrt[2]+Sqrt[7074526-4914300 Sqrt[2]])/1728}
+}]
 |>;
 
 
