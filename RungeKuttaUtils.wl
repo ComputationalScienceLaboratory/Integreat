@@ -49,7 +49,7 @@ TableauESDIRK[s_Integer, t_Integer, entry_:Global`a, diagEntry_:Global`\[Gamma]]
 (*This appears to be slightly inefficient*)
 RKStability[z_, A_, b_] := (1+z*Total[b\[Transpose].Inverse[IdentityMatrix[Dimensions[A]]-z*A], 2]);
 RKInternalStability[z_, A_] := Inverse[IdentityMatrix[Dimensions[A]]-z*A].ConstantArray[1, {Length[A], 1}];
-RKStabilityPlot[A_, b_, {xMin_, xMax_}, {yMin_, yMax_}, args___] := RegionPlot[Abs[RKStability[realPart+imagPart*I, A, b]] <= 1, {realPart, xMin, xMax}, {imagPart, yMin, yMax}, args];
+RKStabilityPlot[A_, b_, x:{xMin_:-6, xMax_:2}:{}, y:{yMin_:-4, yMax_:4}:{}, args___] := RegionPlot[Abs[RKStability[realPart+imagPart*I, A, b]] <= 1, {realPart, xMin, xMax}, {imagPart, yMin, yMax}, args];
 
 
 RKReplace[expr_, A_, b_] := With[{
