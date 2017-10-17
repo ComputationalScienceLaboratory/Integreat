@@ -15,6 +15,9 @@ TableauSDIRK::usage = "Creates an SDIRK Butcher tableau";
 TableauESDIRK::usage = "Creates an SDIRK Butcher tableau with the first stage explicit";
 
 RKStability::usage = "The linear stability function for a Runge-Kutta method";
+RKP::usage = "The numerator of the linear stability function";
+RKQ::usage = "The denominator of the linear stability function";
+RKE::usage = "The E-polynomial to test for I-stability";
 RKInternalStability::usage = "The linear stability function for the stages of a Runge-Kutta method";
 RKStabilityPlot::usage = "Plots the region of linear stability";
 
@@ -46,9 +49,11 @@ TableauSDIRK[s_Integer, t_Integer, entry_:Global`a, diagEntry_:Global`\[Gamma]] 
 TableauESDIRK[s_Integer, t_Integer, entry_:Global`a, diagEntry_:Global`\[Gamma]] := LowerTriangularize[Table[Switch[i, 1, 0, j, diagEntry, _, Subscript[entry, i,j]], {i, s}, {j, t}]];
 
 
-(*This appears to be slightly inefficient*)
 RKStability[z_, A_, b_] := (1+z*Total[b\[Transpose].Inverse[IdentityMatrix[Dimensions[A]]-z*A], 2]);
-RKInternalStability[z_, A_] := Inverse[IdentityMatrix[Dimensions[A]]-z*A].ConstantArray[1, {Length[A], 1}];
+RKP[z_,A_,b_] := Det[IdentityMatrix[Dimensions[A]]-z*A+z*ConstantArray[Flatten[b],Length[A]]];
+RKQ[z_,A_] := Det[IdentityMatrix[Dimensions[A]]-z*A];
+RKE[y_,A_,b_] := RKQ[I*y]*RKQ[-I*y]-RKP[I*y]*RKP[-I*y];
+RKInternalStability[z_, A_] := RKQ[z,A].ConstantArray[1, {Length[A], 1}];
 RKStabilityPlot[A_, b_, x:{xMin_:-6, xMax_:2}:{}, y:{yMin_:-4, yMax_:4}:{}, args___] := RegionPlot[Abs[RKStability[realPart+imagPart*I, A, b]] <= 1, {realPart, xMin, xMax}, {imagPart, yMin, yMax}, args];
 
 
@@ -81,7 +86,7 @@ RKMetricD[A_, b_, bHat_:{}] := Max[Abs[A], Abs[b], Abs[RowSum[A]], Abs[bHat]];
 RKMetricE[A_, b_, bHat_, pHat_] := RKMetricA[A, b, pHat] / RKMetricA[A, bHat, pHat - 1];
 
 
-MethodAssociation[A_, b_, bHat_:{}] := (
+(*MethodAssociation[A_, b_, bHat_:{}] := (
 	method=<|"A"->A, "b"->b|>;
 	If[Length[bHat] == 0, method, AppendTo[method, "\!\(\*OverscriptBox[\(b\), \(^\)]\)"->bHat]]
 );
@@ -268,7 +273,7 @@ RKCatalog=<|
  {(1322+75 Sqrt[2]-5 Sqrt[7074526-4914300 Sqrt[2]])/6048},
  {(38-15 Sqrt[2]+Sqrt[7074526-4914300 Sqrt[2]])/1728}
 }]
-|>;
+|>;*)
 
 
 End[];
