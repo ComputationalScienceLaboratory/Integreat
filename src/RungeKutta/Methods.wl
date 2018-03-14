@@ -19,10 +19,6 @@ RungeKuttaCatalog::usage = "A dataset of Runge-Kutta methods";
 Begin["`Private`"];
 Needs["CSL`OdeUtils`Tableaus`"];
 
-PrimaryQ[x_, s_] := AssociationQ[x] && KeyExistsQ[x, \[FormalCapitalA]] && KeyExistsQ[x, \[FormalB]] && KeyExistsQ[x, \[FormalC]] && SquareMatrixQ[x[\[FormalCapitalA]]] && Dimensions[x[\[FormalB]]] === {s} && Dimensions[x[\[FormalC]]] === {s};
-	
-EmbeddedQ[x_, s_] := Dimensions[x[\[FormalD]]] === {s};
-
 dimsErr = "`1` must have length equal to the size of A";
 
 Tableau[s_, A_, b_, c_] := With[{
@@ -46,41 +42,37 @@ catalog = Dataset[{
 }];
 
 
-RungeKuttaQ[x_] := AssociationQ[x] && KeyExistsQ[x, \[FormalCapitalA]] && KeyExistsQ[x, \[FormalB]] && KeyExistsQ[x, \[FormalC]] && SquareMatrixQ[x[\[FormalCapitalA]]] &&
+RungeKuttaQ[x_] := AssociationQ[x] && SquareMatrixQ[x[\[FormalCapitalA]]] && VectorQ[x[\[FormalB]]] && VectorQ[x[\[FormalC]]] &&
 	With[{s = Length[x[\[FormalCapitalA]]]},
-		Dimensions[x[\[FormalB]]] == {s} && Dimensions[x[\[FormalC]]] == {s}
-		&& If[KeyExistsQ[x, \[FormalD]], Dimensions[x[\[FormalD]]] == {s}, True]
+		Length[x[\[FormalB]]] === s && Length[x[\[FormalC]]] === s
+		&& If[KeyExistsQ[x, \[FormalD]], VectorQ[x[\[FormalD]]] && Length[x[\[FormalD]]] === s, True]
 	];
 
-RungeKuttaPairQ[x_] := AssociationQ[x] && KeyExistsQ[x, \[FormalCapitalA]] && KeyExistsQ[x, \[FormalB]] && KeyExistsQ[x, \[FormalC]] && KeyExistsQ[x, \[FormalD]] && SquareMatrixQ[x[\[FormalCapitalA]]] &&
+RungeKuttaPairQ[x_] := AssociationQ[x] && SquareMatrixQ[x[\[FormalCapitalA]]] && VectorQ[x[\[FormalB]]] && VectorQ[x[\[FormalC]]] && VectorQ[x[\[FormalD]]] &&
 	With[{s = Length[x[\[FormalCapitalA]]]},
-		Dimensions[x[\[FormalB]]] == {s} && Dimensions[x[\[FormalC]]] == {s} && Dimensions[x[\[FormalD]]] == {s}
+		Length[x[\[FormalB]]] === s && Length[x[\[FormalC]]] === s && Length[x[\[FormalD]]] === s
 	];
 
 RungeKutta::dims = dimsErr;
-RungeKutta[A_List/;SquareMatrixQ[A], b_List, c_List] := With[{
-	s = Length[A],
-	bDims = Dimensions[b],
-	cDims = Dimensions[c]
+RungeKutta[A_List/;SquareMatrixQ[A], b_List/;VectorQ[b], c_List/;VectorQ[c]] := With[{
+	s = Length[A]
 },
-	If[bDims != {s, 1} && bDims != {s}, Message[RungeKutta::dims, "b"]; Return[$Failed]];
-	If[cDims != {s, 1} && cDims != {s}, Message[RungeKutta::dims, "c"]; Return[$Failed]];
-	<|\[FormalCapitalA] -> A, \[FormalB] -> Flatten[b], \[FormalC] -> Flatten[c]|>
+	If[Length[b] =!= s, Message[RungeKutta::dims, "b"]; Return[$Failed]];
+	If[Length[c] =!= s, Message[RungeKutta::dims, "c"]; Return[$Failed]];
+	<|\[FormalCapitalA] -> A, \[FormalB] -> b, \[FormalC] -> c|>
 ];
-RungeKutta[A_List/;SquareMatrixQ[A], b_List] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[A_List/;SquareMatrixQ[A], b_List/;VectorQ[b]] := RungeKutta[A, b, Total[A, {2}]];
 RungeKutta[A_List/;SquareMatrixQ[A]] := RungeKutta[A, Table[Subscript[\[FormalB], i], {i, Length[A]}]];
-RungeKutta[s_Integer] := RungeKutta[TableauFIRK[s], Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
+RungeKutta[s_Integer] := RungeKutta[TableauFirk[s], Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
 
 RungeKuttaPair::dims = dimsErr;
-RungeKuttaPair[method_/;RungeKuttaQ[method], d_List] := With[{
-	s = RungeKuttaStages[method],
-	dDims = Dimensions[d]
-},
-	If[dDims != {s, 1} && dDims != {s}, Message[RungeKuttaPair::dims, "d"]; Return[$Failed]];
-	Append[method, \[FormalD] -> Flatten[d]]
-];
-RungeKuttaPair[A_List/;SquareMatrixQ[A], b_List, c_List, d_List] := RungeKuttaPair[RungeKutta[A, b, c], d];
-RungeKuttaPair[A_List/;SquareMatrixQ[A], b_List, d_List] := RungeKuttaPair[RungeKutta[A, b], d];
+RungeKuttaPair[method_/;RungeKuttaQ[method], d_List/;VectorQ[d]] := (
+	If[Length[d] =!= RungeKuttaStages[method], Message[RungeKuttaPair::dims, "d"]; Return[$Failed]];
+	Append[method, \[FormalD] -> d]
+);
+
+RungeKuttaPair[A_List/;SquareMatrixQ[A], b_List/;VectorQ[b], c_List/;VectorQ[c], d_List/;VectorQ[d]] := RungeKuttaPair[RungeKutta[A, b, c], d];
+RungeKuttaPair[A_List/;SquareMatrixQ[A], b_List/;VectorQ[b], d_List/;VectorQ[d]] := RungeKuttaPair[RungeKutta[A, b], d];
 
 RungeKuttaEmbedded[method_/;RungeKuttaPairQ[method]] := RungeKutta[method[\[FormalCapitalA]], method[\[FormalD]], method[\[FormalC]]];
 
