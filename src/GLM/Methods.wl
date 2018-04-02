@@ -19,6 +19,7 @@ GlmCatalog::usage = "A dataset of general linear methods";
 Begin["`Private`"];
 Needs["CSL`OdeUtils`Tableaus`"];
 Needs["CSL`OdeUtils`RungeKutta`Methods`"];
+Needs["CSL`OdeUtils`Internal`Catalog`"];
 
 glmOptions = OptionsPattern[{"Type" -> -1}];
 
@@ -26,7 +27,7 @@ TableauW[r_, p_] := Table[Subscript[\[FormalW], i, j], {i, r}, {j, 0, p}];
 
 TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
 
-catalog = Dataset[{
+catalog = Catalog[{
 }];
 
 
@@ -84,13 +85,17 @@ GlmInternalStages[method_/;GlmQ[method]] := Length[method[\[FormalCapitalA]]];
 
 GlmExternalStages[method_/;GlmQ[method]] := Length[method[\[FormalCapitalV]]];
 
-GlmTableau[method_/;GlmQ[method]] := 0;
-	
-GlmCatalog[search_/;StringQ[search]] := With[{
-	pattern = StringMatchQ[search, IgnoreCase -> True, SpellingCorrection -> True]
+GlmTableau[method_/;GlmQ[method]] := With[{
+	s = GlmInternalStages[method],
+	cCol = Transpose[{method[\[FormalC]]}]
 },
-	Normal[catalog[SelectFirst[MemberQ[pattern[#Names], True] &], "Method"]]
+	Grid[
+		ArrayFlatten[{{cCol, method[\[FormalCapitalA]], method[\[FormalCapitalU]]}, {Null, method[\[FormalCapitalB]], method[\[FormalCapitalV]]}}],
+		Dividers -> {{2 -> True, 2 + s -> True}, {1 + s -> True}}
+	]
 ];
+	
+GlmCatalog[search_] := CatalogSearch[catalog, search];
 GlmCatalog[] := catalog
 
 

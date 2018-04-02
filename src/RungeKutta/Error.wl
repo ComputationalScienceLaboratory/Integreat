@@ -25,15 +25,15 @@ RungeKuttaReplace[expr_, method_] := With[{
 ];
 
 
-RungeKuttaA[method_/;RungeKuttaQ[method], p_Integer] := Norm[RungeKuttaReplace[ButcherPrincipalError[p - 1, RungeKuttaStages[method]], method]];
+RungeKuttaA[method_?RungeKuttaQ, p_Integer] := Norm[RungeKuttaReplace[ButcherPrincipalError[p - 1, RungeKuttaStages[method]], method]];
 
-RungeKuttaB[method_/;RungeKuttaPairQ[method], pHat_Integer] := With[{
+RungeKuttaB[method_?RungeKuttaPairQ, pHat_Integer] := With[{
 	eMethod = RungeKuttaEmbedded[method]
 },
 	RungeKuttaA[eMethod, pHat] / RungeKuttaA[eMethod, pHat - 1]
 ];
 
-RungeKuttaC[method_/;RungeKuttaPairQ[method], pHat_Integer] := With[{
+RungeKuttaC[method_?RungeKuttaPairQ, pHat_Integer] := With[{
 	s = RungeKuttaStages[method],
 	eMethod = RungeKuttaEmbedded[method]
 },
@@ -42,11 +42,11 @@ RungeKuttaC[method_/;RungeKuttaPairQ[method], pHat_Integer] := With[{
 	] / RungeKuttaA[eMethod, pHat - 1]
 ];
 
-RungeKuttaD[method_/;RungeKuttaQ[method]] := Max[Abs[{
+RungeKuttaD[method_?RungeKuttaQ] := Max[Abs[{
 	method[\[FormalCapitalA]], method[\[FormalB]], method[\[FormalC]], If[KeyExistsQ[method, \[FormalD]], method[\[FormalD]], {}]
 }]];
 
-RungeKuttaE[method_/;RungeKuttaPairQ[method], pHat_Integer] := RungeKuttaA[method, pHat] / RungeKuttaA[RungeKuttaEmbedded[method], pHat - 1];
+RungeKuttaE[method_?RungeKuttaPairQ, pHat_Integer] := RungeKuttaA[method, pHat] / RungeKuttaA[RungeKuttaEmbedded[method], pHat - 1];
 
 
 End[];

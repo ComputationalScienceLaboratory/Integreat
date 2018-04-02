@@ -27,7 +27,7 @@ TableauDiagonalQ::usage = "Returns True if input is a diagonal Butcher tableau, 
 Begin["`Private`"];
 
 
-TableauPattern[pattern_List/;MatrixQ[pattern], entry_:\[FormalA]] := MapIndexed[Switch[#1, True, Subscript[entry, First[#2], Last[#2]], False, 0, _, #1] &, pattern, {2}];
+TableauPattern[pattern_List?MatrixQ, entry_:\[FormalA]] := MapIndexed[Switch[#1, True, Subscript[entry, First[#2], Last[#2]], False, 0, _, #1] &, pattern, {2}];
 
 TableauZeros[{s_Integer, t_Integer}] := ConstantArray[0, {s, t}];
 TableauZeros[s_Integer] := TableauZeros[{s, s}];
@@ -42,7 +42,7 @@ TableauExplicitQ[x_] := MatrixQ[x] && x === LowerTriangularize[x, -1];
 TableauFirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[Subscript[entry, i,j], {i, s}, {j, t}];
 TableauFirk[s_Integer, entry_:\[FormalA]] := TableauFirk[{s, s}, entry];
 
-TableauFirkQ[x_] := MatrixQ[x] && !TableauExplicit[x];
+TableauFirkQ[x_] := MatrixQ[x] && x =!= LowerTriangularize[x];
 
 TableauDirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := LowerTriangularize[Table[Subscript[entry, i,j], {i, s}, {j, t}]];
 TableauDirk[s_Integer, entry_:\[FormalA]] := TableauDirk[{s, s}, entry];
