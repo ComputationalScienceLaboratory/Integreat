@@ -33,6 +33,12 @@ Tableau[s_, A_, b_, c_] := With[{
 catalog = Catalog[{
 	(*Explicit*)
 	<|"Names" -> {"Euler", "Euler's Method", "Forward Euler", "Explicit Euler"}, "Method" -> RungeKutta[{{0}}, {1}]|>,
+	<|"Names" -> {"2 Stage Explicit, Order 2"}, "Method" -> RungeKuttaPair[{{0,0},{Subscript[\[FormalC], 2],0}}, {(2*Subscript[\[FormalC], 2]-1)/(2*Subscript[\[FormalC], 2]),1/(2*Subscript[\[FormalC], 2])}, {1-Subscript[\[FormalD], 2],Subscript[\[FormalD], 2]}]|>,
+	<|"Names" -> {"3 Stage Explicit, Order 3"}, "Method" -> RungeKuttaPair[
+		{{0,0,0},{Subscript[\[FormalC], 2],0,0},{(Subscript[\[FormalC], 3](3*Subscript[\[FormalC], 2]^2-3*Subscript[\[FormalC], 2]+Subscript[\[FormalC], 3]))/(Subscript[\[FormalC], 2](3*Subscript[\[FormalC], 2]-2)),(Subscript[\[FormalC], 3](Subscript[\[FormalC], 2]-Subscript[\[FormalC], 3]))/(Subscript[\[FormalC], 2](3*Subscript[\[FormalC], 2]-2)),0}},
+		{(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]-3*Subscript[\[FormalC], 2]-3*Subscript[\[FormalC], 3]+2)/(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]),(2-3*Subscript[\[FormalC], 3])/(6*Subscript[\[FormalC], 2]^2-6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]),(3*Subscript[\[FormalC], 2]-2)/(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]-6*Subscript[\[FormalC], 3]^2)},
+		{Subscript[\[FormalD], 2](Subscript[\[FormalC], 2]/Subscript[\[FormalC], 3]-1)-1/(2*Subscript[\[FormalC], 3])+1,Subscript[\[FormalD], 2],(1-2*Subscript[\[FormalD], 2]*Subscript[\[FormalC], 2])/(2*Subscript[\[FormalC], 3])}
+	]|>,
 	<|"Names" -> {"Heun", "Heun's Method", "Explicit Trapezoid"}, "Method" -> RungeKuttaPair[{{0,0},{1,0}}, {1/2,1/2}, {1,0}]|>,
 	<|"Names" -> {"Ralston's 2nd Order Method", "Ralston 2"}, "Method" -> RungeKuttaPair[{{0,0},{2/3,0}}, {1/4,3/4}, {1,0}]|>,
 	<|"Names" -> {"Ralston's 3rd Order Method", "Ralston 3"}, "Method" -> RungeKuttaPair[{{0,0,0},{1/2,0,0},{0,3/4,0}}, {2/9,1/3,4/9}, {1/40,37/40,1/20}]|>,
