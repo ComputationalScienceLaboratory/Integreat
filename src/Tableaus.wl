@@ -60,7 +60,7 @@ TableauSdirk[s_Integer, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := Tableau
 TableauSdirkQ[x_] := TableauDirkQ[x] && SameQ @@ Diagonal[x];
 
 TableauEsdirk[{s_Integer, t_Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := LowerTriangularize[Table[Switch[i, 1, 0, j, diagEntry, _, Subscript[entry, i,j]], {i, s}, {j, t}]];
-TableauEsdirk[s_Integer, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := TableauEedirk[{s, s}, entry, diagEntry];
+TableauEsdirk[s_Integer, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := TableauEsdirk[{s, s}, entry, diagEntry];
 
 TableauEsdirkQ[x_] := TableauEdirkQ[x] && SameQ @@ Rest[Diagonal[x]];
 
