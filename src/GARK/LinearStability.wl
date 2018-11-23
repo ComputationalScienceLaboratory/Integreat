@@ -44,7 +44,7 @@ MrGarkLinearStabilityQ[method_?MrGarkQ, M_Integer, zf_, zs_] := With[{
 	Det[IdentityMatrix[s] - MrGarkFullA[method, M].Z]
 ];
 
-MrGarkLinearStabilityE[method_?MrGarkQ, M_Integer, yf_, ys_] := Abs[MrGarkLinearStabilityQ[method, M, I*yf, I*ys]]^2 - Abs[MrGarkLinearStabilityP[method, M, I*yf, I*ys]]^2;
+MrGarkLinearStabilityE[method_?MrGarkQ, M_Integer, zf_, zs_] := Abs[MrGarkLinearStabilityQ[method, M, zf, zs]]^2 - Abs[MrGarkLinearStabilityP[method, M, zf, zs]]^2;
 
 MrGark2DLinearStability[method_?MrGarkQ, M_Integer, A_/;Dimensions[A]==={2,2}] := With[{
 	sf = M * MrGarkFastStages[method],

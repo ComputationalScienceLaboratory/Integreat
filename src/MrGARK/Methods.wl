@@ -484,7 +484,7 @@ Selectable->False]\)}}
 	]|>,
 	<|"Names" -> {"EX2-IM2 2(1)"}, "Method" -> MrGark[
 		RungeKuttaCatalog["Ralston 2"],
-		RungeKuttaCatalog["SDIRK 2(1)"],
+		RungeKuttaCatalog["SDIRK 2(1)2"],
 		{{(-1+\[FormalLambda])/\[FormalCapitalM],0},{(-1+3 \[FormalLambda])/(3 \[FormalCapitalM]),0}},
 		{{\!\(\*
 TagBox[GridBox[{
@@ -572,42 +572,8 @@ Selectable->False]\)}},
 		{{0,0},{2/3,0}}
 	]|>,
 	<|"Names" -> {"IM2-IM2 2(1)"}, "Method" -> MrGark[
-		RungeKuttaCatalog["SDIRK 2(1)"],
-		{{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{"1", "-", 
-FractionBox["1", 
-RowBox[{
-SqrtBox["2"], " ", "\[FormalCapitalM]"}]]}], 
-RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
-{
-RowBox[{"-", 
-FractionBox[
-RowBox[{
-SqrtBox["2"], "-", 
-RowBox[{"2", " ", "\[FormalLambda]"}]}], 
-RowBox[{"2", " ", "\[FormalCapitalM]"}]]}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0},{\!\(\*
+		RungeKuttaCatalog["SDIRK 2(1)2"],
+		{{-((Sqrt[2]-2 \[FormalLambda])/(2 \[FormalCapitalM])),0},{\!\(\*
 TagBox[GridBox[{
 {"\[Piecewise]", GridBox[{
 {
@@ -690,6 +656,445 @@ DeleteWithContents->True,
 Editable->False,
 SelectWithContents->True,
 Selectable->False]\),0},{1/Sqrt[2],1-1/Sqrt[2]}}
+	]|>,
+	<|"Names" -> {"IM3-IM3 2(1)"}, "Method" -> MrGark[
+		RungeKuttaCatalog["ESDIRK 2(1)3"],
+		{{\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", "\[FormalCapitalM]"}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{"30", "-", 
+RowBox[{"21", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "5"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{"30", "-", 
+RowBox[{"21", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "5"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", "\[FormalLambda]"}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+RowBox[{"-", 
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", "\[FormalCapitalM]"}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "6"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", "\[FormalCapitalM]"}]}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]]}], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+RowBox[{"-", 
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "6"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", "\[FormalCapitalM]"}]}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", "\[FormalLambda]"}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]]}], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),0},{\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{"1", "-", 
+SqrtBox["2"], "+", "\[FormalCapitalM]"}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{"30", "-", 
+RowBox[{"21", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "5"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{"30", "-", 
+RowBox[{"21", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "5"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{"1", "-", 
+SqrtBox["2"], "+", "\[FormalLambda]"}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", 
+SqrtBox["2"], "-", "\[FormalCapitalM]"}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "6"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", "\[FormalCapitalM]"}]}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "6"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", "\[FormalCapitalM]"}]}], ")"}], " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "1"}], "+", 
+SqrtBox["2"], "-", "\[FormalLambda]"}], ")"}]}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),0},{\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+FractionBox["1", 
+RowBox[{"2", " ", 
+SqrtBox["2"]}]], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{"30", "-", 
+RowBox[{"21", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "5"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}], " ", "\[FormalLambda]"}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+FractionBox["1", 
+RowBox[{"2", " ", 
+SqrtBox["2"]}]], 
+RowBox[{"\[FormalCapitalM]", "==", "\[FormalLambda]"}]},
+{
+RowBox[{"-", 
+FractionBox[
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "6"}], "+", 
+RowBox[{"3", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{"2", " ", "\[FormalCapitalM]"}]}], ")"}], " ", "\[FormalLambda]"}], 
+RowBox[{"6", " ", "\[FormalCapitalM]", " ", 
+RowBox[{"(", 
+RowBox[{"6", "-", 
+RowBox[{"4", " ", 
+SqrtBox["2"]}], "+", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"-", "2"}], "+", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}]}], ")"}]}]]}], 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+RowBox[{"1", "-", 
+FractionBox["1", 
+SqrtBox["2"]]}], 
+RowBox[{"\[FormalLambda]", "==", "\[FormalCapitalM]"}]},
+{"0", 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\)}},
+		{{0,0,0},{\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+RowBox[{
+RowBox[{"(", 
+RowBox[{"2", "-", 
+SqrtBox["2"]}], ")"}], " ", "\[FormalCapitalM]"}], 
+RowBox[{"\[FormalLambda]", "==", "1"}]},
+{"0", 
+TagBox["True",
+"PiecewiseDefault",
+AutoDelete->True]}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\),0,0},{1/(2 Sqrt[2]),1/(2 Sqrt[2]),1-1/Sqrt[2]}}
 	]|>,
 	<|"Names" -> {"EX3-EX3 3(2)"}, "Method" -> MrGark[
 		RungeKuttaCatalog["Ralston 3"],
@@ -1620,463 +2025,9 @@ Editable->False,
 SelectWithContents->True,
 Selectable->False]\)}}
 	]|>,
-	<|"Names" -> {"EX3-EX3 3(2)S"}, "Method" -> MrGark[
-		RungeKuttaCatalog["3 Stage Explicit, Order 3"]/.Subscript[\[FormalC], 3]->1,
-		{{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-FractionBox[
-RowBox[{
-RowBox[{"-", "1"}], "+", "\[FormalLambda]"}], "\[FormalCapitalM]"], 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{"0", 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-FractionBox[
-RowBox[{
-RowBox[{"-", "1"}], "+", "\[FormalLambda]"}], "\[FormalCapitalM]"], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0},{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-FractionBox[
-RowBox[{
-RowBox[{"-", "1"}], "+", "\[FormalLambda]", "+", 
-SubscriptBox["\[FormalC]", "2"]}], "\[FormalCapitalM]"], 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{"0", 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-FractionBox[
-RowBox[{
-RowBox[{"-", "1"}], "+", "\[FormalLambda]", "+", 
-SubscriptBox["\[FormalC]", "2"]}], "\[FormalCapitalM]"], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0},{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-FractionBox["\[FormalLambda]", "\[FormalCapitalM]"], 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-FractionBox[
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "1"}], "+", 
-SubscriptBox["\[FormalC]", "2"]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["\[FormalCapitalM]", "2"]}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-SuperscriptBox["\[FormalCapitalM]", "2"], "-", 
-SuperscriptBox[
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}], "2"]}], ")"}]}]}], ")"}]}], 
-RowBox[{"\[FormalCapitalM]", " ", 
-RowBox[{"(", 
-RowBox[{
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "2"}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"]}]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{"\[FormalCapitalM]", "-", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}]}], ")"}]}]], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-FractionBox[
-RowBox[{"\[FormalLambda]", "-", 
-FractionBox[
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "1"}], "+", 
-SubscriptBox["\[FormalC]", "2"]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["\[FormalCapitalM]", "2"]}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-SuperscriptBox["\[FormalCapitalM]", "2"], "-", 
-SuperscriptBox[
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}], "2"]}], ")"}]}]}], ")"}]}], 
-RowBox[{
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "2"}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"]}]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{"\[FormalCapitalM]", "-", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}]}]]}], "\[FormalCapitalM]"], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0}},
-		{{0,0,0},{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{
-FractionBox[
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]], "-", "0", "-", "0"}], 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{"0", 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{"0", 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0},{\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-RowBox[{"1", "-", 
-FractionBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "3"}], " ", "\[FormalCapitalM]"}], "-", 
-RowBox[{
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "3"}], "+", "\[FormalCapitalM]"}], ")"}], " ", "\[FormalCapitalM]"}], "-", 
-RowBox[{"3", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "1"}], "+", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}], " ", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]}], ")"}]}], "+", 
-RowBox[{
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}], " ", 
-RowBox[{"(", 
-RowBox[{"2", "+", "\[FormalCapitalM]", "-", 
-RowBox[{"2", " ", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], "+", 
-RowBox[{"2", " ", "0"}]}], ")"}]}]}], 
-RowBox[{"2", " ", 
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "2"}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"]}]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{"\[FormalCapitalM]", "-", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}]}]], "-", "0"}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{"\[FormalLambda]", "<=", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]},
-{
-FractionBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "3"}], " ", "\[FormalCapitalM]"}], "-", 
-RowBox[{
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "3"}], "+", "\[FormalCapitalM]"}], ")"}], " ", "\[FormalCapitalM]"}], "-", 
-RowBox[{"3", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "1"}], "+", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}], " ", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}]}], ")"}]}], "+", 
-RowBox[{
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}], " ", 
-RowBox[{"(", 
-RowBox[{"2", "+", "\[FormalCapitalM]", "-", 
-RowBox[{"2", " ", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], "+", 
-RowBox[{"2", " ", "0"}]}], ")"}]}]}], 
-RowBox[{"2", " ", 
-SubscriptBox["\[FormalC]", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "2"}], "+", 
-RowBox[{"3", " ", 
-SubscriptBox["\[FormalC]", "2"]}]}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{"\[FormalCapitalM]", "-", 
-RowBox[{"Floor", "[", 
-RowBox[{"\[FormalCapitalM]", " ", 
-SubscriptBox["\[FormalC]", "2"]}], "]"}]}], ")"}]}]], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\),0}}
-	]|>,
 	<|"Names" -> {"EX3-IM3 3(2)"}, "Method" -> MrGark[
 		RungeKuttaCatalog["Ralston 3"],
-		RungeKuttaCatalog["SDIRK 3(2)"],
+		RungeKuttaCatalog["SDIRK 3(2)3"],
 		{{(-1+\[FormalLambda])/\[FormalCapitalM],0,0},{(-1+2 \[FormalLambda])/(2 \[FormalCapitalM]),0,0},{(-1+4 \[FormalLambda]+Root[6-9 #1^2+4 #1^3&,3] (-3 \[FormalCapitalM]+9 (-1+2 \[FormalLambda]) Root[-1+9 #1-18 #1^2+6 #1^3&,2]))/(4 \[FormalCapitalM]),(3 Root[24-9 #1^2+2 #1^3&,3] (\[FormalCapitalM]+3 (1-2 \[FormalLambda]) Root[-1+9 #1-18 #1^2+6 #1^3&,2]))/(8 \[FormalCapitalM]),0}},
 		{{\!\(\*
 TagBox[GridBox[{
@@ -2207,7 +2158,7 @@ SelectWithContents->True,
 Selectable->False]\),0},{2/9,1/3,4/9}}
 	]|>,
 	<|"Names" -> {"IM3-EX3 3(2)"}, "Method" -> MrGark[
-		RungeKuttaCatalog["SDIRK 3(2)"],
+		RungeKuttaCatalog["SDIRK 3(2)3"],
 		RungeKuttaCatalog["Ralston 3"],
 		{{(\[FormalLambda]+Root[-4-9 #1+6 #1^3&,2])/\[FormalCapitalM],0,0},{\!\(\*
 TagBox[GridBox[{

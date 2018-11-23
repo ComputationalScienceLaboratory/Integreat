@@ -28,6 +28,7 @@ TableauW[r_, p_] := Table[Subscript[\[FormalW], i, j], {i, r}, {j, 0, p}];
 TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
 
 catalog = Catalog[{
+	(*<|"Names" -> {"DIMSIM3 Type 1"}, "Method" -> Dimsim[*)
 }];
 
 
@@ -42,7 +43,7 @@ GlmQ[x_] := AssociationQ[x] && SquareMatrixQ[x[\[FormalCapitalA]]] && MatrixQ[x[
 Glm::dims = "`1` must have the same number of rows as `2` and the same number of columns as `3`";
 Glm::cdims = "c must have length equal to the size of A";
 Glm::wdims = "W must have the same number of rows as V";
-Glm[A_List/;SquareMatrixQ[A], B_List/;MatrixQ[B], U_List/;MatrixQ[U], V_List/;SquareMatrixQ[V], c_List/;VectorQ[c], W_List/;MatrixQ[W]] := With[{
+Glm[A_List?SquareMatrixQ, B_List?MatrixQ, U_List?MatrixQ, V_List?SquareMatrixQ, c_List?VectorQ, W_List?MatrixQ] := With[{
 	s = Length[A],
 	r = Length[V]
 },
@@ -52,26 +53,26 @@ Glm[A_List/;SquareMatrixQ[A], B_List/;MatrixQ[B], U_List/;MatrixQ[U], V_List/;Sq
 	If[Length[W] =!= r, Message[Glm::wdims]; Return[$Failed]];
 	<|\[FormalCapitalA] -> A, \[FormalCapitalB] -> B, \[FormalCapitalU] -> U, \[FormalCapitalV] -> V, \[FormalC] -> c, \[FormalCapitalW] -> W|>
 ];
-Glm[A_List/;SquareMatrixQ[A], B_List/;MatrixQ[B], U_List/;MatrixQ[U], V_List/;SquareMatrixQ[V], W_List;/MatrixQ[W]] := Glm[A, B, U, V, Total[A, {2}] + U.W[[All, 2]], W];
+Glm[A_List?SquareMatrixQ, B_List?MatrixQ, U_List?MatrixQ, V_List?SquareMatrixQ, W_List?MatrixQ] := Glm[A, B, U, V, Total[A, {2}] + U.W[[All, 2]], W];
 Glm[s_Integer, r_Integer, p_Integer, glmOptions] := Glm[TypeToTableau[OptionValue["Type"]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalC], i], {i, s}], TableauW[r, p]];
-Glm[method_/;RungeKuttaQ[method], p_Integer] := Glm[method[\[FormalCapitalA]], {method[\[FormalB]]}, ConstantArray[1, {RungeKuttaStages[method], 1}], {{1}}, method[\[FormalC]], {Factorial[Range[0, p]]}];
+Glm[method_?RungeKuttaQ, p_Integer] := Glm[method[\[FormalCapitalA]], {method[\[FormalB]]}, ConstantArray[1, {RungeKuttaStages[method], 1}], {{1}}, method[\[FormalC]], {Factorial[Range[0, p]]}];
 
 DimsimQ[x_] := GlmQ[x] && With[{s = GlmInternalStages[x]},
-	s === GlmExternalStages[x] && SdirkQ[x] && MatrixRank[x[\[FormalCapitalV]]] === 1 && And @@ Thread[x[\[FormalCapitalU]] == IdentityMatrix[s], {2}]
+	s === GlmExternalStages[x] && SdirkQ[x] && MatrixRank[x[\[FormalCapitalV]]] === 1 && And @@ Thread[x[\[FormalCapitalU]] === IdentityMatrix[s], {2}]
 ];
 
 Dimsim::dims = "`1` must have the same size as A";
-Dimsim[A_List/;SquareMatrixQ[A] && TableauSdirkQ[A], B_List/;SquareMatrixQ[B], V_List/;SquareMatrixQ[V] && MatrixRank[V] === 1, c_List/;VectorQ[c], W_List/;MatrixQ[W]] := With[{
+Dimsim[A_List/;SquareMatrixQ[A] && TableauSdirkQ[A], B_List?SquareMatrixQ, V_List/;SquareMatrixQ[V] && MatrixRank[V] === 1, c_List?VectorQ, W_List?MatrixQ] := With[{
 	s = Length[A]
 },
 	If[Length[B] =!= s, Message[Dimsim::dims, "B"]; Return[$Failed]];
 	If[Length[V] =!= s, Message[Dimsim::dims, "V"]; Return[$Failed]];
 	Glm[A, B, IdentityMatrix[s], V, c, W]
 ];
-Dimsim[A_List/;SquareMatrixQ[A] && TableauSdirkQ[A], B_List/;SquareMatrixQ[B], v_List/;VectorQ[v], c_List/;VectorQ[c], W_List/;MatrixQ[W]] := Dimsim[A, B, ConstantArray[v, Length[A]], c, W];
+Dimsim[A_List/;SquareMatrixQ[A] && TableauSdirkQ[A], B_List?SquareMatrixQ, v_List?VectorQ, c_List?VectorQ, W_List?MatrixQ] := Dimsim[A, B, ConstantArray[v, Length[A]], c, W];
 Dimsim[s_Integer, glmOptions] := Dimsim[TypeToTableau[OptionValue["Type"]][s], TableauFirk[s, \[FormalB]], Table[Subscript[\[FormalV], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}], TableauW[s, s]];
 
-GlmType[method_/;GlmQ[method]] := With[{A = method[\[FormalCapitalA]]},
+GlmType[method_?GlmQ] := With[{A = method[\[FormalCapitalA]]},
 	Which[
 		TableauZerosQ[A], 3,
 		TableauDiagonalQ[A], 4,
@@ -81,11 +82,11 @@ GlmType[method_/;GlmQ[method]] := With[{A = method[\[FormalCapitalA]]},
 	]
 ];
 
-GlmInternalStages[method_/;GlmQ[method]] := Length[method[\[FormalCapitalA]]];
+GlmInternalStages[method_?GlmQ] := Length[method[\[FormalCapitalA]]];
 
-GlmExternalStages[method_/;GlmQ[method]] := Length[method[\[FormalCapitalV]]];
+GlmExternalStages[method_?GlmQ] := Length[method[\[FormalCapitalV]]];
 
-GlmTableau[method_/;GlmQ[method]] := With[{
+GlmTableau[method_?GlmQ] := With[{
 	s = GlmInternalStages[method],
 	cCol = Transpose[{method[\[FormalC]]}]
 },

@@ -5,114 +5,140 @@ BeginPackage["CSL`OdeUtils`RungeKutta`Methods`"];
 
 CSL`OdeUtils`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
-RungeKuttaQ::usage = "Returns True if input is a valid Runge-Kutta method, and False otherwise";
-RungeKuttaPairQ::usage = "Returns True if input is a valid Runge-Kutta pair method, and False otherwise";
-RungeKutta::usage = "Constructs an association containing Runge-Kutta coefficients";
-RungeKuttaPair::usage = "Constructs a Runge-Kutta method with an embedded method";
-RungeKuttaEmbedded::usage = "Extracts the embedded method from a pair";
-RungeKuttaStages::usage = "Returns the number of stages in a Runge-Kutta method";
-RungeKuttaTableau::usage = "Creates a tableau of Runge-Kutta coefficients";
-RungeKuttaFsalQ::usage = "Returns True if Runge-Kutta method have First Same As Last property, and False otherwise";
-RungeKuttaCatalog::usage = "A dataset of Runge-Kutta methods";
+RungeKutta::usage = "Constructs a Runge-Kutta method";
+RungeKuttaEmbedded::usage = "Gets the embedded Runge-Kutta method";
+RungeKuttaPairQ::usage = "Returns True if m is a Runge-Kutta method with an embedded method";
+RungeKuttaCollocation::usage = "Constructs a collocated Runge-Kutta method";
+RungeKuttaCompose::usage = "Builds a single Runge-Kutta method out of sub-methods";
+RungeKuttaA::usage = "Gets the A coefficients of a Runge-Kutta method";
+RungeKuttaB::usage = "Gets the b coefficients of a Runge-Kutta method";
+RungeKuttaC::usage = "Gets the c coefficients of a Runge-Kutta method";
+RungeKuttaD::usage = "Gets the embedded coefficients of a Runge-Kutta method";
+RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
 
 
 Begin["`Private`"];
 Needs["CSL`OdeUtils`Tableaus`"];
 Needs["CSL`OdeUtils`Internal`Catalog`"];
+Needs["CSL`OdeUtils`Internal`Composition`"];
 
-dimsErr = "`1` must have length equal to the size of A";
+LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, DeleteCases[Range[Length[c]], i]}];
 
-Tableau[s_, A_, b_, c_] := With[{
-	cCol = Transpose[{c}],
-	vertDivs = {2 -> True},
-	horizDivs = Thread[s + Range[Length[b]] -> True]
-},
-	Grid[ArrayFlatten[{{cCol, A}, {Null, b}}], Dividers -> {vertDivs, horizDivs}]
+RkCompose[m_] := RungeKutta[
+	ArrayFlatten[Table[Which[
+		i == j, m[[i, 2]] * RungeKuttaA[m[[i, 1]]],
+		i >= j, m[[j, 2]] * ConstantArray[RungeKuttaB[m[[j, 1]]], RungeKuttaStages[m[[i, 1]]]],
+		True, 0
+	], {i, Length[m]}, {j, Length[m]}]],
+	Catenate[Map[Last[#] * RungeKuttaB[First[#]] &, m]],
+	Catenate[Map[Last[#] * RungeKuttaC[First[#]] &, m] + FoldList[Plus, 0, m[[1 ;; -2, 2]]]],
+	(*Can embedded methods be handled better?*)
+	If[AllTrue[m[[All, 1]], RungeKuttaPairQ], Catenate[Map[Last[#] * RungeKuttaD[First[#]] &, m]], Unevaluated[Sequence[]]]
 ];
 
-catalog = Catalog[{
-	(*Explicit*)
-	<|"Names" -> {"Euler", "Euler's Method", "Forward Euler", "Explicit Euler"}, "Method" -> RungeKutta[{{0}}, {1}]|>,
-	<|"Names" -> {"2 Stage Explicit, Order 2"}, "Method" -> RungeKuttaPair[{{0,0},{Subscript[\[FormalC], 2],0}}, {(2*Subscript[\[FormalC], 2]-1)/(2*Subscript[\[FormalC], 2]),1/(2*Subscript[\[FormalC], 2])}, {1-Subscript[\[FormalD], 2],Subscript[\[FormalD], 2]}]|>,
-	<|"Names" -> {"3 Stage Explicit, Order 3"}, "Method" -> RungeKuttaPair[
-		{{0,0,0},{Subscript[\[FormalC], 2],0,0},{(Subscript[\[FormalC], 3](3*Subscript[\[FormalC], 2]^2-3*Subscript[\[FormalC], 2]+Subscript[\[FormalC], 3]))/(Subscript[\[FormalC], 2](3*Subscript[\[FormalC], 2]-2)),(Subscript[\[FormalC], 3](Subscript[\[FormalC], 2]-Subscript[\[FormalC], 3]))/(Subscript[\[FormalC], 2](3*Subscript[\[FormalC], 2]-2)),0}},
-		{(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]-3*Subscript[\[FormalC], 2]-3*Subscript[\[FormalC], 3]+2)/(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]),(2-3*Subscript[\[FormalC], 3])/(6*Subscript[\[FormalC], 2]^2-6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]),(3*Subscript[\[FormalC], 2]-2)/(6*Subscript[\[FormalC], 2]*Subscript[\[FormalC], 3]-6*Subscript[\[FormalC], 3]^2)},
-		{Subscript[\[FormalD], 2](Subscript[\[FormalC], 2]/Subscript[\[FormalC], 3]-1)-1/(2*Subscript[\[FormalC], 3])+1,Subscript[\[FormalD], 2],(1-2*Subscript[\[FormalD], 2]*Subscript[\[FormalC], 2])/(2*Subscript[\[FormalC], 3])}
-	]|>,
-	<|"Names" -> {"Heun", "Heun's Method", "Explicit Trapezoid"}, "Method" -> RungeKuttaPair[{{0,0},{1,0}}, {1/2,1/2}, {1,0}]|>,
-	<|"Names" -> {"Ralston's 2nd Order Method", "Ralston 2"}, "Method" -> RungeKuttaPair[{{0,0},{2/3,0}}, {1/4,3/4}, {1,0}]|>,
-	<|"Names" -> {"Ralston's 3rd Order Method", "Ralston 3"}, "Method" -> RungeKuttaPair[{{0,0,0},{1/2,0,0},{0,3/4,0}}, {2/9,1/3,4/9}, {1/40,37/40,1/20}]|>,
-	<|"Names" -> {"Bogacki-Shampine", "ode23"}, "Method" -> RungeKuttaPair[{{0,0,0,0},{1/2,0,0,0},{0,3/4,0,0},{2/9,1/3,4/9,0}}, {7/24,1/4,1/3,1/8}]|>,
-	<|"Names" -> {"EX 4(3)"}, "Method" -> RungeKuttaPair[
-		{{0,0,0,0,0},{2/5,0,0,0,0},{-3/20,3/4,0,0,0},{19/44,-15/44,10/11,0,0},{11/72,25/72,25/72,11/72,0}},
-		{1251515/8970912,3710105/8970912,2519695/8970912,61105/8970912,119041/747576}
-	]|>,
-	<|"Names" -> {"Fehlberg's 4th Order Method", "Felhberg 4"}, "Method" -> RungeKuttaPair[
-		{{0,0,0,0,0,0},{1/4,0,0,0,0,0},{3/32,9/32,0,0,0,0},{1932/2197,-7200/2197,7296/2197,0,0,0},{439/216,-8,3680/513,-845/4104,0,0},{-(8/27),2,-3544/2565,1859/4104,-11/40,0}},
-		{25/216,0,1408/2565,2197/4104,-1/5,0}, {16/135,0,6656/12825,28561/56430,-9/50,2/55}
-	]|>,
-	<|"Names" -> {"RK4", "Classiscal", "Classical Runge-Kutta Method", "The Runge-Kutta Method"}, "Method" -> RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,1/2,0,0},{0,0,1,0}}, {1/6,1/3,1/3,1/6}]|>,
-	(*Implicit*)
-	<|"Names" -> {"Backward Euler", "Implicit Euler"}, "Method" -> RungeKutta[{{1}}]|>,
-	<|"Names" -> {"Implicit Midpoint"}, "Method" -> RungeKutta[{{1/2}}, {1}]|>,
-	<|"Names" -> {"Implicit Trapezoidal"}, "Method" -> RungeKutta[{{0,0},{1/2,1/2}}]|>,
-	<|"Names" -> {"SDIRK 2(1)2"}, "Method" -> RungeKuttaPair[{{1-1/Sqrt[2],0},{1/Sqrt[2],1-1/Sqrt[2]}}, {3/5,2/5}]|>,
-	<|"Names" -> {"SDIRK 3(2)3"}, "Method" -> RungeKuttaPair[
-		{{1+Root[-4-9 #1+6 #1^3&,2], 0, 0},{Root[2-9 #1+24 #1^3&,2], 1+Root[-4-9 #1+6 #1^3&,2], 0},{Root[-7+36 #1-54 #1^2+24 #1^3&,3],Root[-8+27 #1^2+12 #1^3&,2],1+Root[-4-9 #1+6 #1^3&,2]}},
-		{Root[1-6 #1+3 #1^2+4 #1^3&,3],Root[-2+12 #1-15 #1^2+4 #1^3&,1],0}
-	]|>,
-	<|"Names" -> {"SDIRK 4(3)5"}, "Method" -> RungeKuttaPair[
-		{{1/4,0,0,0,0},{13/20,1/4,0,0,0},{580/1287,-175/5148,1/4,0,0},{12698/37375,-201/2990,891/11500,1/4,0},{944/1365,-400/819,99/35,-575/252,1/4}},
-		{41911/60060,-83975/144144,3393/1120,-27025/11088,103/352}
-	]|>,
-	<|"Names" -> {"ESDIRK 2(1)3"}, "Method" -> RungeKutta[{{0,0,0},{1-Sqrt[2]/2,1-Sqrt[2]/2,0},{Sqrt[2]/4,Sqrt[2]/4,1-Sqrt[2]/2}}, {3/10,3/10,2/5}]|>	
-}];
+ex22fam[c2_, d1_] := RungeKutta[RungeKutta[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}], {d1, 1-d1}];
+ex33fam[c2_, c3_, d1_] = Simplify[RungeKutta[RungeKutta[
+		{{0,0,0},{c2,0,0},{(c3 (3 (-1+c2) c2+c3))/(c2 (-2+3 c2)),((c2-c3) c3)/(c2 (-2+3 c2)),0}},
+		{(2-3 c2-3 c3+6 c2 c3)/(6 c2 c3),(2-3 c3)/(6 c2^2-6 c2 c3),(-2+3 c2)/(6 c2 c3-6 c3^2)}
+	], {d1,(1-2 c3+2 c3 d1)/(2 (c2-c3)),(1-2 c2+2 c2 d1)/(2 (-c2+c3))}
+]];
+
+RkCheck[A_, x__] := TableauQ[A] && AllTrue[{x}, VectorQ] && SameQ[Length /@ {x}];
 
 
-RungeKuttaQ[x_] := AssociationQ[x] && SquareMatrixQ[x[\[FormalCapitalA]]] && VectorQ[x[\[FormalB]]] && VectorQ[x[\[FormalC]]] &&
-	With[{s = Length[x[\[FormalCapitalA]]]},
-		Length[x[\[FormalB]]] === s && Length[x[\[FormalC]]] === s
-		&& If[KeyExistsQ[x, \[FormalD]], VectorQ[x[\[FormalD]]] && Length[x[\[FormalD]]] === s, True]
-	];
-
-RungeKuttaPairQ[x_] := AssociationQ[x] && SquareMatrixQ[x[\[FormalCapitalA]]] && VectorQ[x[\[FormalB]]] && VectorQ[x[\[FormalC]]] && VectorQ[x[\[FormalD]]] &&
-	With[{s = Length[x[\[FormalCapitalA]]]},
-		Length[x[\[FormalB]]] === s && Length[x[\[FormalC]]] === s && Length[x[\[FormalD]]] === s
-	];
-
-RungeKutta::dims = dimsErr;
-RungeKutta[A_List?SquareMatrixQ, b_List?VectorQ, c_List?VectorQ] := With[{
-	s = Length[A]
-},
-	If[Length[b] =!= s, Message[RungeKutta::dims, "b"]; Return[$Failed]];
-	If[Length[c] =!= s, Message[RungeKutta::dims, "c"]; Return[$Failed]];
-	<|\[FormalCapitalA] -> A, \[FormalB] -> b, \[FormalC] -> c|>
-];
-RungeKutta[A_List?SquareMatrixQ, b_List?VectorQ] := RungeKutta[A, b, Total[A, {2}]];
-RungeKutta[A_List?SquareMatrixQ] := RungeKutta[A, Last[A]];
+RungeKutta[A_?TableauQ, b_] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[A_?TableauQ] := RungeKutta[A, Last[A]];
 RungeKutta[s_Integer] := RungeKutta[TableauFirk[s], Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
+RungeKutta[RungeKutta[A_, b_, c_, ___], d_] := RungeKutta[A, b, c, d];
 
-RungeKuttaPair::dims = dimsErr;
-RungeKuttaPair[method_?RungeKuttaQ, d_List?VectorQ] := (
-	If[Length[d] =!= RungeKuttaStages[method], Message[RungeKuttaPair::dims, "d"]; Return[$Failed]];
-	Append[method, \[FormalD] -> d]
-);
-RungeKuttaPair[method_?RungeKuttaQ] := RungeKuttaPair[method, Table[Subscript[\[FormalD], i], {i, RungeKuttaStages[method]}]];
-RungeKuttaPair[A_List?SquareMatrixQ, b_List?VectorQ, c_List?VectorQ, d_List?VectorQ] := RungeKuttaPair[RungeKutta[A, b, c], d];
-RungeKuttaPair[A_List?SquareMatrixQ, b_List?VectorQ, d_List?VectorQ] := RungeKuttaPair[RungeKutta[A, b], d];
-RungeKuttaPair[A_List?SquareMatrixQ, d_List?VectorQ] := RungeKuttaPair[RungeKutta[A], d];
+AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
 
-RungeKuttaEmbedded[method_?RungeKuttaPairQ] := RungeKutta[method[\[FormalCapitalA]], method[\[FormalD]], method[\[FormalC]]];
+RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_]]] := RungeKutta[A, x * b, c];
+RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_, d_]]] := RungeKutta[A, x * b, c, x * d];
 
-RungeKuttaStages[method_?RungeKuttaQ] := Length[method[\[FormalCapitalA]]];
+RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1_, d1_], RungeKutta[A2_, b2_, c2_, d2_]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2], Join[d1, d2]];
+RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1__], RungeKutta[A2_, b2_, c2__]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
 
-RungeKuttaTableau[method_?RungeKuttaPairQ] := Tableau[RungeKuttaStages[method], method[\[FormalCapitalA]], {method[\[FormalB]], method[\[FormalD]]}, method[\[FormalC]]];
-RungeKuttaTableau[method_?RungeKuttaQ] := Tableau[RungeKuttaStages[method], method[\[FormalCapitalA]], {method[\[FormalB]]}, method[\[FormalC]]];
+HoldPattern[RungeKuttaEmbedded[RungeKutta[A_, _, c_, d_]]] := RungeKutta[A, d, c];
 
-RungeKuttaFsalQ[method_?RungeKuttaQ] := And @@ Thread[First[method[\[FormalCapitalA]]] == 0] && And @@ Thread[Last[method[\[FormalCapitalA]]] == method[\[FormalB]]];
+(* Maybe could make the pattern itself public *)
+RungeKuttaPairQ[m_] := MatchQ[m, HoldPattern[RungeKutta[_, _, _, _]]];
 
-RungeKuttaCatalog[search_] := CatalogSearch[catalog, search];
-RungeKuttaCatalog[] := catalog
+RungeKuttaCollocation[c_List?VectorQ] := RungeKutta[
+	Table[Integrate[LagrangeBasis[t, c, j], {t, 0, c[[i]]}], {i, Length[c]}, {j, Length[c]}],
+	Table[Integrate[LagrangeBasis[t, c, i], {t, 0, 1}], {i, Length[c]}],
+	c
+];
+
+HoldPattern[RungeKuttaA[RungeKutta[A_, __]]] := A;
+
+HoldPattern[RungeKuttaB[RungeKutta[_, b_, __]]] := b;
+
+HoldPattern[RungeKuttaC[RungeKutta[_, _, c_, ___]]] := c;
+
+HoldPattern[RungeKuttaD[RungeKutta[_, _, _, d_]]] := d;
+
+HoldPattern[RungeKuttaStages[RungeKutta[A_, __]]] := Length[A];
+
+RungeKutta /: MakeBoxes[RungeKutta[A_List, b_List, c_List, d_List:Nothing], format_] := GridBox[
+	Join[MapThread[Prepend, {Map[MakeBoxes, A, {2}], MakeBoxes /@ c}], Map[Prepend[MakeBoxes /@ #, ""] &, {b, d}]],
+	ColumnLines -> {True, False},
+	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
+];
+
+AddCatalog[
+	RungeKutta,
+	(*Explicit*)
+	{"Euler", "Euler's Method", "Forward Euler", "Explicit Euler", RungeKutta[{{0}}, {1}]},
+	{"2 Stage Explicit, Order 2", ex22fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
+	{"3 Stage Explicit, Order 3", ex33fam[Subscript[\[FormalC], 2], Subscript[\[FormalC], 3], Subscript[\[FormalD], 1]]},
+	{"Heun", "Heun's Method", "Explicit Trapezoid", ex22fam[1, 1]},
+	{"Ralston's 2nd Order Method", "Ralston 2", ex22fam[2/3, 1]},
+	{"Ralston's 3rd Order Method", "Ralston 3", ex33fam[1/2, 3/4, 1/40]},
+	{"Bogacki-Shampine", "ode23", RungeKutta[RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,3/4,0,0},{2/9,1/3,4/9,0}}], {7/24,1/4,1/3,1/8}]},
+	{"EX 4(3)", RungeKutta[
+		RungeKutta[{{0,0,0,0,0},{2/5,0,0,0,0},{-3/20,3/4,0,0,0},{19/44,-15/44,10/11,0,0},{11/72,25/72,25/72,11/72,0}}],
+		{1251515/8970912,3710105/8970912,2519695/8970912,61105/8970912,119041/747576}
+	]},
+	{"Fehlberg's 4th Order Method", "Felhberg 4", RungeKutta[
+		RungeKutta[
+			{{0,0,0,0,0,0},{1/4,0,0,0,0,0},{3/32,9/32,0,0,0,0},{1932/2197,-7200/2197,7296/2197,0,0,0},{439/216,-8,3680/513,-845/4104,0,0},{-8/27,2,-3544/2565,1859/4104,-11/40,0}},
+			{25/216,0,1408/2565,2197/4104,-1/5,0}
+		],
+		{16/135,0,6656/12825,28561/56430,-9/50,2/55}
+	]},
+	{"RK4", "Classiscal", "Classical Runge-Kutta Method", "The Runge-Kutta Method", RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,1/2,0,0},{0,0,1,0}}, {1/6,1/3,1/3,1/6}]},
+	{"RKDP", "DOPRI", "Dormand-Prince", RungeKutta[
+		RungeKutta[{{0,0,0,0,0,0,0},{1/5,0,0,0,0,0,0},{3/40,9/40,0,0,0,0,0},{44/45,-56/15,32/9,0,0,0,0},{19372/6561,\[Minus]25360/2187,64448/6561,\[Minus]212/729,0,0,0},{9017/3168,\[Minus]355/33,46732/5247,49/176,\[Minus]5103/18656,0,0},{35/384,0,500/1113,125/192,\[Minus]2187/6784,11/84,0}}],
+		{5179/57600,0,7571/16695,393/640,\[Minus]92097/339200,187/2100,1/40}
+	]},
+	
+	(*Implicit*)
+	{"Backward Euler", "Implicit Euler", RungeKutta[{{1}}]},
+	{"Implicit Midpoint", RungeKuttaCollocation[{1/2}]},
+	{"Implicit Trapezoidal", RungeKuttaCollocation[{0, 1}]},
+	{"SDIRK 2(1)2", RungeKutta[RungeKutta[{{1-1/Sqrt[2],0},{1/Sqrt[2],1-1/Sqrt[2]}}], {3/5,2/5}]},
+	{"SDIRK 2(1)2A", RungeKutta[RungeKutta[{{1/4,0},{7/12,1/4}},{4/7,3/7}], {52/87,35/87}]},
+	{"ESDIRK 2(1)3", RungeKutta[RungeKutta[{{0,0,0},{1-Sqrt[2]/2,1-Sqrt[2]/2,0},{Sqrt[2]/4,Sqrt[2]/4,1-Sqrt[2]/2}}], {3/10,3/10,2/5}]},
+	{"ESDIRK 2(1)3A", RungeKutta[RungeKutta[{{0,0,0},{1/4,1/4,0},{1/4,1/6,1/4}},{1/4,0,3/4}],{9/34,1/34,12/17}]},
+	{"SDIRK 3(2)3", RungeKutta[
+		RungeKutta[{{1+Root[-4-9 #1+6 #1^3&,2], 0, 0},{Root[2-9 #1+24 #1^3&,2], 1+Root[-4-9 #1+6 #1^3&,2], 0},{Root[-7+36 #1-54 #1^2+24 #1^3&,3],Root[-8+27 #1^2+12 #1^3&,2],1+Root[-4-9 #1+6 #1^3&,2]}}],
+		{Root[1-6 #1+3 #1^2+4 #1^3&,3],Root[-2+12 #1-15 #1^2+4 #1^3&,1],0}
+	]},
+	{"SDIRK 3(2)4", RungeKutta[
+		RungeKutta[{{9/40,0,0,0},{163/520,9/40,0,0},{-6481433/8838675,87795409/70709400,9/40,0},{4032/9943,6929/15485,-(723/9272),9/40}}],
+		{20/51,64477140871/138472716300,-1303583701/18463028840,1034014989/4858691800}
+	]},
+	{"ESDIRK 3(2)5", RungeKutta[
+		RungeKutta[{{0,0,0,0,0},{9/40,9/40,0,0,0},{9/80 (1+Sqrt[2]),9/80 (1+Sqrt[2]),9/40,0,0},{1/80 (8+7 Sqrt[2]),1/80 (8+7 Sqrt[2]),-(7/40) (-1+Sqrt[2]),9/40,0},{(-1181+1187 Sqrt[2])/2835,(-1181+1187 Sqrt[2])/2835,-((2374 (-1+Sqrt[2]))/2835),5827/7560,9/40}}],
+		{18/101,18/101,-8673046/(1515*(-32822+35625*Sqrt[2])),(5128050998831+1058874840048*Sqrt[2])/8853645249960,81*(1004412917+104076552 Sqrt[2])/421602154760}
+	]},
+	{"SDIRK 4(3)5", RungeKutta[
+		RungeKutta[{{1/4,0,0,0,0},{13/20,1/4,0,0,0},{580/1287,-175/5148,1/4,0,0},{12698/37375,-201/2990,891/11500,1/4,0},{944/1365,-400/819,99/35,-575/252,1/4}}],
+		{41911/60060,-83975/144144,3393/1120,-27025/11088,103/352}
+	]}
+];
+RungeKutta[args___] /; Not[3 <= Length[Unevaluated[args]] <= 4 && RkCheck[args]] := $Failed;
 
 
 End[];

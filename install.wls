@@ -17,4 +17,4 @@ Quiet[DeleteDirectory[packageDir, DeleteContents->True], {DeleteDirectory::nodir
 Quiet[CreateDirectory[cslDir], {CreateDirectory::filex}];
 CopyFile[srcDir, packageDir, OverwriteTarget->True];
 success = Check[<<CSL`OdeUtils`; True, False];
-Print["Installation " <> If[success, "Succeeded", "Failed"]];
+If[success, Print["Successfully installed in " <> cslDir], Print["Installation failed!"]];
