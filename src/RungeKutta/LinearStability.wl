@@ -5,7 +5,6 @@ BeginPackage["CSL`OdeUtils`RungeKutta`LinearStability`"];
 
 CSL`OdeUtils`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
-RungeKuttaLinearStabilityInternal::usage = "The linear stability function for the stages of a Runge-Kutta method";
 RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method";
 RungeKuttaLinearStabilityPlot::usage = "Plots the region of linear stability";
 RungeKuttaLinearStabilityP::usage = "The numerator of the linear stability function";
@@ -20,23 +19,26 @@ Needs["CSL`OdeUtils`RungeKutta`Methods`"];
 Needs["CSL`OdeUtils`Internal`LinearStability`"];
 
 
-RungeKuttaLinearStabilityInternal[rk_RungeKutta, z_] := With[{
-		s = RungeKuttaStages[rk]
+RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := With[{
+		s = Length[rk]
 	},
-	LinearSolve[IdentityMatrix[s] - z * RungeKuttaA[rk], ConstantArray[1, s]]
+	LinearSolve[IdentityMatrix[s] - z * RungeKuttaA[rk], ConstantArray[1, s]][[p]]
+];
+RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
+
+RungeKuttaLinearStabilityPlot[rk_RungeKutta, args___] := LinearStabilityPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
+
+RungeKuttaLinearStabilityP[rk_RungeKutta, z_] := With[{
+		s = Length[rk]
+	},
+	Det[IdentityMatrix[s] + z * (ConstantArray[RungeKuttaB[rk], s] - RungeKuttaA[rk])]
 ];
 
-RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStabilityInternal[rk, z];
+RungeKuttaLinearStabilityQ[rk_RungeKutta, z_] := Det[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]];
 
-RungeKuttaLinearStabilityPlot[rk_RungeKutta, args___] := LinearStabilityPlot[Abs[RungeKuttaLinearStability[rk, #]] &, args];
-
-HoldPattern[RungeKuttaLinearStabilityP[method: RungeKutta[A_, b_, __], z_]] := Det[IdentityMatrix[Length[A]] + z * (ConstantArray[b, Length[A]] - A)];
-
-HoldPattern[RungeKuttaLinearStabilityQ[RungeKutta[A_, __], z_]] := Det[IdentityMatrix[Length[A]] - z * A];
-
-RungeKuttaLinearStabilityE[rk_RungeKutta, y_] := ComplexExpand[
-	RungeKuttaLinearStabilityQ[rk, y * I] * RungeKuttaLinearStabilityQ[rk, -y * I]
-	- RungeKuttaLinearStabilityP[rk, y * I] * RungeKuttaLinearStabilityP[rk, -y * I]
+RungeKuttaLinearStabilityE[rk_RungeKutta, y_, p_|PatternSequence[]] := ComplexExpand[
+	RungeKuttaLinearStabilityQ[rk, y * I, p] * RungeKuttaLinearStabilityQ[rk, -y * I, p]
+	- RungeKuttaLinearStabilityP[rk, y * I, p] * RungeKuttaLinearStabilityP[rk, -y * I, p]
 ];
 
 RungeKuttaAStableCondition[rk_RungeKutta] := Resolve[ForAll[y, RungeKuttaLinearStabilityE[rk, y] >= 0], Reals]

@@ -12,7 +12,7 @@ Begin["`Private`"];
 
 
 LinearStabilityPlot[stab_, {xMin_, xMax_}, {yMin_, yMax_}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
-	stab[a + b * I] <= 1,
+	stab[a + b * I] < 1,
 	{a, xMin, xMax},
 	{b, yMin, yMax},
 	opts,

@@ -12,8 +12,8 @@ Begin["`Private`"];
 
 
 AddComposition[type_Symbol, op_Symbol, composer_] := (
-	op[args__:{_type, _}] := composer[List[args]];
-	op[args__type] := With[{
+	op[args___:{_type, _}] := composer[List[args]];
+	op[args___type] := With[{
 			m = List[args]
 		},
 		composer[Map[{#, 1 / Length[m]} &, m]]

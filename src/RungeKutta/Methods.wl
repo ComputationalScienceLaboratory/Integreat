@@ -6,6 +6,7 @@ BeginPackage["CSL`OdeUtils`RungeKutta`Methods`"];
 CSL`OdeUtils`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
+RungeKuttaPrimary::usage = "Removes the embedded method from a Runge-Kutta method";
 RungeKuttaEmbedded::usage = "Gets the embedded Runge-Kutta method";
 RungeKuttaPairQ::usage = "Returns True if m is a Runge-Kutta method with an embedded method";
 RungeKuttaCollocation::usage = "Constructs a collocated Runge-Kutta method";
@@ -36,13 +37,15 @@ RkCompose[m_] := RungeKutta[
 	If[AllTrue[m[[All, 1]], RungeKuttaPairQ], Catenate[Map[Last[#] * RungeKuttaD[First[#]] &, m]], Unevaluated[Sequence[]]]
 ];
 
-erk2fam[c2_, d1_] := RungeKutta[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];
-erk3fam[c2_, c3_, d1_] := RungeKutta[
+Erk2Fam[c2_, d1_] := RungeKutta[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];
+Erk3Fam[c2_, c3_, d1_] := RungeKutta[
 	{{0,0,0},{c2,0,0},{(c3 (3 (-1+c2) c2+c3))/(c2 (-2+3 c2)),((c2-c3) c3)/(c2 (-2+3 c2)),0}},
 	{(2-3 c2-3 c3+6 c2 c3)/(6 c2 c3),(2-3 c3)/(6 c2^2-6 c2 c3),(-2+3 c2)/(6 c2 c3-6 c3^2)},
 	{0,c2,c3},
 	{d1,(1-2 c3+2 c3 d1)/(2 (c2-c3)),(1-2 c2+2 c2 d1)/(2 (-c2+c3))}
 ];
+
+ArrayBoxes[x_, format_] := Map[MakeBoxes[#, format] &, x, {ArrayDepth[x]}];
 
 RkCheck[A_, x__] := TableauQ[A] && AllTrue[{x}, VectorQ] && SameQ[Length /@ {x}];
 
@@ -58,7 +61,9 @@ RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_]]] := RungeKutta[A, x 
 RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_, d_]]] := RungeKutta[A, x * b, c, x * d];
 
 RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1_, d1_], RungeKutta[A2_, b2_, c2_, d2_]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2], Join[d1, d2]];
-RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1__], RungeKutta[A2_, b2_, c2__]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
+RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1_, ___], RungeKutta[A2_, b2_, c2_, ___]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
+
+HoldPattern[RungeKuttaPrimary[RungeKutta[A_, b_, c_, ___]]] := RungeKutta[A, b, c];
 
 HoldPattern[RungeKuttaEmbedded[RungeKutta[A_, _, c_, d_]]] := RungeKutta[A, d, c];
 
@@ -81,8 +86,10 @@ HoldPattern[RungeKuttaD[RungeKutta[_, _, _, d_]]] := d;
 
 HoldPattern[RungeKuttaStages[RungeKutta[A_, __]]] := Length[A];
 
+RungeKutta /: Length[rk_RungeKutta] := RungeKuttaStages[rk];
+
 RungeKutta /: MakeBoxes[RungeKutta[A_List, b_List, c_List, d_List:Nothing], format_] := GridBox[
-	Join[MapThread[Prepend, {Map[MakeBoxes, A, {2}], MakeBoxes /@ c}], Map[Prepend[MakeBoxes /@ #, ""] &, {b, d}]],
+	Join[MapThread[Prepend, {ArrayBoxes[A, format], ArrayBoxes[c, format]}], Map[Prepend[ArrayBoxes[#, format], ""] &, {b, d}]],
 	ColumnLines -> {True, False},
 	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
 ];
@@ -91,11 +98,11 @@ AddCatalog[
 	RungeKutta,
 	(*Explicit*)
 	{"Euler", "Euler's Method", "Forward Euler", "Explicit Euler", RungeKutta[{{0}}, {1}]},
-	{"ERK 2(1)2P", "2 Stage Explicit, Order 2", erk2fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
-	{"Heun", "Heun's Method", "Explicit Trapezoid", erk2fam[1, 1]},
-	{"Ralston's 2nd Order Method", "Ralston 2", erk2fam[2/3, 1]},
-	{"ERK 3(2)3P", "3 Stage Explicit, Order 3", erk3fam[Subscript[\[FormalC], 2], Subscript[\[FormalC], 3], Subscript[\[FormalD], 1]]},
-	{"Ralston's 3rd Order Method", "Ralston 3", erk3fam[1/2, 3/4, 1/40]},
+	{"ERK 2(1)2P", "2 Stage Explicit, Order 2", Erk2Fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
+	{"Heun", "Heun's Method", "Explicit Trapezoid", Erk2Fam[1, 1]},
+	{"Ralston's 2nd Order Method", "Ralston 2", Erk2Fam[2/3, 1]},
+	{"ERK 3(2)3P", "3 Stage Explicit, Order 3", Erk3Fam[Subscript[\[FormalC], 2], Subscript[\[FormalC], 3], Subscript[\[FormalD], 1]]},
+	{"Ralston's 3rd Order Method", "Ralston 3", Erk3Fam[1/2, 3/4, 1/40]},
 	{"Bogacki-Shampine", "ode23", RungeKutta[RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,3/4,0,0},{2/9,1/3,4/9,0}}], {7/24,1/4,1/3,1/8}]},
 	{"RK4", "Classiscal", "Classical Runge-Kutta Method", "The Runge-Kutta Method", RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,1/2,0,0},{0,0,1,0}}, {1/6,1/3,1/3,1/6}]},
 	{"ERK 4(3)", RungeKutta[
@@ -122,7 +129,7 @@ AddCatalog[
 	{"SDIRK 2(1)2N", RungeKutta[RungeKutta[{{1/4,0},{1/2,1/4}}], {1/2,1/2}]},
 	{"SDIRK 2(1)2A", RungeKutta[RungeKutta[{{1/4,0},{7/12,1/4}},{4/7,3/7}], {52/87,35/87}]},
 	{"ESDIRK 2(1)3", RungeKutta[RungeKutta[{{0,0,0},{1-Sqrt[2]/2,1-Sqrt[2]/2,0},{Sqrt[2]/4,Sqrt[2]/4,1-Sqrt[2]/2}}], {3/10,3/10,2/5}]},
-	{"ESDIRK 2(1)3A", RungeKutta[RungeKutta[{{0,0,0},{1/4,1/4,0},{1/4,1/6,1/4}},{1/4,0,3/4}],{9/34,1/34,12/17}]},
+	{"ESDIRK 2()3A", RungeKutta[{{0,0,0},{1/4,1/4,0},{1/8 (1+Sqrt[2]),1/8 (1+Sqrt[2]),1/4}},{1-1/Sqrt[2],1-1/Sqrt[2],-1+Sqrt[2]}]},
 	{"SDIRK 3()2", RungeKutta[{{1/6*(3+Sqrt[3]),0},{-1/Sqrt[3],1/6*(3+Sqrt[3])}}, {1/2,1/2}, {1/6*(3+Sqrt[3]),1/6*(3-Sqrt[3])}]},
 	{"ESDIRK 3()3", RungeKutta[
 		{{0,0,0},{1/6*(3+Sqrt[3]),1/6*(3+Sqrt[3]),0},{1/96*(9-5 Sqrt[3]),1/96*(15-19 Sqrt[3]),1/6*(3+Sqrt[3])}},
@@ -143,16 +150,20 @@ AddCatalog[
 	]},
 	{"SDIRK 3(2)3A", RungeKutta[RungeKutta[{{1/3,0,0},{1/6,1/3,0},{5/6,-5/12,1/3}}, {6/5,-1,4/5}], {15/13,-12/13,10/13}]},
 	{"ESDIRK 3(2)4", RungeKutta[
-		{{0,0,0,0},{Root[-1+9 #1-18 #1^2+6 #1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0,0},{1/384 Root[2539044-51786 #1+162 #1^2+#1^3&,3],1/384 Root[-415332-8586 #1+126 #1^2+#1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0},{Root[-43+636 #1-3000 #1^2+4448 #1^3&,2],Root[1-684 #1+3816 #1^2+7968 #1^3&,1],Root[32768-73728 #1+6768 #1^2+34611 #1^3&,3],1+Root[-4-9 #1+6 #1^3&,2]}},
+		{{0,0,0,0},{1+Root[-4-9 #1+6 #1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0,0},{1/384 Root[2539044-51786 #1+162 #1^2+#1^3&,3],1/384 Root[-415332-8586 #1+126 #1^2+#1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0},{Root[-43+636 #1-3000 #1^2+4448 #1^3&,2],Root[1-684 #1+3816 #1^2+7968 #1^3&,1],Root[32768-73728 #1+6768 #1^2+34611 #1^3&,3],1+Root[-4-9 #1+6 #1^3&,2]}},
 		{Root[-43+636 #1-3000 #1^2+4448 #1^3&,2],Root[1-684 #1+3816 #1^2+7968 #1^3&,1],Root[32768-73728 #1+6768 #1^2+34611 #1^3&,3],1+Root[-4-9 #1+6 #1^3&,2]},
 		{0,2 (1+Root[-4-9 #1+6 #1^3&,2]),1/24 (18+Root[-144-54 #1+#1^3&,2]),1},
 		{Root[19177-289836 #1+1044864 #1^2+213504 #1^3&,2],Root[-95821+549972 #1+1050624 #1^2+382464 #1^3&,2],Root[-1270016+3346992 #1-1961496 #1^2+103833 #1^3&,2],Root[434-3519 #1+4752 #1^2+576 #1^3&,3]}
 	]},
-	{"ESDIRK 3()4P", RungeKutta[
+	{"ESDIRK 3(2)4P", RungeKutta[
 		{{0,0,0,0},{\[FormalGamma],\[FormalGamma],0,0},{-((9+16 \[FormalGamma] (-12+\[FormalGamma] (95+3 \[FormalGamma] (-117+8 \[FormalGamma] (26+3 \[FormalGamma] (-7+2 \[FormalGamma]))))))/(64 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma])^2)),-(((3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma]))))/(64 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma])^2)),\[FormalGamma],0},{(-1+6 \[FormalGamma] (-1+2 \[FormalGamma]) (-3+8 \[FormalGamma]))/(12 \[FormalGamma] (3+4 \[FormalGamma] (-5+6 \[FormalGamma]))),(-1+6 \[FormalGamma])/(12 \[FormalGamma] (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma])))),-((16 (1+6 (-1+\[FormalGamma]) \[FormalGamma])^3)/(3 (3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma]))))),\[FormalGamma]}},
 		{(-1+6 \[FormalGamma] (-1+2 \[FormalGamma]) (-3+8 \[FormalGamma]))/(12 \[FormalGamma] (3+4 \[FormalGamma] (-5+6 \[FormalGamma]))),(-1+6 \[FormalGamma])/(12 \[FormalGamma] (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma])))),-((16 (1+6 (-1+\[FormalGamma]) \[FormalGamma])^3)/(3 (3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma]))))),\[FormalGamma]},
 		{0,2 \[FormalGamma],(3+4 \[FormalGamma] (-5+6 \[FormalGamma]))/(4+24 (-1+\[FormalGamma]) \[FormalGamma]),1},
 		{(-3+2 \[FormalGamma] (33+\[FormalGamma] (-280+\[FormalGamma] (1166+\[FormalGamma] (-2530+3 \[FormalGamma] (957-2 \[FormalGamma] (283+4 \[FormalGamma] (-25+6 \[FormalGamma]))))))))/(4 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma]) (3+4 \[FormalGamma] (-5+6 \[FormalGamma]))),(-3+2 \[FormalGamma] (31+\[FormalGamma] (-252+\[FormalGamma] (1028+\[FormalGamma] (-2242+3 \[FormalGamma] (873-4 \[FormalGamma] (137+12 (-4+\[FormalGamma]) \[FormalGamma])))))))/(4 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma]) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma])))),(16 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma]) (-2+\[FormalGamma] (21+\[FormalGamma] (-68+\[FormalGamma] (79+3 \[FormalGamma] (-11+4 \[FormalGamma]))))))/((3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma])))),-((3 \[FormalGamma]^2 (-1+\[FormalGamma] (4+(-2+\[FormalGamma]) \[FormalGamma])))/(1+6 (-1+\[FormalGamma]) \[FormalGamma]))}
+	]},
+	{"ESDIRK 3(2)4A", RungeKutta[
+		RungeKutta[{{0,0,0,0},{1/3,1/3,0,0},{79/192,65/192,1/3,0},{29/208,41/240,-28/195,1/3}}, {9/52,3/20,48/455,4/7}],
+		{5/26,1/6,32/273,11/21}
 	]},
 	{"SDIRK 3(2)4", RungeKutta[
 		RungeKutta[{{9/40,0,0,0},{163/520,9/40,0,0},{-6481433/8838675,87795409/70709400,9/40,0},{4032/9943,6929/15485,-(723/9272),9/40}}],
@@ -176,6 +187,12 @@ AddCatalog[
 	{"SDIRK 4(3)5", RungeKutta[
 		RungeKutta[{{1/4,0,0,0,0},{13/20,1/4,0,0,0},{580/1287,-175/5148,1/4,0,0},{12698/37375,-201/2990,891/11500,1/4,0},{944/1365,-400/819,99/35,-575/252,1/4}}],
 		{41911/60060,-83975/144144,3393/1120,-27025/11088,103/352}
+	]},
+	{"ESDIRK 4(3)6", RungeKutta[
+		{{0,0,0,0,0,0},{1/4,1/4,0,0,0,0},{1/8 (1-Sqrt[2]),1/8 (1-Sqrt[2]),1/4,0,0,0},{1/64 (5-7 Sqrt[2]),1/64 (5-7 Sqrt[2]),7/32 (1+Sqrt[2]),1/4,0,0},{(-13796-54539 Sqrt[2])/125000,(-13796-54539 Sqrt[2])/125000,(506605+132109 Sqrt[2])/437500,(166 (-97+376 Sqrt[2]))/109375,1/4,0},{(1181-987 Sqrt[2])/13782,(1181-987 Sqrt[2])/13782,(47 (-267+1783 Sqrt[2]))/273343,-((16 (-22922+3525 Sqrt[2]))/571953),-((15625 (97+376 Sqrt[2]))/90749876),1/4}},
+		{(1181-987 Sqrt[2])/13782,(1181-987 Sqrt[2])/13782,(47 (-267+1783 Sqrt[2]))/273343,-((16 (-22922+3525 Sqrt[2]))/571953),-((15625 (97+376 Sqrt[2]))/90749876),1/4},
+		{0,1/2,1/4 (2-Sqrt[2]),5/8,26/25,1},
+		{(263980-483197 Sqrt[2])/4515000,(263980-483197 Sqrt[2])/4515000,(483197 (1+Sqrt[2]))/2257500,293362/564375,-(1/12),10/43}
 	]}
 ];
 RungeKutta[args___] /; Not[3 <= Length[Unevaluated[args]] <= 4 && RkCheck[args]] := $Failed;

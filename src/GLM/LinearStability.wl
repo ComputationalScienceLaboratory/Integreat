@@ -12,20 +12,14 @@ GlmLinearStabilityPlot::usage = "Plots the region of linear stability";
 
 Begin["`Private`"];
 Needs["CSL`OdeUtils`GLM`Methods`"];
+Needs["CSL`OdeUtils`Internal`LinearStability`"];
 
 
-GlmLinearStabilityMatrix[method_?GlmQ, z_] := method[\[FormalCapitalV]] + z * method[\[FormalCapitalB]] . Inverse[IdentityMatrix[GlmInternalStages[method]] - z * method[\[FormalCapitalA]]] . method[\[FormalCapitalU]];
+GlmLinearStabilityMatrix[glm_Glm, z_] := GlmV[glm] + z * GlmB[glm] . Inverse[IdentityMatrix[GlmInternalStages[glm]] - z * GlmA[glm]] . GlmU[glm];
 
-GlmLinearStabilityFunction[method_?GlmQ, w_, z_] := Det[w * IdentityMatrix[GlmExternalStages[method]] - GlmLinearStabilityMatrix[method, z]];
+GlmLinearStabilityFunction[glm_Glm, w_, z_] := Det[w * IdentityMatrix[GlmExternalStages[glm]] - GlmLinearStabilityMatrix[glm, z]];
 
-GlmLinearStabilityPlot[method_?GlmQ, {xMin_, xMax_}, {yMin_, yMax_}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
-	Abs[First[Eigenvalues[GlmLinearStabilityMatrix[method, realPart + imagPart * I], 1]]] < 1,
-	{realPart, xMin, xMax},
-	{imagPart, yMin, yMax},
-	opts,
-	FrameLabel -> {"Re", "Im"}
-];
-GlmLinearStabilityPlot[method_?GlmQ, opts:OptionsPattern[RegionPlot]] := GlmLinearStabilityPlot[method, {-6, 2}, {-4, 4}, opts];
+GlmLinearStabilityPlot[glm_Glm, args___] := LinearStabilityPlot[Evaluate[Norm[Eigenvalues[GlmLinearStabilityMatrix[glm, #]], Infinity]] &, args];
 
 
 End[];
