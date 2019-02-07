@@ -17,7 +17,7 @@ RungeKuttaAdjoint[rk_RungeKutta] := With[{
 		A = RungeKuttaA[rk],
 		b = RungeKuttaB[rk]
 	},
-	RungeKutta[Table[b[[j]] - A[[i, j]], {i, s, 1, -1}, {j, s, 1, -1}], Reverse[b], 1 - Reverse[RungeKuttaC[rk]]]
+	RungeKutta[Table[b[[j]] - A[[i, j]], {i, s, 1, -1}, {j, s, 1, -1}], Reverse[b], 1 - Reverse[RungeKuttaC[rk]], If[RungeKuttaPairQ[rk], Reverse[RungeKuttaD[rk]], Unevaluated[Sequence[]]]]
 ];
 
 RungeKutta /: Transpose[rk_RungeKutta] := RungeKuttaAdjoint[rk];
