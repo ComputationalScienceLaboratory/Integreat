@@ -72,7 +72,7 @@ GlmType[glm_Glm] := With[{A = GlmA[glm]},
 	]
 ];
 
-Glm /: MakeBoxes[Glm[A_List, B_List, U_List, V_List, c_List], format_] := GridBox[
+Glm /: HoldPattern[MakeBoxes[Glm[A_, B_, U_, V_, c_], format_]] := GridBox[
 	ArrayFlatten[{
 		{Map[{MakeBoxes[#, format]} &, c], Map[MakeBoxes[#, format] &, A, {2}], Map[MakeBoxes[#, format] &, U, {2}]},
 		{ConstantArray[{""}, Length[B]], Map[MakeBoxes[#, format] &, B, {2}], Map[MakeBoxes[#, format] &, V, {2}]}

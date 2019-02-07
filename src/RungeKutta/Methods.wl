@@ -88,7 +88,7 @@ HoldPattern[RungeKuttaStages[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Length[rk_RungeKutta] := RungeKuttaStages[rk];
 
-RungeKutta /: MakeBoxes[RungeKutta[A_List, b_List, c_List, d_List:Nothing], format_] := GridBox[
+RungeKutta /: HoldPattern[MakeBoxes[RungeKutta[A_, b_, c_, d_:Nothing], format_]] := GridBox[
 	Join[MapThread[Prepend, {ArrayBoxes[A, format], ArrayBoxes[c, format]}], Map[Prepend[ArrayBoxes[#, format], ""] &, {b, d}]],
 	ColumnLines -> {True, False},
 	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
