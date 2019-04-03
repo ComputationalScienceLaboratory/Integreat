@@ -35,14 +35,14 @@ TableauQ[x_] := SquareMatrixQ[x];
 TableauZeros[{s_Integer, t_Integer}] := ConstantArray[0, {s, t}];
 TableauZeros[s_Integer] := TableauZeros[{s, s}];
 
-TableauZerosQ[x_] := TableauQ[x] && AllTrue[x, # === 0 &, 2];
+TableauZerosQ[x_] := TableauQ[x] && MatchQ[x, {{0..}..}];
 
 TableauExplicit[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i > j, Subscript[entry, i, j], 0], {i, s}, {j, t}];
 TableauExplicit[s_Integer, entry_:\[FormalA]] := TableauExplicit[{s, s}, entry];
 
 TableauExplicitQ[x_] := TableauQ[x] && x === LowerTriangularize[x, -1];
 
-TableauFirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[Subscript[entry, i,j], {i, s}, {j, t}];
+TableauFirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[Subscript[entry, i, j], {i, s}, {j, t}];
 TableauFirk[s_Integer, entry_:\[FormalA]] := TableauFirk[{s, s}, entry];
 
 TableauFirkQ[x_] := TableauQ[x] && x =!= LowerTriangularize[x];
@@ -50,7 +50,7 @@ TableauFirkQ[x_] := TableauQ[x] && x =!= LowerTriangularize[x];
 TableauDirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i < j, 0, Subscript[entry, i, j]], {i, s}, {j, t}];
 TableauDirk[s_Integer, entry_:\[FormalA]] := TableauDirk[{s, s}, entry];
 
-TableauDirkQ[x_] := TableauQ[x] && x === LowerTriangularize[x];
+TableauDirkQ[x_] := TableauQ[x] && x === LowerTriangularize[x] && !MatchQ[Diagonal[x], {0..}];
 
 TableauEdirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i == 1 || i < j, 0, Subscript[entry, i, j]], {i, s}, {j, t}];
 TableauEdirk[s_Integer, entry_:\[FormalA]] := TableauEdirk[{s, s}, entry];
@@ -70,7 +70,7 @@ TableauEsdirkQ[x_] := TableauEdirkQ[x] && SameQ @@ Rest[Diagonal[x]];
 TableauDiagonal[{s_Integer, t_Integer}, diagEntry_:\[FormalGamma]] := diagEntry * IdentityMatrix[{s, t}];
 TableauDiagonal[s_Integer, diagEntry_:\[FormalGamma]] := TableauDiagonal[{s, s}, diagEntry];
 
-TableauDiagonalQ[x_] := TableauQ[x] && DiagonalMatrix[Diagonal[x]] === x
+TableauDiagonalQ[x_] := TableauQ[x] && DiagonalMatrix[Diagonal[x]] === x;
 
 
 End[];

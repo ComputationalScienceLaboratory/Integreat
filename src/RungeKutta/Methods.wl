@@ -28,7 +28,7 @@ LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, Delet
 RkCompose[m_] := RungeKutta[
 	ArrayFlatten[Table[Which[
 		i == j, m[[i, 2]] * RungeKuttaA[m[[i, 1]]],
-		i >= j, m[[j, 2]] * ConstantArray[RungeKuttaB[m[[j, 1]]], RungeKuttaStages[m[[i, 1]]]],
+		i > j, m[[j, 2]] * ConstantArray[RungeKuttaB[m[[j, 1]]], RungeKuttaStages[m[[i, 1]]]],
 		True, 0
 	], {i, Length[m]}, {j, Length[m]}]],
 	Catenate[Map[Last[#] * RungeKuttaB[First[#]] &, m]],
@@ -67,8 +67,8 @@ HoldPattern[RungeKuttaPrimary[RungeKutta[A_, b_, c_, ___]]] := RungeKutta[A, b, 
 
 HoldPattern[RungeKuttaEmbedded[RungeKutta[A_, _, c_, d_]]] := RungeKutta[A, d, c];
 
-(* Maybe could make the pattern itself public *)
-RungeKuttaPairQ[m_] := MatchQ[m, HoldPattern[RungeKutta[_, _, _, _]]];
+HoldPattern[RungeKuttaPairQ[RungeKutta[_, _, _, _]]] := True;
+RungeKuttaPairQ[_] := False;
 
 RungeKuttaCollocation[c_List?VectorQ] := RungeKutta[
 	Table[Integrate[LagrangeBasis[t, c, j], {t, 0, c[[i]]}], {i, Length[c]}, {j, Length[c]}],
@@ -126,7 +126,7 @@ AddCatalog[
 	{"Implicit Midpoint", RungeKutta[{{1/2}}, {1}]},
 	{"Implicit Trapezoidal", RungeKutta[{{0, 0},{1/2,1/2}}]},
 	{"SDIRK 2(1)2", RungeKutta[RungeKutta[{{1-1/Sqrt[2],0},{1/Sqrt[2],1-1/Sqrt[2]}}], {3/5,2/5}]},
-	{"SDIRK 2(1)2N", RungeKutta[RungeKutta[{{1/4,0},{1/2,1/4}}], {1/2,1/2}]},
+	{"SDIRK 2()2N", RungeKutta[{{1/4,0},{1/2,1/4}}, {1/2,1/2}]},
 	{"SDIRK 2(1)2A", RungeKutta[RungeKutta[{{1/4,0},{7/12,1/4}},{4/7,3/7}], {52/87,35/87}]},
 	{"ESDIRK 2(1)3", RungeKutta[RungeKutta[{{0,0,0},{1-Sqrt[2]/2,1-Sqrt[2]/2,0},{Sqrt[2]/4,Sqrt[2]/4,1-Sqrt[2]/2}}], {3/10,3/10,2/5}]},
 	{"ESDIRK 2()3A", RungeKutta[{{0,0,0},{1/4,1/4,0},{1/8 (1+Sqrt[2]),1/8 (1+Sqrt[2]),1/4}},{1-1/Sqrt[2],1-1/Sqrt[2],-1+Sqrt[2]}]},

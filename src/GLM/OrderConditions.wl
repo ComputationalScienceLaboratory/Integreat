@@ -14,22 +14,22 @@ Needs["CSL`OdeUtils`GLM`Methods`"];
 
 
 GlmPreconsistencyCondition[glm_Glm] := With[{
-	w0 = Table[Subscript[\[FormalW], i, 0], {i, GlmExternalStages[glm]}]
-},
+		q0 = GlmQ[glm][[All, 1]]
+	},
 	Thread[Flatten[{
-		GlmU[glm].w0 - 1,
-		GlmV[glm].w0 - w0
+		GlmU[glm].q0 - 1,
+		GlmV[glm].q0 - q0
 	}] == 0]
 ];
 
-GlmOrderCondition[glm_Glm, p_Integer, q_Integer] := With[{
-		W = Table[Subscript[\[FormalW], i, j], {i, GlmExternalStages[glm]}, {j, 0, p}],
-		C = Transpose[Prepend[Table[GlmC[glm]^i / Factorial[i], {i, p}], ConstantArray[1, GlmInternalStages[glm]]]],
-		mu = Table[If[j < i, 0, 1 / Factorial[j - i]], {i, 0, p}, {j, p}]
+GlmOrderCondition[glm_Glm, q_Integer] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm] <= q + 1) := With[{
+		C = Transpose[Prepend[Table[GlmC[glm]^i / i!, {i, GlmOrder[glm]}], ConstantArray[1, GlmInternalStages[glm]]]],
+		mu = Table[If[j < i, 0, 1 / Factorial[j - i]], {i, 0, GlmOrder[glm]}, {j, GlmOrder[glm]}],
+		p = GlmOrder[glm]
 	},
 	Thread[Flatten[{
-		C[[All, 2;;q+1]] - GlmA[glm].C[[All, 1;;q]] - GlmU[glm].W[[All, 2;;q+1]],
-		W[[All, 1;;p+1]].mu - GlmB[glm].C[[All, 1;;p]] - GlmV[glm].W[[All, 2;;p+1]]
+		C[[All, 2;;q+1]] - GlmA[glm].C[[All, 1;;q]] - GlmU[glm].GlmQ[glm][[All, 2;;q+1]],
+		GlmQ[glm][[All, 1;;p+1]].mu - GlmB[glm].C[[All, 1;;p]] - GlmV[glm].GlmQ[glm][[All, 2;;p+1]]
 	}] == 0]
 ];
 
