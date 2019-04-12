@@ -23,13 +23,12 @@ GlmPreconsistencyCondition[glm_Glm] := With[{
 ];
 
 GlmOrderCondition[glm_Glm, q_Integer] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm] <= q + 1) := With[{
-		C = Transpose[Prepend[Table[GlmC[glm]^i / i!, {i, GlmOrder[glm]}], ConstantArray[1, GlmInternalStages[glm]]]],
-		mu = Table[If[j < i, 0, 1 / Factorial[j - i]], {i, 0, GlmOrder[glm]}, {j, GlmOrder[glm]}],
+		C = Table[Switch[j, -1, 0, 0, 1, _, GlmC[glm][[i]]^j / j!], {i, GlmInternalStages[glm]}, {j, -1, GlmOrder[glm]}],
 		p = GlmOrder[glm]
 	},
 	Thread[Flatten[{
-		C[[All, 2;;q+1]] - GlmA[glm].C[[All, 1;;q]] - GlmU[glm].GlmQ[glm][[All, 2;;q+1]],
-		GlmQ[glm][[All, 1;;p+1]].mu - GlmB[glm].C[[All, 1;;p]] - GlmV[glm].GlmQ[glm][[All, 2;;p+1]]
+		C[[All, 2;;q+2]] - GlmA[glm].C[[All, 1;;q+1]] - GlmU[glm].GlmQ[glm][[All, 1;;q+1]],
+		GlmQ[glm].Table[If[j < i, 0, 1 / Factorial[j - i]], {i, 0, p}, {j, 0, p}] - GlmB[glm].C[[All, 1;;p+1]] - GlmV[glm].GlmQ[glm]
 	}] == 0]
 ];
 
