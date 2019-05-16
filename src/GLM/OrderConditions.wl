@@ -32,6 +32,15 @@ GlmOrderCondition[glm_Glm, q_Integer] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm
 	}] == 0]
 ];
 
+(*GlmErrorA[glm_Glm, q_Integer] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm] <= q + 1) := With[{
+		p = GlmOrder[glm]
+	},
+	Norm[Join[
+		GlmQ[] - GlmB[glm].GlmC[glm]^p / p!,
+		GlmB[glm].(GlmC[glm]^p / p! - GlmA[glm].GlmC[glm]^(p - 1) / Factorial[p - 1] - GlmU[glm].GlmQ[glm][[All, p + 1]]
+	]]
+];*)
+
 
 End[];
 

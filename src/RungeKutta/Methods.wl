@@ -88,6 +88,8 @@ HoldPattern[RungeKuttaStages[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Length[rk_RungeKutta] := RungeKuttaStages[rk];
 
+RungeKutta /: HoldPattern[Variables[RungeKutta[a___]]] := Variables[{a}];
+
 RungeKutta /: HoldPattern[MakeBoxes[RungeKutta[A_, b_, c_, d_:Nothing], format_]] := GridBox[
 	Join[MapThread[Prepend, {ArrayBoxes[A, format], ArrayBoxes[c, format]}], Map[Prepend[ArrayBoxes[#, format], ""] &, {b, d}]],
 	ColumnLines -> {True, False},
@@ -105,7 +107,7 @@ AddCatalog[
 	{"Ralston's 3rd Order Method", "Ralston 3", Erk3Fam[1/2, 3/4, 1/40]},
 	{"Bogacki-Shampine", "ode23", RungeKutta[RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,3/4,0,0},{2/9,1/3,4/9,0}}], {7/24,1/4,1/3,1/8}]},
 	{"RK4", "Classiscal", "Classical Runge-Kutta Method", "The Runge-Kutta Method", RungeKutta[{{0,0,0,0},{1/2,0,0,0},{0,1/2,0,0},{0,0,1,0}}, {1/6,1/3,1/3,1/6}]},
-	{"ERK 4(3)", RungeKutta[
+	{"ERK 4(3)5", RungeKutta[
 		RungeKutta[{{0,0,0,0,0},{2/5,0,0,0,0},{-3/20,3/4,0,0,0},{19/44,-15/44,10/11,0,0},{11/72,25/72,25/72,11/72,0}}],
 		{1251515/8970912,3710105/8970912,2519695/8970912,61105/8970912,119041/747576}
 	]},
@@ -119,6 +121,10 @@ AddCatalog[
 	{"RKDP", "DOPRI", "Dormand-Prince", RungeKutta[
 		RungeKutta[{{0,0,0,0,0,0,0},{1/5,0,0,0,0,0,0},{3/40,9/40,0,0,0,0,0},{44/45,-56/15,32/9,0,0,0,0},{19372/6561,\[Minus]25360/2187,64448/6561,\[Minus]212/729,0,0,0},{9017/3168,\[Minus]355/33,46732/5247,49/176,\[Minus]5103/18656,0,0},{35/384,0,500/1113,125/192,\[Minus]2187/6784,11/84,0}}],
 		{5179/57600,0,7571/16695,393/640,\[Minus]92097/339200,187/2100,1/40}
+	]},
+	{"BS(4,5)", RungeKutta[
+		RungeKutta[{{0,0,0,0,0,0,0,0},{1/6,0,0,0,0,0,0,0},{2/27,4/27,0,0,0,0,0,0},{183/1372,-162/343,1053/1372,0,0,0,0,0},{68/297,-4/11,42/143,1960/3861,0,0,0,0},{597/22528,81/352,63099/585728,58653/366080,4617/20480,0,0,0},{174197/959244,-30942/79937,8152137/19744439,666106/1039181,-29421/29068,482048/414219,0,0},{587/8064,0,4440339/15491840,24353/124800,387/44800,2152/5985,7267/94080,0}}],
+		{73229/979776,0,2150079/7745920,28742371/136468800,-2537/201600,1626736/4363065,180606751/2183267520,-3293/556956}
 	]},
 	
 	(*Implicit*)

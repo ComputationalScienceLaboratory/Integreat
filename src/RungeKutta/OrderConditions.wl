@@ -56,12 +56,11 @@ RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := With[{
 	Table[Thread[If[k == 1, b, b * c^(k-1)].A == b * (1 - c^k) / k], {k, zeta}]
 ];
 
-(* Can the FullSimplify be removed?  Without it there are issues with determining if residuals are zero *)
-RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, RungeKuttaStages[rk]], rk]//FullSimplify;
+RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, RungeKuttaStages[rk]], rk];
 RungeKuttaPrincipalError[rk_RungeKutta] := RungeKuttaPrincipalError[rk, RungeKuttaOrder[rk]];
 
 RungeKuttaOrder[rk_RungeKutta, tol_Real: 0] := (
-	For[p = 1, RungeKuttaErrorA[rk, p + 1] <= tol, p++];
+	For[p = 1, Norm[FullSimplify[RungeKuttaPrincipalError[rk, p]]] <= tol, p++];
 	p
 );
 

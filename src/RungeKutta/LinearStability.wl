@@ -6,6 +6,7 @@ BeginPackage["CSL`OdeUtils`RungeKutta`LinearStability`"];
 CSL`OdeUtils`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
 RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method";
+RungeKuttaOrderStarPlot::usage = "Plots the order star";
 RungeKuttaLinearStabilityPlot::usage = "Plots the region of linear stability";
 RungeKuttaLinearStabilityP::usage = "The numerator of the linear stability function";
 RungeKuttaLinearStabilityQ::usage = "The denominator of the linear stability function";
@@ -22,9 +23,12 @@ Needs["CSL`OdeUtils`Internal`LinearStability`"];
 RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := With[{
 		s = Length[rk]
 	},
-	LinearSolve[IdentityMatrix[s] - z * RungeKuttaA[rk], ConstantArray[1, s]][[p]]
+	(*LinearSolve[IdentityMatrix[s] - z * RungeKuttaA[rk], ConstantArray[1, s]][[p]]*)
+	(Inverse[IdentityMatrix[s] - z * RungeKuttaA[rk]].ConstantArray[1, s])[[p]]
 ];
 RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
+
+RungeKuttaOrderStarPlot[rk_RungeKutta, args___] := OrderStarPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
 
 RungeKuttaLinearStabilityPlot[rk_RungeKutta, args___] := LinearStabilityPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
 
