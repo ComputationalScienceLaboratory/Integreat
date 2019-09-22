@@ -1,27 +1,37 @@
 (* ::Package:: *)
 
+(* ::Section:: *)
+(*Usage*)
+
+
 BeginPackage["CSL`OdeUtils`RungeKutta`Methods`"];
-
-
 CSL`OdeUtils`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
+RungeKuttaType::usage = "A string representation of the type of Runge-Kutta method";
 RungeKuttaPrimary::usage = "Removes the embedded method from a Runge-Kutta method";
 RungeKuttaEmbedded::usage = "Gets the embedded Runge-Kutta method";
 RungeKuttaPairQ::usage = "Returns True if m is a Runge-Kutta method with an embedded method";
 RungeKuttaCollocation::usage = "Constructs a collocated Runge-Kutta method";
 RungeKuttaCompose::usage = "Builds a single Runge-Kutta method out of sub-methods";
 RungeKuttaA::usage = "Gets the A coefficients of a Runge-Kutta method";
+RungeKuttaDenseOutput::usage = "Gets the b coeffients as a function of \[FormalTheta] for a Runge-Kutta method";
 RungeKuttaB::usage = "Gets the b coefficients of a Runge-Kutta method";
 RungeKuttaC::usage = "Gets the c coefficients of a Runge-Kutta method";
-RungeKuttaD::usage = "Gets the embedded coefficients of a Runge-Kutta method";
+RungeKuttaBHat::usage = "Gets the embedded coefficients of a Runge-Kutta method";
 RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
+
+
+(* ::Section:: *)
+(*Private Members*)
 
 
 Begin["`Private`"];
 Needs["CSL`OdeUtils`Tableaus`"];
 Needs["CSL`OdeUtils`Internal`Catalog`"];
 Needs["CSL`OdeUtils`Internal`Composition`"];
+
+TypeToTableau[type_] := Switch[type, "ERK", TableauExplicit, "ESDIRK", TableauEsdirk, "SDIRK", TableauSdirk, "DIRK", TableauDirk, _, TableauFirk];
 
 LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, DeleteCases[Range[Length[c]], i]}];
 
@@ -31,10 +41,10 @@ RkCompose[m_] := RungeKutta[
 		i > j, m[[j, 2]] * ConstantArray[RungeKuttaB[m[[j, 1]]], RungeKuttaStages[m[[i, 1]]]],
 		True, 0
 	], {i, Length[m]}, {j, Length[m]}]],
-	Catenate[Map[Last[#] * RungeKuttaB[First[#]] &, m]],
-	Catenate[Map[Last[#] * RungeKuttaC[First[#]] &, m] + FoldList[Plus, 0, m[[1 ;; -2, 2]]]],
+	Catenate[Map[Last[#] * RungeKuttaDenseOutput[First[#]] &, m]],
+	Catenate[Map[Last[#] * RungeKuttaC[First[#]] &, m] + FoldList[#1 + Last[#2] * Total[RungeKuttaB[First[#2]]] &, 0, Most[m]]],
 	(*Can embedded methods be handled better?*)
-	If[AllTrue[m[[All, 1]], RungeKuttaPairQ], Catenate[Map[Last[#] * RungeKuttaD[First[#]] &, m]], Unevaluated[Sequence[]]]
+	If[AllTrue[m[[All, 1]], RungeKuttaPairQ], Catenate[Map[Last[#] * RungeKuttaBHat[First[#]] &, m]], Unevaluated[Sequence[]]]
 ];
 
 Erk2Fam[c2_, d1_] := RungeKutta[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];
@@ -45,61 +55,70 @@ Erk3Fam[c2_, c3_, d1_] := RungeKutta[
 	{d1,(1-2 c3+2 c3 d1)/(2 (c2-c3)),(1-2 c2+2 c2 d1)/(2 (-c2+c3))}
 ];
 
-ArrayBoxes[x_, format_] := Map[MakeBoxes[#, format] &, x, {ArrayDepth[x]}];
 
-RkCheck[A_, x__] := TableauQ[A] && AllTrue[{x}, VectorQ] && SameQ[Length /@ {x}];
+(* ::Section:: *)
+(*Package Definitions*)
 
 
-RungeKutta[A_?TableauQ, b_] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[s_Integer, OptionsPattern[{Type -> "FIRK"}]] := RungeKutta[TypeToTableau[OptionValue[Type]][s], Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
 RungeKutta[A_?TableauQ] := RungeKutta[A, Last[A]];
-RungeKutta[s_Integer] := RungeKutta[TableauFirk[s], Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
-RungeKutta[RungeKutta[A_, b_, c_, ___], d_] := RungeKutta[A, b, c, d];
+RungeKutta[A_?TableauQ, b_] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[HoldPattern[RungeKutta[A_, b_, c_, ___]], bHat_] := RungeKutta[A, b, c, bHat];
 
 AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
 
-RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_]]] := RungeKutta[A, x * b, c];
-RungeKutta /: HoldPattern[Times[x_, RungeKutta[A_, b_, c_, d_]]] := RungeKutta[A, x * b, c, x * d];
+RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_]] := RungeKutta[A, x * b, c];
+RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_, bHat_]] := RungeKutta[A, x * b, c, x * bHat];
 
-RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1_, d1_], RungeKutta[A2_, b2_, c2_, d2_]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2], Join[d1, d2]];
-RungeKutta /: HoldPattern[Plus[RungeKutta[A1_, b1_, c1_, ___], RungeKutta[A2_, b2_, c2_, ___]]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
+RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, bHat1_] + RungeKutta[A2_, b2_, c2_, bHat2_]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
+RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, ___] + RungeKutta[A2_, b2_, c2_, ___]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
 
-HoldPattern[RungeKuttaPrimary[RungeKutta[A_, b_, c_, ___]]] := RungeKutta[A, b, c];
+RungeKuttaType[HoldPattern[RungeKutta[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
 
-HoldPattern[RungeKuttaEmbedded[RungeKutta[A_, _, c_, d_]]] := RungeKutta[A, d, c];
+RungeKuttaPrimary[HoldPattern[RungeKutta[A_, b_, c_, ___]]] := RungeKutta[A, b, c];
 
-HoldPattern[RungeKuttaPairQ[RungeKutta[_, _, _, _]]] := True;
+RungeKuttaEmbedded[HoldPattern[RungeKutta[A_, _, c_, bHat_]]] := RungeKutta[A, bHat, c];
+
+RungeKuttaPairQ[HoldPattern[RungeKutta[_, _, _, _]]] := True;
 RungeKuttaPairQ[_] := False;
 
 RungeKuttaCollocation[c_List?VectorQ] := RungeKutta[
 	Table[Integrate[LagrangeBasis[t, c, j], {t, 0, c[[i]]}], {i, Length[c]}, {j, Length[c]}],
-	Table[Integrate[LagrangeBasis[t, c, i], {t, 0, 1}], {i, Length[c]}],
+	Table[Integrate[LagrangeBasis[t, c, i], {t, 0, \[FormalTheta]}], {i, Length[c]}],
 	c
 ];
 
-HoldPattern[RungeKuttaA[RungeKutta[A_, __]]] := A;
+RungeKuttaA[HoldPattern[RungeKutta[A_, __]]] := A;
 
-HoldPattern[RungeKuttaB[RungeKutta[_, b_, __]]] := b;
+RungeKuttaDenseOutput[RungeKutta[_, b_, __]] := b;
 
-HoldPattern[RungeKuttaC[RungeKutta[_, _, c_, ___]]] := c;
+RungeKuttaB[HoldPattern[RungeKutta[_, b_, _, bHat_:Null]], embedded_:False]:= If[embedded, bHat, b /. \[FormalTheta] -> 1];
 
-HoldPattern[RungeKuttaD[RungeKutta[_, _, _, d_]]] := d;
+RungeKuttaC[HoldPattern[RungeKutta[_, _, c_, ___]]] := c;
 
-HoldPattern[RungeKuttaStages[RungeKutta[A_, __]]] := Length[A];
+RungeKuttaBHat[HoldPattern[RungeKutta[_, _, _, bHat_]]] := bHat;
 
-RungeKutta /: Length[rk_RungeKutta] := RungeKuttaStages[rk];
+RungeKuttaStages[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
-RungeKutta /: HoldPattern[Variables[RungeKutta[a___]]] := Variables[{a}];
+RungeKutta /: Length[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
-RungeKutta /: HoldPattern[MakeBoxes[RungeKutta[A_, b_, c_, d_:Nothing], format_]] := GridBox[
-	Join[MapThread[Prepend, {ArrayBoxes[A, format], ArrayBoxes[c, format]}], Map[Prepend[ArrayBoxes[#, format], ""] &, {b, d}]],
+RungeKutta /: Variables[HoldPattern[RungeKutta[a___]]] := Variables[{a}];
+
+RungeKutta /: MakeBoxes[HoldPattern[RungeKutta[A_, b_, c_, bHat_:Nothing]], format_] := GridBox[
+	Join[Map[MakeBoxes[#, format] &, MapThread[Prepend, {A, c}], {2}], Map[Prepend[#, ""] &, Map[MakeBoxes[#, format] &, {b /. \[FormalTheta] -> 1, bHat}, {2}]]],
 	ColumnLines -> {True, False},
 	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
 ];
 
+
+(* ::Section:: *)
+(*Catalog*)
+
+
 AddCatalog[
 	RungeKutta,
 	(*Explicit*)
-	{"Euler", "Euler's Method", "Forward Euler", "Explicit Euler", RungeKutta[{{0}}, {1}]},
+	{"Euler", "Euler's Method", "Forward Euler", "Explicit Euler", RungeKutta[{{0}}, {\[FormalTheta]}]},
 	{"ERK 2(1)2P", "2 Stage Explicit, Order 2", Erk2Fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
 	{"Heun", "Heun's Method", "Explicit Trapezoid", Erk2Fam[1, 1]},
 	{"Ralston's 2nd Order Method", "Ralston 2", Erk2Fam[2/3, 1]},
@@ -201,10 +220,27 @@ AddCatalog[
 		{(263980-483197 Sqrt[2])/4515000,(263980-483197 Sqrt[2])/4515000,(483197 (1+Sqrt[2]))/2257500,293362/564375,-(1/12),10/43}
 	]}
 ];
-RungeKutta[args___] /; Not[3 <= Length[Unevaluated[args]] <= 4 && RkCheck[args]] := $Failed;
+
+
+(* ::Section:: *)
+(*Error Handling*)
+
+
+RungeKutta::args = "RungeKutta called with `1` arguments; must have an A, b, c, and possibly \!\(\*OverscriptBox[\(b\), \(^\)]\).";
+RungeKutta[args___] /; Not[3 <= Length[Unevaluated[args]] <= 4] := (Message[RungeKutta::args, Length[Unevaluated[args]]]; $Failed);
+RungeKutta::squarea = "RungeKutta A coefficients must be a square matrix.";
+RungeKutta[A_, __] /; !SquareMatrixQ[A] := (Print[Stack[]]; Message[RungeKutta::squarea]; $Failed);
+RungeKutta::vector = "RungeKutta `1` coefficients must be a vector.";
+RungeKutta[_, b_, __] /; !VectorQ[b] := (Message[RungeKutta::vector, "b"]; $Failed);
+RungeKutta[_, _, c_, ___] /; !VectorQ[c] := (Message[RungeKutta::vector, "c"]; $Failed);
+RungeKutta[_, _, _, bHat_] /; !VectorQ[bHat] := (Message[RungeKutta::vector, "\!\(\*OverscriptBox[\(b\), \(^\)]\)"]; $Failed);
+RungeKutta::length = "RungeKutta coefficients must have compatible lengths.";
+RungeKutta[args___] /; ArrayDepth[{args}] != 2 := (Message[RungeKutta::length]; $Failed);
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];
-
-
 EndPackage[];

@@ -16,7 +16,7 @@ Needs["CSL`OdeUtils`RungeKutta`Methods`"];
 RungeKuttaAlgebraicStabilityMatrix[rk_RungeKutta] := With[{
 	A = RungeKuttaA[rk],
 	b = RungeKuttaB[rk],
-	s = RungeKuttaStages[rk]
+	s = Length[rk]
 },
 	Table[b[[i]] * A[[i,j]] + b[[j]] * A[[j,i]] - b[[i]] * b[[j]], {i, s}, {j, s}]
 ];
