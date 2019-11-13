@@ -90,7 +90,7 @@ RungeKuttaCollocation[c_List?VectorQ] := RungeKutta[
 
 RungeKuttaA[HoldPattern[RungeKutta[A_, __]]] := A;
 
-RungeKuttaDenseOutput[RungeKutta[_, b_, __]] := b;
+RungeKuttaDenseOutput[HoldPattern[RungeKutta[_, b_, __]]] := b;
 
 RungeKuttaB[HoldPattern[RungeKutta[_, b_, _, bHat_:Null]], embedded_:False]:= If[embedded, bHat, b /. \[FormalTheta] -> 1];
 
@@ -229,7 +229,7 @@ AddCatalog[
 RungeKutta::args = "RungeKutta called with `1` arguments; must have an A, b, c, and possibly \!\(\*OverscriptBox[\(b\), \(^\)]\).";
 RungeKutta[args___] /; Not[3 <= Length[Unevaluated[args]] <= 4] := (Message[RungeKutta::args, Length[Unevaluated[args]]]; $Failed);
 RungeKutta::squarea = "RungeKutta A coefficients must be a square matrix.";
-RungeKutta[A_, __] /; !SquareMatrixQ[A] := (Print[Stack[]]; Message[RungeKutta::squarea]; $Failed);
+RungeKutta[A_, __] /; !SquareMatrixQ[A] := (Message[RungeKutta::squarea]; $Failed);
 RungeKutta::vector = "RungeKutta `1` coefficients must be a vector.";
 RungeKutta[_, b_, __] /; !VectorQ[b] := (Message[RungeKutta::vector, "b"]; $Failed);
 RungeKutta[_, _, c_, ___] /; !VectorQ[c] := (Message[RungeKutta::vector, "c"]; $Failed);
