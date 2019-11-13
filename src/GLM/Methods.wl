@@ -18,6 +18,7 @@ GlmInternalStages::usage = "Returns the number of internal stages in a general l
 GlmExternalStages::usage = "Returns the number of external stages in a general linear method";
 GlmOrder::usage = "Returns the order of a general linear method";
 GlmType::usage = "Returns the type number of the general linear method";
+GlmTransform::usage = "Transforms a general linear method into an equivalent formulation";
 
 
 Begin["`Private`"];
@@ -118,6 +119,12 @@ GlmType[glm_Glm] := With[{A = GlmA[glm]},
 		TableauSdirkQ[A], 2,
 		True, Undefined
 	]
+];
+
+GlmTransform[Glm[A_, B_, U_, V_, W_, c_], T_?SquareMatrixQ] := With[{
+		Tinv = Inverse[T]
+	},
+	Glm[A, T.B, U.Tinv, T.V.Tinv, T.W, c]
 ];
 
 Glm /: HoldPattern[MakeBoxes[Glm[A_, B_, U_, V_, _, c_], format_]] := GridBox[
