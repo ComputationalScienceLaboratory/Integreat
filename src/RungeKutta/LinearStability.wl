@@ -31,8 +31,8 @@ Needs["CSL`OdeUtils`Internal`LinearStability`"];
 
 
 (*Inverse seems to be faster than LinearSolve*)
+RungeKuttaLinearStability[rk_RungeKutta, Infinity, p___] := Limit[RungeKuttaLinearStability[rk, z, p], z -> Infinity];
 RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]], {2}][[p]];
-
 RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
 
 RungeKuttaOrderStarPlot[rk_RungeKutta, args___] := OrderStarPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
