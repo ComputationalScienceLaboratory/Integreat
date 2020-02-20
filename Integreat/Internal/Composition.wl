@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`Internal`Composition`"];
+BeginPackage["Integreat`Internal`Composition`"];
 
 
-CSL`OdeUtils`Internal`Composition::usage = "An internal package for generating composite methods";
+Integreat`Internal`Composition::usage = "An internal package for generating composite methods";
 
 AddComposition::usage = "Defines functions and overloads the power function for generic method composition";
 
@@ -24,6 +24,4 @@ AddComposition[type_Symbol, op_Symbol, composer_] := (
 
 
 End[];
-
-
 EndPackage[];

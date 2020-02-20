@@ -4,15 +4,15 @@
 (*Usage*)
 
 
-BeginPackage["CSL`OdeUtils`RungeKutta`LinearStability`"];
-CSL`OdeUtils`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
+BeginPackage["Integreat`RungeKutta`LinearStability`", {"Integreat`RungeKutta`Methods`", "Integreat`Internal`LinearStability`"}];
+Integreat`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
-RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method";
+RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method applied to y'=\[Lambda]y";
 RungeKuttaOrderStarPlot::usage = "Plots the order star";
 RungeKuttaLinearStabilityPlot::usage = "Plots the region of linear stability";
 RungeKuttaLinearStabilityP::usage = "The numerator of the linear stability function";
 RungeKuttaLinearStabilityQ::usage = "The denominator of the linear stability function";
-RungeKuttaLinearStabilityE::usage = "The E-polynomial to test for I-stability";
+RungeKuttaEPolynomial::usage = "The E-polynomial to test for I-stability";
 RungeKuttaAStableCondition::usage = "Returns True if the Runge-Kutta method is A-stable, and False otherwise";
 RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
 
@@ -22,8 +22,6 @@ RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method 
 
 
 Begin["`Private`"];
-Needs["CSL`OdeUtils`RungeKutta`Methods`"];
-Needs["CSL`OdeUtils`Internal`LinearStability`"];
 
 
 (* ::Section:: *)
@@ -31,7 +29,7 @@ Needs["CSL`OdeUtils`Internal`LinearStability`"];
 
 
 (*Inverse seems to be faster than LinearSolve*)
-RungeKuttaLinearStability[rk_RungeKutta, Infinity, p___] := Limit[RungeKuttaLinearStability[rk, z, p], z -> Infinity];
+RungeKuttaLinearStability[rk_RungeKutta, Infinity, p:Repeated[_, {0, 1}]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> Infinity];
 RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]], {2}][[p]];
 RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
 
@@ -55,12 +53,12 @@ RungeKuttaLinearStabilityP[rk_RungeKutta, z_] := With[{
 
 RungeKuttaLinearStabilityQ[rk_RungeKutta, z_] := Det[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]];
 
-RungeKuttaLinearStabilityE[rk_RungeKutta, y_, p:Repeated[_, {0, 1}]] := ComplexExpand[
+RungeKuttaEPolynomial[rk_RungeKutta, y_] := ComplexExpand[
 	RungeKuttaLinearStabilityQ[rk, y * I] * RungeKuttaLinearStabilityQ[rk, -y * I]
-	- RungeKuttaLinearStabilityP[rk, y * I, p] * RungeKuttaLinearStabilityP[rk, -y * I, p]
+	- RungeKuttaLinearStabilityP[rk, y * I] * RungeKuttaLinearStabilityP[rk, -y * I]
 ];
 
-RungeKuttaAStableCondition[rk_RungeKutta, p:Repeated[_, {0, 1}]] := Resolve[ForAll[y, RungeKuttaLinearStabilityE[rk, y, p] >= 0], Reals]
+RungeKuttaAStableCondition[rk_RungeKutta, p:Repeated[_, {0, 1}]] := Resolve[ForAll[y, RungeKuttaEPolynomial[rk, y, p] >= 0], Reals]
 
 RungeKuttaStifflyAccurateCondition[rk_RungeKutta] := And @@ Thread[Last[RungeKuttaA[rk]] == RungeKuttaB[rk]];
 

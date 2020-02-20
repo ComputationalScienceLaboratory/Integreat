@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`RungeKutta`OrderConditions`"];
+BeginPackage["Integreat`RungeKutta`OrderConditions`", {"Integreat`RungeKutta`Methods`", "Integreat`RungeKutta`LinearStability`", "NumericalDifferentialEquationAnalysis`"}];
 
 
-CSL`OdeUtils`RungeKutta`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
+Integreat`RungeKutta`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
 
 RungeKuttaOrderCondition::usage = "?";
 RungeKuttaSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
@@ -17,11 +17,13 @@ RungeKuttaErrorB::usage = "The ratio of the embedded second error terms' norm to
 RungeKuttaErrorC::usage = "The ratio of the norm of the difference in second error terms to the norm of embedded leading error terms";
 RungeKuttaErrorD::usage = "The maximum entry in the Butcher tableau by absolute value";
 RungeKuttaErrorE::usage = "The ratio of the second error terms' norm to embedded leading error terms' norm";
+RungeKuttaDispersionError::usage = "Dispersion error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RungeKuttaDispersionOrder::usage = "Dispersion order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RungeKuttaDissipationError::usage = "Dissipation error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RungeKuttaDissipationOrder::usage = "Dissipation order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
 
 
 Begin["`Private`"];
-Needs["CSL`OdeUtils`RungeKutta`Methods`"];
-Needs["NumericalDifferentialEquationAnalysis`"];
 
 RungeKuttaReplace[expr_, rk_] := With[{
 		Asubs = MapIndexed[Subscript[\[FormalA], First[#2], Last[#2]]->#1 &, RungeKuttaA[rk], {2}],
@@ -30,6 +32,11 @@ RungeKuttaReplace[expr_, rk_] := With[{
 	},
 	ReplaceAll[expr, Flatten[{Asubs, bsubs, csubs}]]
 ];
+
+ErrOrder[err_, y_] := If[PossibleZeroQ[err], \[Infinity], (
+	For[p = 0, SeriesCoefficient[err, {y, 0, p}] === 0, p++];
+	p - 1
+)];
 
 
 RungeKuttaOrderCondition[rk_RungeKutta, p_Integer] := RungeKuttaReplace[RungeKuttaOrderConditions[p, RungeKuttaStages[rk]], rk];
@@ -59,12 +66,12 @@ RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := With[{
 RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, RungeKuttaStages[rk]], rk];
 RungeKuttaPrincipalError[rk_RungeKutta] := RungeKuttaPrincipalError[rk, RungeKuttaOrder[rk]];
 
-RungeKuttaOrder[rk_RungeKutta, tol_Real: 0] := (
-	For[p = 1, Norm[FullSimplify[RungeKuttaPrincipalError[rk, p]]] <= tol, p++];
+RungeKuttaOrder[rk_RungeKutta] := (
+	For[p = 1, PossibleZeroQ[Norm[RungeKuttaPrincipalError[rk, p]]] , p++];
 	p
 );
 
-RungeKuttaErrorA[rk_RungeKutta, p_Integer] := Norm[RungeKuttaPrincipalError[rk, p - 1]];
+RungeKuttaErrorA[rk_RungeKutta, p_Integer] := Norm[FullSimplify[RungeKuttaPrincipalError[rk, p - 1]]];
 RungeKuttaErrorA[rk_RungeKutta] := RungeKuttaErrorA[rk, RungeKuttaOrder[rk] + 1];
 
 RungeKuttaErrorAHat[rk_?RungeKuttaPairQ, pHat_Integer] := RungeKuttaErrorA[RungeKuttaEmbedded[rk], pHat];
@@ -82,6 +89,14 @@ RungeKuttaErrorD[rk_RungeKutta] := Max[Abs[Level[rk, 1]]];
 
 RungeKuttaErrorE[rk_?RungeKuttaPairQ, pHat_Integer] := RungeKuttaErrorA[rk, pHat] / RungeKuttaErrorAHat[rk, pHat - 1];
 RungeKuttaErrorE[rk_?RungeKuttaPairQ] := RungeKuttaErrorE[rk, RungeKuttaOrder[rk] + 1];
+
+RungeKuttaDispersionError[rk_RungeKutta, y_] := y - ComplexExpand[Arg[RungeKuttaLinearStability[rk, y * I]], TargetFunctions -> {Re, Im}];
+
+RungeKuttaDispersionOrder[rk_RungeKutta] := ErrOrder[RungeKuttaDispersionError[rk, y], y];
+
+RungeKuttaDissipationError[rk_RungeKutta, y_] := 1 - ComplexExpand[Abs[RungeKuttaLinearStability[rk, y * I]]];
+
+RungeKuttaDissipationOrder[rk_RungeKutta] := ErrOrder[RungeKuttaDissipationError[rk, y], y];
 
 
 End[];

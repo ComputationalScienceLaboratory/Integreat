@@ -1,16 +1,15 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`GLM`OrderConditions`"];
+BeginPackage["Integreat`GLM`OrderConditions`", {"Integreat`GLM`Methods`"}];
 
 
-CSL`OdeUtils`GLM`OrderConditions::usage = "Package containing functions for determining the order of general linear methods";
+Integreat`GLM`OrderConditions::usage = "Package containing functions for determining the order of general linear methods";
 
 GlmPreconsistencyCondition::usage = "?";
 GlmOrderCondition::usage = "?";
 
 
 Begin["`Private`"];
-Needs["CSL`OdeUtils`GLM`Methods`"];
 
 
 GlmPreconsistencyCondition[glm_Glm] := With[{
@@ -43,6 +42,4 @@ GlmOrderCondition[glm_Glm, q_Integer] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm
 
 
 End[];
-
-
 EndPackage[];

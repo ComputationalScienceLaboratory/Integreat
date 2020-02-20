@@ -19,3 +19,22 @@ This will copy Mathematica ODE Utils into your Mathematica applications director
 ```mathematica
 << CSL`OdeUtils`;
 ```
+
+## Todo
+
+- Packlet
+- Trees
+    - NP-Trees
+    - From method, generic matrix form
+    - Representation?
+    - MakeBoxes?
+    - Functions
+        - Gamma, sigma, ...
+        - Simplifying assumptions
+- LMM
+    - Constructor
+    - Catalog
+    - Stability
+    - Reducibility/simplify
+    - Order conditions
+    - Error constant

@@ -1,13 +1,20 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`GLM`Methods`"];
+BeginPackage["Integreat`GLM`Methods`", {
+	"Integreat`Tableaus`",
+	"Integreat`RungeKutta`Methods`",
+	"Integreat`RungeKutta`OrderConditions`",
+	"Integreat`Internal`Catalog`",
+	"Integreat`Internal`Composition`"
+}];
 
 
-CSL`OdeUtils`GLM`Methods::usage = "Package containing functions for creating general linear methods";
+Integreat`GLM`Methods::usage = "Package containing functions for creating general linear methods";
 
 Glm::usage = "Constructs an association containing general linear method coefficients";
-Dimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
-DimsimQ::usage = "Returns True if input is a valid diagonally implicit multistage integration method, and False otherwise";
+GlmCompose::usage = "";
+GlmDimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
+GlmDimsimQ::usage = "Returns True if input is a valid diagonally implicit multistage integration method, and False otherwise";
 GlmA::usage = "Gets the A coefficients of a general linear method";
 GlmB::usage = "Gets the B coefficients of a general linear method";
 GlmU::usage = "Gets the U coefficients of a general linear method";
@@ -22,15 +29,10 @@ GlmTransform::usage = "Transforms a general linear method into an equivalent for
 
 
 Begin["`Private`"];
-Needs["CSL`OdeUtils`Tableaus`"];
-Needs["CSL`OdeUtils`RungeKutta`Methods`"];
-Needs["CSL`OdeUtils`RungeKutta`OrderConditions`"];
-Needs["CSL`OdeUtils`Internal`Catalog`"];
-Needs["CSL`OdeUtils`Internal`Composition`"];
 
 TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
 
-GlmCompose[m_] := With[{
+GlmComp[m_] := With[{
 		n = Length[m]
 	},
 	Glm[
@@ -53,7 +55,7 @@ D1[c_] := Table[Phi[1 + c[[i]], c, j] / Phi[c[[j]], c, j], {i, Length[c]}, {j, L
 D2[c_] := Table[Integrate[Phi[x, c, j], {x, 0, c[[i]]}] / Phi[c[[j]], c, j], {i, Length[c]}, {j, Length[c]}];
 DimsimB[A_, v_, c_] := D0[c] - A.D1[c] + ConstantArray[v.(A - D2[c]), Length[v]];
 
-GlmCheck[A_, B_, U_, V_, Q_, c_] := TableauQ[A] && MatrixQ[B] && MatrixQ[U] && TableauQ[V] && MatrixQ[Q] && VectorQ[c] && With[{s = Length[c], r = Length[V]},
+GlmCheck[A_, B_, U_, V_, Q_, c_] := SquareMatrixQ[A] && MatrixQ[B] && MatrixQ[U] && SquareMatrixQ[V] && MatrixQ[Q] && VectorQ[c] && With[{s = Length[c], r = Length[V]},
 	Length[A] === s && Dimensions[B] === {r, s} && Dimensions[U] === {s, r} && Length[Q] === r
 ];
 
@@ -70,28 +72,28 @@ Glm /: HoldPattern[Plus[Glm[A1_, B1_, U1_, V1_, Q1_, c1_], Glm[A2_, B2_, U2_, V2
 	Glm[ArrayFlatten[{{A1, 0}, {0, A2}}], ArrayFlatten[{{B1, B2}}], ArrayFlatten[{{U1, 0}, {0, U2}}], ArrayFlatten[{{V1, V2}}], Q1[[All, 1;;pMin]] + Q2[[All, 1;;pMin]], Join[c1, c2]]
 ];
 
-AddComposition[Glm, GlmCompose, GlmCompose];
+AddComposition[Glm, GlmCompose, GlmComp];
 
-Dimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{GlmType -> 2}]] := With[{
+GlmDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{GlmType -> 2}]] := With[{
 		v1 = Table[Subscript[\[FormalV], i], {i, r - 1}]
 	},
-	Dimsim[TypeToTableau[OptionValue[GlmType]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
+	GlmDimsim[TypeToTableau[OptionValue[GlmType]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
 ];
-Dimsim[A_?TableauQ, v_?VectorQ, c_?VectorQ, o:{p_Integer, q_Integer}] /; Length[c] === Length[v] === p === q := With[{
+GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, o:{p_Integer, q_Integer}] /; Length[c] === Length[v] === p === q := With[{
 		s = Length[A],
 		C = ArrayFlatten[{{ConstantArray[{0, 1}, Length[c]], Transpose[Table[c^i / i!, {i, Length[c]}]]}}]
 	},
-	Dimsim[A, DimsimB[A, v, c], v, C[[All, 2;;q + 2]] - A.C[[All, 1;;q+1]], c]
+	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;q + 2]] - A.C[[All, 1;;q+1]], c]
 ];
-Dimsim[A_?TableauQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
+GlmDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
 
-HoldPattern[DimsimQ[Glm[A_, _, U_, V_, __]]] := With[{
+HoldPattern[GlmDimsimQ[Glm[A_, _, U_, V_, __]]] := With[{
 		s = Length[A],
 		r = Length[V]
 	},
 	(r === s || r === s + 1) && (TableauExplicitQ[A] || TableauSdirkQ[A]) && U === IdentityMatrix[Dimensions[U]] && MatrixRank[V] === 1 && Total[First[V]] === 1
 ];
-DimsimQ[_] := False;
+GlmDimsimQ[_] := False;
 
 HoldPattern[GlmA[Glm[A_, __]]] := A;
 
@@ -126,6 +128,8 @@ GlmTransform[Glm[A_, B_, U_, V_, W_, c_], T_?SquareMatrixQ] := With[{
 	},
 	Glm[A, T.B, U.Tinv, T.V.Tinv, T.W, c]
 ];
+
+Glm /: Variables[HoldPattern[Glm[a___]]] := Variables[{a}];
 
 Glm /: HoldPattern[MakeBoxes[Glm[A_, B_, U_, V_, _, c_], format_]] := GridBox[
 	ArrayFlatten[{
@@ -208,6 +212,4 @@ Glm[args___] /; Not[Length[Unevaluated[args]] === 6 && GlmCheck[args]] := $Faile
 
 
 End[];
-
-
 EndPackage[];

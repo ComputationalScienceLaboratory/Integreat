@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`Internal`LinearStability`"];
+BeginPackage["Integreat`Internal`LinearStability`"];
 
 
-CSL`OdeUtils`Internal`LinearStability::usage = "An internal package for analyzing linear stability";
+Integreat`Internal`LinearStability::usage = "An internal package for analyzing linear stability";
 
 LinearStabilityPlot::usage = "Plots a stability region on the complex plane";
 OrderStarPlot::usage = "Plots an order star on the complex plane";
@@ -34,6 +34,4 @@ OrderStarPlot[___] := $Failed;
 
 
 End[];
-
-
 EndPackage[];
