@@ -11,8 +11,10 @@ LmmOrder::usage = "?";
 
 Begin["`Private`"];
 
-LmmOrderConditions[lmm_Lmm, p_Integer?NonPositive] := Thread[
-	LmmAlpha[lmm].Table[Pow[i, j], {i, 0, Length[lmm]}, {j, 0, p}] == LmmBeta[lmm].Table[j * Pow[i, j - 1], {i, 0, Length[lmm]}, {j, 0, p}]
+LmmOrderConditions[lmm_Lmm, p_Integer?NonNegative] := With[{
+		i = Range[0, Length[lmm]]
+	},
+	MapThread[Equal, {LmmAlpha[lmm].SeriesVander[i, 0, p], LmmBeta[lmm].SeriesVander[i, -1, p - 1]}]
 ];
 
 LmmOrder[lmm_Lmm] := With[{
@@ -20,7 +22,7 @@ LmmOrder[lmm_Lmm] := With[{
 		b = LmmBeta[lmm],
 		i = Range[0, Length[lmm]]
 	},
-	NestWhile[# + 1 &, 0, PossibleZeroQ[a.Pow[i, #] - # * b.Pow[i, # - 1]] &]
+	NestWhile[# + 1 &, -1, PossibleZeroQ[a.SeriesVander[i, # + 1] - b.SeriesVander[i, #]] &]
 ];
 
 

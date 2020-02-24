@@ -4,6 +4,7 @@ BeginPackage["Integreat`GLM`Methods`", {
 	"Integreat`Tableaus`",
 	"Integreat`RungeKutta`Methods`",
 	"Integreat`RungeKutta`OrderConditions`",
+	"Integreat`Internal`MathUtils`",
 	"Integreat`Internal`Catalog`",
 	"Integreat`Internal`Composition`"
 }];
@@ -14,7 +15,7 @@ Integreat`GLM`Methods::usage = "Package containing functions for creating genera
 Glm::usage = "Constructs an association containing general linear method coefficients";
 GlmCompose::usage = "";
 GlmDimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
-GlmDimsimQ::usage = "Returns True if input is a valid diagonally implicit multistage integration method, and False otherwise";
+GlmParallelEnsemble::usage = "Constructs a parallel emsemble general linear method";
 GlmA::usage = "Gets the A coefficients of a general linear method";
 GlmB::usage = "Gets the B coefficients of a general linear method";
 GlmU::usage = "Gets the U coefficients of a general linear method";
@@ -80,20 +81,21 @@ GlmDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{GlmType -> 2}]] := Wi
 	GlmDimsim[TypeToTableau[OptionValue[GlmType]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
 ];
 GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, o:{p_Integer, q_Integer}] /; Length[c] === Length[v] === p === q := With[{
-		s = Length[A],
-		C = ArrayFlatten[{{ConstantArray[{0, 1}, Length[c]], Transpose[Table[c^i / i!, {i, Length[c]}]]}}]
+		s = Length[c],
+		C = SeriesVander[c, -1, Length[c]]
 	},
 	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;q + 2]] - A.C[[All, 1;;q+1]], c]
 ];
 GlmDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
 
-HoldPattern[GlmDimsimQ[Glm[A_, _, U_, V_, __]]] := With[{
-		s = Length[A],
-		r = Length[V]
+GlmParallelEnsemble[c_?VectorQ, \[Lambda]_] := With[{
+		s = Length[c],
+		i = Range[2, Length[c]],
+		I = IdentityMatrix[Length[c]],
+		C = SeriesVander[c, -1, Length[c]]
 	},
-	(r === s || r === s + 1) && (TableauExplicitQ[A] || TableauSdirkQ[A]) && U === IdentityMatrix[Dimensions[U]] && MatrixRank[V] === 1 && Total[First[V]] === 1
+	Glm[\[Lambda] * I, C[[All, 2;;s+1]].ToeplitzMatrix[UnitVector[s, 1], Prepend[(1 - \[Lambda] * i) / i!, 1]].Inverse[C[[All, 2;;s+1]]], I, I, C[[All, 2;;]] - \[Lambda] * C[[All, ;;s+1]], c]
 ];
-GlmDimsimQ[_] := False;
 
 HoldPattern[GlmA[Glm[A_, __]]] := A;
 
@@ -131,7 +133,7 @@ GlmTransform[Glm[A_, B_, U_, V_, W_, c_], T_?SquareMatrixQ] := With[{
 
 Glm /: Variables[HoldPattern[Glm[a___]]] := Variables[{a}];
 
-Glm /: HoldPattern[MakeBoxes[Glm[A_, B_, U_, V_, _, c_], format_]] := GridBox[
+Glm /: HoldPattern[MakeBoxes[Glm[A_List, B_List, U_List, V_List, _List, c_List], format_]] := GridBox[
 	ArrayFlatten[{
 		{Map[{MakeBoxes[#, format]} &, c], Map[MakeBoxes[#, format] &, A, {2}], Map[MakeBoxes[#, format] &, U, {2}]},
 		{ConstantArray[{""}, Length[B]], Map[MakeBoxes[#, format] &, B, {2}], Map[MakeBoxes[#, format] &, V, {2}]}
