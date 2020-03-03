@@ -15,6 +15,7 @@ Integreat`GLM`Methods::usage = "Package containing functions for creating genera
 Glm::usage = "Constructs an association containing general linear method coefficients";
 GlmCompose::usage = "";
 GlmDimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
+GlmPeer::usage = "Constructs a peer type general linear method";
 GlmParallelEnsemble::usage = "Constructs a parallel emsemble general linear method";
 GlmA::usage = "Gets the A coefficients of a general linear method";
 GlmB::usage = "Gets the B coefficients of a general linear method";
@@ -87,6 +88,12 @@ GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, o:{p_Integer, q_Integer}] /;
 	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;q + 2]] - A.C[[All, 1;;q+1]], c]
 ];
 GlmDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
+
+GlmPeer[B_?MatrixQ, A_?SquareMatrixQ, R_?SquareMatrixQ, c_?VectorQ, p_Integer] := With[{
+		BA = ArrayFlatten[{{B, A}}]
+	},
+	Glm[R, ArrayFlatten[{{R}, {IdentityMatrix[Length[R]]}}], BA, KroneckerProduct[{{1}, {0}}, BA], ArrayFlatten[{{SeriesVander[c - 1, 0, p]}, {SeriesVander[c - 1, -1, p - 1]}}], c]
+];
 
 GlmParallelEnsemble[c_?VectorQ, \[Lambda]_] := With[{
 		s = Length[c],
