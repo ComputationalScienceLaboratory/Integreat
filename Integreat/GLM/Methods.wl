@@ -71,7 +71,7 @@ Glm /: HoldPattern[Times[x_, Glm[A_, B_, U_, V_, Q_, c_]]] := Glm[A, x * B, U, x
 Glm /: HoldPattern[Plus[Glm[A1_, B1_, U1_, V1_, Q1_, c1_], Glm[A2_, B2_, U2_, V2_, Q2_, c2_]]] := With[{
 		pMin = Min[Dimensions[Q1][[2]], Dimensions[Q2][[2]]]
 	},
-	Glm[ArrayFlatten[{{A1, 0}, {0, A2}}], ArrayFlatten[{{B1, B2}}], ArrayFlatten[{{U1, 0}, {0, U2}}], ArrayFlatten[{{V1, V2}}], Q1[[All, 1;;pMin]] + Q2[[All, 1;;pMin]], Join[c1, c2]]
+	Glm[BlockDiag[A1, A2], BlockDiag[B1, B2], BlockDiag[U1, U2], BlockDiag[V1, V2], ArrayFlatten[{{Q1[[All, ;;pMin]]}, {Q2[[All, ;;pMin]]}}], Join[c1, c2]]
 ];
 
 AddComposition[Glm, GlmCompose, GlmComp];

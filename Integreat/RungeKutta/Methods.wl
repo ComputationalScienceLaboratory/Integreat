@@ -4,7 +4,12 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`Methods`", {"Integreat`Tableaus`", "Integreat`Internal`Catalog`", "Integreat`Internal`Composition`"}];
+BeginPackage["Integreat`RungeKutta`Methods`", {
+	"Integreat`Tableaus`",
+	"Integreat`Internal`MathUtils`",
+	"Integreat`Internal`Catalog`",
+	"Integreat`Internal`Composition`"
+}];
 Integreat`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
@@ -69,8 +74,8 @@ AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
 RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_]] := RungeKutta[A, x * b, c];
 RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_, bHat_]] := RungeKutta[A, x * b, c, x * bHat];
 
-RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, bHat1_] + RungeKutta[A2_, b2_, c2_, bHat2_]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
-RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, ___] + RungeKutta[A2_, b2_, c2_, ___]] := RungeKutta[ArrayFlatten[{{A1, 0}, {0, A2}}], Join[b1, b2], Join[c1, c2]];
+RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, bHat1_] + RungeKutta[A2_, b2_, c2_, bHat2_]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
+RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, ___] + RungeKutta[A2_, b2_, c2_, ___]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2]];
 
 RungeKuttaType[HoldPattern[RungeKutta[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
 
