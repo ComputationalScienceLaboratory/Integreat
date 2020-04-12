@@ -24,6 +24,7 @@ RungeKuttaDenseOutput::usage = "Gets the interpolatory b coeffients as a functio
 RungeKuttaB::usage = "Gets the b coefficients of a Runge-Kutta method.  Optionally the second argument is a boolean for whether to return to return the embedded b coefficients.";
 RungeKuttaC::usage = "Gets the c coefficients of a Runge-Kutta method";
 RungeKuttaBHat::usage = "Gets the embedded coefficients of a Runge-Kutta method";
+RungeKuttaGraph::usage = "Creates a weighted directed graph from the Runge-Kutta coefficients";
 RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
 
 
@@ -32,8 +33,6 @@ RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
 
 
 Begin["`Private`"];
-
-TypeToTableau[type_] := Switch[type, "ERK", TableauExplicit, "ESDIRK", TableauEsdirk, "SDIRK", TableauSdirk, "DIRK", TableauDirk, _, TableauFirk];
 
 LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, DeleteCases[Range[Length[c]], i]}];
 
@@ -102,14 +101,27 @@ RungeKuttaC[HoldPattern[RungeKutta[_, _, c_, ___]]] := c;
 
 RungeKuttaBHat[HoldPattern[RungeKutta[_, _, _, bHat_]]] := bHat;
 
+RungeKuttaGraph[rk:HoldPattern[RungeKutta[A_, _, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
+		K = Replace[Join[A, {RungeKuttaB[rk], bHat}], 0 -> Infinity, {2}],
+		s = Length[A]
+	},
+	WeightedAdjacencyGraph[
+		PadRight[K, {Automatic, Length[K]}, Infinity],
+		opts,
+		DirectedEdges -> True,
+		EdgeLabels -> "EdgeWeight",
+		VertexLabels -> Table[i -> Which[i <= s, StringForm["\!\(\*SubscriptBox[\(Y\), \(``\)]\)", i], i == s + 1, "\!\(\*SubscriptBox[\(y\), \(n\)]\)", True, "\!\(\*SubscriptBox[OverscriptBox[\(y\), \(^\)], \(n\)]\)"], {i, Length[K]}]
+	]
+];
+
 RungeKuttaStages[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Length[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Variables[HoldPattern[RungeKutta[a___]]] := Variables[{a}];
 
-RungeKutta /: MakeBoxes[HoldPattern[RungeKutta[A_List, b_List, c_List, bHat_:Nothing]], format_] := GridBox[
-	Join[Map[MakeBoxes[#, format] &, MapThread[Prepend, {A, c}], {2}], Map[Prepend[#, ""] &, Map[MakeBoxes[#, format] &, {b /. \[FormalTheta] -> 1, bHat}, {2}]]],
+RungeKutta /: MakeBoxes[rk:HoldPattern[RungeKutta[A_List, b_List, c_List, bHat___]], format_] := GridBox[
+	Join[Map[MakeBoxes[#, format] &, MapThread[Prepend, {A, c}], {2}], Map[Prepend[#, ""] &, Map[MakeBoxes[#, format] &, {RungeKuttaB[rk], bHat}, {2}]]],
 	ColumnLines -> {True, False},
 	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
 ];

@@ -34,7 +34,7 @@ RungeKuttaReplace[expr_, rk_] := With[{
 ];
 
 ErrOrder[err_, y_] := If[PossibleZeroQ[err], \[Infinity], (
-	For[p = 0, SeriesCoefficient[err, {y, 0, p}] === 0, p++];
+	For[p = 0, PossibleZeroQ[SeriesCoefficient[err, {y, 0, p}]], p++];
 	p - 1
 )];
 
@@ -67,7 +67,7 @@ RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherP
 RungeKuttaPrincipalError[rk_RungeKutta] := RungeKuttaPrincipalError[rk, RungeKuttaOrder[rk]];
 
 RungeKuttaOrder[rk_RungeKutta] := (
-	For[p = 1, PossibleZeroQ[Norm[RungeKuttaPrincipalError[rk, p]]] , p++];
+	For[p = 1, PossibleZeroQ[FullSimplify[Norm[RungeKuttaPrincipalError[rk, p]]]], p++];
 	p
 );
 

@@ -9,6 +9,7 @@
 <<Integreat`RungeKutta`NonlinearStability`;
 <<Integreat`RungeKutta`OrderConditions`;
 <<Integreat`RungeKutta`Symmetry`;
+<<Integreat`RungeKutta`Simplify`;
 
 
 <<Integreat`LMM`Methods`;
