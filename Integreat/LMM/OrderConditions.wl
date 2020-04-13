@@ -14,7 +14,7 @@ Begin["`Private`"];
 LmmOrderConditions[lmm_Lmm, p_Integer?NonNegative] := With[{
 		i = Range[0, Length[lmm]]
 	},
-	MapThread[Equal, {LmmAlpha[lmm].SeriesVander[i, 0, p], LmmBeta[lmm].SeriesVander[i, -1, p - 1]}]
+	ThreadEqual[LmmAlpha[lmm].SeriesVander[i, 0, p], LmmBeta[lmm].SeriesVander[i, -1, p - 1]]
 ];
 
 LmmOrder[lmm_Lmm] := With[{

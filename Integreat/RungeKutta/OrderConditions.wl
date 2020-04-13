@@ -1,6 +1,11 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`OrderConditions`", {"Integreat`RungeKutta`Methods`", "Integreat`RungeKutta`LinearStability`", "NumericalDifferentialEquationAnalysis`"}];
+BeginPackage["Integreat`RungeKutta`OrderConditions`", {
+	"Integreat`RungeKutta`Methods`",
+	"Integreat`RungeKutta`LinearStability`",
+	"Integreat`Internal`MathUtils`",
+	"NumericalDifferentialEquationAnalysis`"
+}];
 
 
 Integreat`RungeKutta`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
@@ -39,35 +44,30 @@ ErrOrder[err_, y_] := If[PossibleZeroQ[err], \[Infinity], (
 )];
 
 
-RungeKuttaOrderCondition[rk_RungeKutta, p_Integer] := RungeKuttaReplace[RungeKuttaOrderConditions[p, RungeKuttaStages[rk]], rk];
+RungeKuttaOrderCondition[rk_RungeKutta, p_Integer?Positive] := RungeKuttaReplace[RungeKuttaOrderConditions[p, RungeKuttaStages[rk]], rk];
 
-RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, p_Integer] := With[{
+RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {1}] := Total[RungeKuttaB[rk]] == 1;
+RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {p_Integer?Positive}] := RungeKuttaB[rk].RungeKuttaC[rk]^(p - 1) == 1 / p;
+RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, p_Integer?Positive] := Table[RungeKuttaSimplifyingAssumptionB[rk, {k}], {k, p}];
+
+RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, {1}, stages_:All] := ThreadEqual[Total[RungeKuttaA[rk][[stages]], {2}], RungeKuttaC[rk][[stages]]];
+RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, {eta_Integer?Positive}, stages_:All] := ThreadEqual[RungeKuttaA[rk][[stages]].RungeKuttaC[rk]^(eta - 1), RungeKuttaC[rk][[stages]]^eta / eta];
+RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, eta_Integer?Positive, stages_:All] := Table[RungeKuttaSimplifyingAssumptionC[rk, {k}, stages], {k, eta}];
+
+RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, {1}] := ThreadEqual[RungeKuttaB[rk].RungeKuttaA[rk], RungeKuttaB[rk] * (1 - RungeKuttaC[rk])];
+RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, {zeta_Integer?Positive}] := With[{
 		b = RungeKuttaB[rk],
 		c = RungeKuttaC[rk]
 	},
-	Table[If[k == 1, Total[b], b.c^(k-1)] == 1 / k, {k, p}]
+	ThreadEqual[(b * c^(zeta - 1)).RungeKuttaA[rk], b * (1 - c^zeta) / zeta]
 ];
-
-RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, eta_Integer] := With[{
-		A = RungeKuttaA[rk],
-		c = RungeKuttaC[rk]
-	},
-	Table[Thread[If[k == 1, Total[A, {2}], A.c^(k-1)] == c^k / k], {k, eta}]
-];
-
-RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := With[{
-		A = RungeKuttaA[rk],
-		b = RungeKuttaB[rk],
-		c = RungeKuttaC[rk]
-	},
-	Table[Thread[If[k == 1, b, b * c^(k-1)].A == b * (1 - c^k) / k], {k, zeta}]
-];
+RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := Table[RungeKuttaSimplifyingAssumptionD[rk, {k}], {k, zeta}];
 
 RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, RungeKuttaStages[rk]], rk];
 RungeKuttaPrincipalError[rk_RungeKutta] := RungeKuttaPrincipalError[rk, RungeKuttaOrder[rk]];
 
 RungeKuttaOrder[rk_RungeKutta] := (
-	For[p = 1, PossibleZeroQ[FullSimplify[Norm[RungeKuttaPrincipalError[rk, p]]]], p++];
+	For[p = 1, FreeQ[PossibleZeroQ[RungeKuttaPrincipalError[rk, p]], False], p++];
 	p
 );
 
