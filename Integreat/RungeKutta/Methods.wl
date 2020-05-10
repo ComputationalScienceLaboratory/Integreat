@@ -64,8 +64,8 @@ Erk3Fam[c2_, c3_, d1_] := RungeKutta[
 RungeKutta[s_Integer, OptionsPattern[{Type -> "FIRK"}]] := RungeKutta[
 	Switch[OptionValue[Type], "ERK", TableauExplicit, "ESDIRK", TableauEsdirk, "SDIRK", TableauSdirk, "DIRK", TableauDirk, _, TableauFirk][s],
 	Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
-RungeKutta[A_?SquareMatrixQ] := RungeKutta[A, Last[A]];
-RungeKutta[A_?SquareMatrixQ, b_?VectorQ] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[A_] := RungeKutta[A, Last[A]];
+RungeKutta[A_, b_] := RungeKutta[A, b, Total[A, {2}]];
 RungeKutta[HoldPattern[RungeKutta[A_, b_, c_, ___]], bHat_] := RungeKutta[A, b, c, bHat];
 
 AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
