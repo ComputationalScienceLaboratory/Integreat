@@ -28,8 +28,7 @@ Begin["`Private`"];
 (*Package Definitions*)
 
 
-(*Inverse seems to be faster than LinearSolve*)
-RungeKuttaLinearStability[rk_RungeKutta, Infinity, p:Repeated[_, {0, 1}]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> Infinity];
+RungeKuttaLinearStability[rk_RungeKutta, lim_DirectedInfinity, p:Repeated[_, {0, 1}]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> lim];
 RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]], {2}][[p]];
 RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
 
