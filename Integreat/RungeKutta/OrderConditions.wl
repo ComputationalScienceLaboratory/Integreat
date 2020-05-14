@@ -1,11 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`OrderConditions`", {
-	"Integreat`RungeKutta`Methods`",
-	"Integreat`RungeKutta`LinearStability`",
-	"Integreat`Internal`MathUtils`",
-	"NumericalDifferentialEquationAnalysis`"
-}];
+BeginPackage["Integreat`RungeKutta`OrderConditions`"];
 
 
 Integreat`RungeKutta`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
@@ -29,6 +24,12 @@ RungeKuttaDissipationOrder::usage = "Dissipation order of Runge-Kutta method app
 
 
 Begin["`Private`"];
+Scan[Needs, {
+	"Integreat`RungeKutta`Methods`",
+	"Integreat`RungeKutta`LinearStability`",
+	"Integreat`Internal`MathUtils`",
+	"NumericalDifferentialEquationAnalysis`"
+}];
 
 RungeKuttaReplace[expr_, rk_] := With[{
 		Asubs = MapIndexed[Subscript[\[FormalA], First[#2], Last[#2]]->#1 &, RungeKuttaA[rk], {2}],

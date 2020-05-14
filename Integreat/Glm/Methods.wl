@@ -1,16 +1,11 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`GLM`Methods`", {
-	"Integreat`Tableaus`",
-	"Integreat`RungeKutta`Methods`",
-	"Integreat`RungeKutta`OrderConditions`",
-	"Integreat`Internal`MathUtils`",
-	"Integreat`Internal`Catalog`",
-	"Integreat`Internal`Composition`"
-}];
+(* ::Section:: *)
+(*Usage*)
 
 
-Integreat`GLM`Methods::usage = "Package containing functions for creating general linear methods";
+BeginPackage["Integreat`Glm`Methods`"];
+Integreat`Glm`Methods::usage = "Package containing functions for creating general linear methods";
 
 Glm::usage = "Constructs an association containing general linear method coefficients";
 GlmCompose::usage = "";
@@ -30,7 +25,20 @@ GlmType::usage = "Returns the type number of the general linear method";
 GlmTransform::usage = "Transforms a general linear method into an equivalent formulation";
 
 
+(* ::Section:: *)
+(*Private Members*)
+
+
 Begin["`Private`"];
+Scan[Needs, {
+	"Integreat`Tableaus`",
+	"Integreat`RungeKutta`Methods`",
+	"Integreat`RungeKutta`OrderConditions`",
+	"Integreat`Lmm`Methods`",
+	"Integreat`Internal`MathUtils`",
+	"Integreat`Internal`Catalog`",
+	"Integreat`Internal`Composition`"
+}];
 
 TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
 
@@ -57,14 +65,32 @@ D1[c_] := Table[Phi[1 + c[[i]], c, j] / Phi[c[[j]], c, j], {i, Length[c]}, {j, L
 D2[c_] := Table[Integrate[Phi[x, c, j], {x, 0, c[[i]]}] / Phi[c[[j]], c, j], {i, Length[c]}, {j, Length[c]}];
 DimsimB[A_, v_, c_] := D0[c] - A.D1[c] + ConstantArray[v.(A - D2[c]), Length[v]];
 
-GlmCheck[A_, B_, U_, V_, Q_, c_] := SquareMatrixQ[A] && MatrixQ[B] && MatrixQ[U] && SquareMatrixQ[V] && MatrixQ[Q] && VectorQ[c] && With[{s = Length[c], r = Length[V]},
-	Length[A] === s && Dimensions[B] === {r, s} && Dimensions[U] === {s, r} && Length[Q] === r
-];
+
+(* ::Section:: *)
+(*Package Definitions*)
 
 
-Glm[s_Integer, r_Integer, p_Integer, OptionsPattern[{GlmType -> 0}]] := Glm[TypeToTableau[OptionValue[GlmType]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
+Glm[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := Glm[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
 Glm[rk_RungeKutta, p_Integer] := Glm[RungeKuttaA[rk], {RungeKuttaB[rk]}, ConstantArray[1, {Length[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RungeKuttaC[rk]];
 Glm[rk_RungeKutta] := Glm[rk, RungeKuttaOrder[rk]];
+(*Glm[lmm_Lmm] := With[{
+		k = Length[lmm],
+		a = LmmAlpha[lmm],
+		b = LmmBeta[lmm],
+		v = SeriesVander[Range[Length[lmm], 1, -1], -1, Length[lmm] - 1]
+	},
+	Glm[
+		Last[b] / Last[a],
+		Transpose[{(Most[b]  - Last[b] / Last[a] * Most[a]) / Last[a]}],
+		UnitVector[k, k],
+		MapThread[Append, {IdentityMatrix[{k,k-1}], -Most[a] / Last[a]}],
+		{Last[b] / Last[a]},
+		0,
+		ToeplitzMatrix[Most[a] / Last[a], First[a] / Last[a] * UnitVector[k, 1]].SeriesVander[
+	]
+];*)
+
+AddComposition[Glm, GlmCompose, GlmComp];
 
 Glm /: HoldPattern[Times[x_, Glm[A_, B_, U_, V_, Q_, c_]]] := Glm[A, x * B, U, x * V, x * Q, c];
 
@@ -74,18 +100,16 @@ Glm /: HoldPattern[Plus[Glm[A1_, B1_, U1_, V1_, Q1_, c1_], Glm[A2_, B2_, U2_, V2
 	Glm[BlockDiag[A1, A2], BlockDiag[B1, B2], BlockDiag[U1, U2], BlockDiag[V1, V2], ArrayFlatten[{{Q1[[All, ;;pMin]]}, {Q2[[All, ;;pMin]]}}], Join[c1, c2]]
 ];
 
-AddComposition[Glm, GlmCompose, GlmComp];
-
-GlmDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{GlmType -> 2}]] := With[{
+GlmDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 2}]] := With[{
 		v1 = Table[Subscript[\[FormalV], i], {i, r - 1}]
 	},
-	GlmDimsim[TypeToTableau[OptionValue[GlmType]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
+	GlmDimsim[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
 ];
-GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, o:{p_Integer, q_Integer}] /; Length[c] === Length[v] === p === q := With[{
+GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, p_Integer] /; Length[c] === Length[v] === p := With[{
 		s = Length[c],
 		C = SeriesVander[c, -1, Length[c]]
 	},
-	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;q + 2]] - A.C[[All, 1;;q+1]], c]
+	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;p + 2]] - A.C[[All, 1;;p + 1]], c]
 ];
 GlmDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
 
@@ -148,6 +172,13 @@ Glm /: HoldPattern[MakeBoxes[Glm[A_List, B_List, U_List, V_List, _List, c_List],
 	ColumnLines -> Join[{True}, ConstantArray[False, Length[c] - 1], {True, False}],
 	RowLines -> Join[ConstantArray[False, Length[c] - 1], {True, False}]
 ];
+
+
+
+
+(* ::Section:: *)
+(*Catalog*)
+
 
 AddCatalog[
 	Glm,
@@ -217,7 +248,33 @@ AddCatalog[
 	]}
 ];
 
-Glm[args___] /; Not[Length[Unevaluated[args]] === 6 && GlmCheck[args]] := $Failed;
+
+(* ::Section:: *)
+(*Error Handling*)
+
+
+Glm::args = "Glm called with `1` arguments; must have an A, B, U, V, W, and c.";
+Glm[args___] /; Length[{args}] =!= 6 := (Message[Glm::args, Length[{args}]]; $Failed);
+Glm::squarematrix = "Glm `1` coefficients must be a square matrix.";
+Glm[A_, __] /; !SquareMatrixQ[A] := (Message[Glm::squarematrix, "A"]; $Failed);
+Glm::matrix = "Glm `1` coefficients must be a matrix.";
+Glm[_, B_, __] /; !MatrixQ[B] := (Message[Glm::matrix, "B"]; $Failed);
+Glm[_, _, U_, __] /; !MatrixQ[U] := (Message[Glm::matrix, "U"]; $Failed);
+Glm[_, _, _, V_, __] /; !SquareMatrixQ[V] := (Message[Glm::squarematrix, "V"]; $Failed);
+Glm[_, _, _, _, W_, _] /; !MatrixQ[W] := (Message[Glm::matrix, "W"]; $Failed);
+Glm::vector = "Glm c coefficients must be a vector.";
+Glm[_, _, _, _, _, c_] /; !VectorQ[c] := (Message[Glm::vector]; $Failed);
+Glm::length = "Glm coefficients must have compatible lengths.";
+Glm[A_, B_, U_, V_, W_, c_] /; !With[{
+		s = Length[c],
+		r = Length[V]
+	},
+	s === Length[A] && Dimensions[B] === {s, r} && Dimensions[U] === {r, s} && Length[W] === r
+] := (Message[Glm::length]; $Failed);
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];

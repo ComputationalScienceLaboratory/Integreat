@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`LinearStability`", {"Integreat`RungeKutta`Methods`", "Integreat`Internal`LinearStability`"}];
+BeginPackage["Integreat`RungeKutta`LinearStability`"];
 Integreat`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
 RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method applied to y'=\[Lambda]y";
@@ -22,6 +22,7 @@ RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method 
 
 
 Begin["`Private`"];
+Scan[Needs, {"Integreat`RungeKutta`Methods`", "Integreat`Internal`LinearStability`"}];
 
 
 (* ::Section:: *)

@@ -1,15 +1,26 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`GLM`OrderConditions`", {"Integreat`Internal`MathUtils`", "Integreat`GLM`Methods`"}];
+(* ::Section:: *)
+(*Usage*)
 
 
-Integreat`GLM`OrderConditions::usage = "Package containing functions for determining the order of general linear methods";
+BeginPackage["Integreat`Glm`OrderConditions`"];
+Integreat`Glm`OrderConditions::usage = "Package containing functions for determining the order of general linear methods";
 
 GlmPreconsistencyCondition::usage = "?";
 GlmOrderCondition::usage = "?";
 
 
+(* ::Section:: *)
+(*Private Members*)
+
+
 Begin["`Private`"];
+Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`Glm`Methods`"}];
+
+
+(* ::Section:: *)
+(*Package Definitions*)
 
 
 GlmPreconsistencyCondition[glm_Glm] := With[{
@@ -40,6 +51,10 @@ GlmOrderCondition[glm_Glm, q_Integer, \[Omega]_:1] /; (GlmOrder[glm] - 1 <= q <=
 		GlmB[glm].(GlmC[glm]^p / p! - GlmA[glm].GlmC[glm]^(p - 1) / Factorial[p - 1] - GlmU[glm].GlmQ[glm][[All, p + 1]]
 	]]
 ];*)
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];

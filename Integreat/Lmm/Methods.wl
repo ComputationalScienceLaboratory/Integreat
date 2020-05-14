@@ -1,9 +1,11 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`LMM`Methods`"];
+(* ::Section:: *)
+(*Usage*)
 
 
-Integreat`LMM`Methods::usage = "Package containing functions for creating linear multistep methods";
+BeginPackage["Integreat`Lmm`Methods`"];
+Integreat`Lmm`Methods::usage = "Package containing functions for creating linear multistep methods";
 
 Lmm::usage = "Constructs a linear multistep method";
 LmmAdamsBashforth::usage = "Constructs an Adams-Bashforth method";
@@ -16,7 +18,15 @@ LmmBetaGeneratingPolynomial::usage = "";
 LmmSteps::usage = "Returns the number of previous steps required to compute the next";
 
 
+(* ::Section:: *)
+(*Private Members*)
+
+
 Begin["`Private`"];
+
+
+(* ::Section:: *)
+(*Package Definitions*)
 
 
 Lmm[k_Integer?Positive] := Lmm[Table[Subscript[\[FormalAlpha], i], {i, 0, k}], Table[Subscript[\[FormalBeta], i], {i, 0, k}]];
@@ -62,6 +72,10 @@ Lmm /: MakeBoxes[HoldPattern[Lmm[a_List, b_List]], format_] := With[{
 	}, MakeBoxes[m, format]];
 
 
+(* ::Section:: *)
+(*Error Handling*)
+
+
 Lmm::args = "Lmm called with `1` arguments; must have \[Alpha] and \[Beta]";
 Lmm[args___] /; Length[{args}] != 2 := (Message[Lmm::args, Length[{args}]]; $Failed);
 Lmm::vector = "Lmm `1` coefficients must be a vector";
@@ -69,6 +83,10 @@ Lmm[a_, _] /; Not[VectorQ[a]] := (Message[Lmm::vector, "\[Alpha]"]; $Failed);
 Lmm[_, b_] /; Not[VectorQ[b]] := (Message[Lmm::vector, "\[Beta]"]; $Failed);
 Lmm::length = "Lmm \[Alpha] and \[Beta] coefficients must have the same length";
 Lmm[a_, b_] /; Length[a] != Length[b] := (Message[Lmm::length]; $Failed);
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];

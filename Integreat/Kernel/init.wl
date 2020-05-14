@@ -1,7 +1,6 @@
 (* ::Package:: *)
 
 <<Integreat`Tableaus`;
-<<Integreat`ErrorAnalysis`;
 
 
 <<Integreat`RungeKutta`Methods`;
@@ -12,11 +11,11 @@
 <<Integreat`RungeKutta`Simplify`;
 
 
-<<Integreat`LMM`Methods`;
-<<Integreat`LMM`OrderConditions`;
-<<Integreat`LMM`Simplify`;
+<<Integreat`Lmm`Methods`;
+<<Integreat`Lmm`OrderConditions`;
+<<Integreat`Lmm`Simplify`;
 
 
-<<Integreat`GLM`Methods`;
-<<Integreat`GLM`LinearStability`;
-<<Integreat`GLM`OrderConditions`;
+<<Integreat`Glm`Methods`;
+<<Integreat`Glm`LinearStability`;
+<<Integreat`Glm`OrderConditions`;

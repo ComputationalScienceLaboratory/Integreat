@@ -1,15 +1,27 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`LMM`OrderConditions`", {"Integreat`Internal`MathUtils`", "Integreat`LMM`Methods`"}];
+(* ::Section:: *)
+(*Usage*)
 
 
-Integreat`LMM`OrderConditions::usage = "Package containing functions for determining the order of linear multistep methods";
+BeginPackage["Integreat`Lmm`OrderConditions`"];
+Integreat`Lmm`OrderConditions::usage = "Package containing functions for determining the order of linear multistep methods";
 
 LmmOrderConditions::usage = "?";
 LmmOrder::usage = "?";
 
 
+(* ::Section:: *)
+(*Private Members*)
+
+
 Begin["`Private`"];
+Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`Lmm`Methods`"}];
+
+
+(* ::Section:: *)
+(*Package Definitions*)
+
 
 LmmOrderConditions[lmm_Lmm, p_Integer?NonNegative] := With[{
 		i = Range[0, Length[lmm]]
@@ -24,6 +36,10 @@ LmmOrder[lmm_Lmm] := With[{
 	},
 	NestWhile[# + 1 &, -1, PossibleZeroQ[a.SeriesVander[i, # + 1] - b.SeriesVander[i, #]] &]
 ];
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];

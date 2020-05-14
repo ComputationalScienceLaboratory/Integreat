@@ -4,12 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`Methods`", {
-	"Integreat`Tableaus`",
-	"Integreat`Internal`MathUtils`",
-	"Integreat`Internal`Catalog`",
-	"Integreat`Internal`Composition`"
-}];
+BeginPackage["Integreat`RungeKutta`Methods`"];
 Integreat`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
@@ -33,6 +28,12 @@ RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
 
 
 Begin["`Private`"];
+Scan[Needs, {
+	"Integreat`Tableaus`",
+	"Integreat`Internal`MathUtils`",
+	"Integreat`Internal`Catalog`",
+	"Integreat`Internal`Composition`"
+}];
 
 LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, DeleteCases[Range[Length[c]], i]}];
 
