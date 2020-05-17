@@ -1,40 +1,23 @@
-# Mathematica ODE Utils
+# Integreat
 
-A comprehensive set of tools for analyzing time integration methods including
+A comprehensive Mathematica package for analyzing time integration methods including
 
-- Runge-Kutta
-- General Linear Methods
-- Multirate Generalized Additive Runge-Kutta
+- Runge-Kutta methods
+- Linear multistep methods
+- General linear methods
 
-## Installation
+## Installation and Updating
 
-Within the cloned repository directory, run the following command.
+Within the root directory of the project, run the following command:
 
 ```shell
 ./install.wls
 ```
 
-This will copy Mathematica ODE Utils into your Mathematica applications directory.  If an old version already exists there, it will be overwritten.  Now you can load Mathematica ODE Utils within a notebook using the following command.
+## Usage
+
+Integreat can be loaded in Mathematica using
 
 ```mathematica
-<< CSL`OdeUtils`;
+<< Integreat`;
 ```
-
-## Todo
-
-- Packlet
-- Trees
-    - NP-Trees
-    - From method, generic matrix form
-    - Representation?
-    - MakeBoxes?
-    - Functions
-        - Gamma, sigma, ...
-        - Simplifying assumptions
-- LMM
-    - Constructor
-    - Catalog
-    - Stability
-    - Reducibility/simplify
-    - Order conditions
-    - Error constant
