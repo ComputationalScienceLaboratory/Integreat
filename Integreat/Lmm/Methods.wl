@@ -33,20 +33,20 @@ Lmm[k_Integer?Positive] := Lmm[Table[Subscript[\[FormalAlpha], i], {i, 0, k}], T
 
 LmmAdamsBashforth[k_Integer?Positive] := Lmm[
 	Join[ConstantArray[0, k - 1], {-1, 1}],
-	Append[LinearSolve[Table[If[i == 0, 1, j^i], {i, 0, k - 1}, {j, k - 1, 0, -1}], Table[(-1)^(i - 1) / i, {i, k}]], 0]
+	Append[LinearSolve[Table[If[i == 0, 1, j^i], {i, 0, k - 1}, {j, 1 - k, 0}], Table[1 / i, {i, k}]], 0]
 ];
 
 LmmAdamsMoulton[0] := Lmm[{-1, 1}, {0, 1}];
-LmmAdamsMoulton[k_Integer?Positive] /; k > 0 := Lmm[
+LmmAdamsMoulton[k_Integer?Positive] := Lmm[
 	Join[ConstantArray[0, k - 1], {-1, 1}],
-	LinearSolve[Table[If[i == 0, 1, j^i], {i, 0, k}, {j, k - 1, -1, -1}], Table[(-1)^i / (i + 1), {i, 0, k}]]
+	LinearSolve[Table[If[i==0, 1, j^i], {i, 0, k}, {j, 1 - k, 1}], Table[1 / i, {i, k + 1}]]
 ];
 
 (*LmmNystrom[k_Integer] /; k > 0 := Lmm[
 	
 ];*)
 
-LmmBdf[k_Integer?Positive] /; k > 0 := With[{
+LmmBdf[k_Integer?Positive] := With[{
 		b0 = 1 / HarmonicNumber[k],
 		i = Range[k, 1, -1]
 	},
