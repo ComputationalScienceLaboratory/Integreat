@@ -92,9 +92,9 @@ Glm[rk_RungeKutta] := Glm[rk, RungeKuttaOrder[rk]];
 
 AddComposition[Glm, GlmCompose, GlmComp];
 
-Glm /: HoldPattern[Times[x_, Glm[A_, B_, U_, V_, Q_, c_]]] := Glm[A, x * B, U, x * V, x * Q, c];
+Glm /: HoldPattern[x_ * Glm[A_, B_, U_, V_, Q_, c_]] := Glm[A, x * B, U, x * V, x * Q, c];
 
-Glm /: HoldPattern[Plus[Glm[A1_, B1_, U1_, V1_, Q1_, c1_], Glm[A2_, B2_, U2_, V2_, Q2_, c2_]]] := With[{
+Glm /: HoldPattern[Glm[A1_, B1_, U1_, V1_, Q1_, c1_] + Glm[A2_, B2_, U2_, V2_, Q2_, c2_]] := With[{
 		pMin = Min[Dimensions[Q1][[2]], Dimensions[Q2][[2]]]
 	},
 	Glm[BlockDiag[A1, A2], BlockDiag[B1, B2], BlockDiag[U1, U2], BlockDiag[V1, V2], ArrayFlatten[{{Q1[[All, ;;pMin]]}, {Q2[[All, ;;pMin]]}}], Join[c1, c2]]
@@ -119,7 +119,7 @@ GlmPeer[B_?MatrixQ, A_?SquareMatrixQ, R_?SquareMatrixQ, c_?VectorQ, p_Integer] :
 	Glm[R, ArrayFlatten[{{R}, {IdentityMatrix[Length[R]]}}], BA, KroneckerProduct[{{1}, {0}}, BA], ArrayFlatten[{{SeriesVander[c - 1, 0, p]}, {SeriesVander[c - 1, -1, p - 1]}}], c]
 ];
 
-GlmParallelEnsemble[c_?VectorQ, \[Lambda]_] := With[{
+GlmParallelEnsemble[c_?VectorQ, \[Lambda]_:0] := With[{
 		s = Length[c],
 		i = Range[2, Length[c]],
 		I = IdentityMatrix[Length[c]],
@@ -128,35 +128,33 @@ GlmParallelEnsemble[c_?VectorQ, \[Lambda]_] := With[{
 	Glm[\[Lambda] * I, C[[All, 2;;s+1]].ToeplitzMatrix[UnitVector[s, 1], Prepend[(1 - \[Lambda] * i) / i!, 1]].Inverse[C[[All, 2;;s+1]]], I, I, C[[All, 2;;]] - \[Lambda] * C[[All, ;;s+1]], c]
 ];
 
-HoldPattern[GlmA[Glm[A_, __]]] := A;
+GlmA[HoldPattern[Glm[A_, __]]] := A;
 
-HoldPattern[GlmB[Glm[_, B_, __]]] := B;
+GlmB[HoldPattern[Glm[_, B_, __]]] := B;
 
-HoldPattern[GlmU[Glm[_, _, U_, __]]] := U;
+GlmU[HoldPattern[Glm[_, _, U_, __]]] := U;
 
-HoldPattern[GlmV[Glm[_, _, _, V_, __]]] := V;
+GlmV[HoldPattern[Glm[_, _, _, V_, __]]] := V;
 
-HoldPattern[GlmQ[Glm[_, _, _, _, Q_, __]]] := Q;
+GlmQ[HoldPattern[Glm[_, _, _, _, Q_, __]]] := Q;
 
-HoldPattern[GlmC[Glm[_, _, _, _, _, c_]]] := c;
+GlmC[HoldPattern[Glm[_, _, _, _, _, c_]]] := c;
 
-HoldPattern[GlmInternalStages[Glm[A_, __]]] := Length[A];
+GlmInternalStages[HoldPattern[Glm[A_, __]]] := Length[A];
 
-HoldPattern[GlmExternalStages[Glm[_, B_, __]]] := Length[B];
+GlmExternalStages[HoldPattern[Glm[_, B_, __]]] := Length[B];
 
-HoldPattern[GlmOrder[Glm[_, _, _, _, Q_, __]]] := Dimensions[Q][[2]] - 1;
+GlmOrder[HoldPattern[Glm[_, _, _, _, Q_, __]]] := Dimensions[Q][[2]] - 1;
 
-GlmType[glm_Glm] := With[{A = GlmA[glm]},
-	Which[
-		TableauZerosQ[A], 3,
-		TableauDiagonalQ[A], 4,
-		TableauExplicitQ[A], 1,
-		TableauSdirkQ[A], 2,
-		True, Undefined
-	]
+GlmType[HoldPattern[Glm[A_, __]]] := Which[
+	TableauZerosQ[A], 3,
+	TableauDiagonalQ[A], 4,
+	TableauExplicitQ[A], 1,
+	TableauSdirkQ[A], 2,
+	True, Undefined
 ];
 
-GlmTransform[Glm[A_, B_, U_, V_, W_, c_], T_?SquareMatrixQ] := With[{
+GlmTransform[HoldPattern[Glm[A_, B_, U_, V_, W_, c_]], T_?SquareMatrixQ] := With[{
 		Tinv = Inverse[T]
 	},
 	Glm[A, T.B, U.Tinv, T.V.Tinv, T.W, c]
@@ -164,7 +162,7 @@ GlmTransform[Glm[A_, B_, U_, V_, W_, c_], T_?SquareMatrixQ] := With[{
 
 Glm /: Variables[HoldPattern[Glm[a___]]] := Variables[{a}];
 
-Glm /: HoldPattern[MakeBoxes[Glm[A_List, B_List, U_List, V_List, _List, c_List], format_]] := GridBox[
+Glm /: MakeBoxes[HoldPattern[Glm[A_List, B_List, U_List, V_List, _List, c_List]], format_] := GridBox[
 	ArrayFlatten[{
 		{Map[{MakeBoxes[#, format]} &, c], Map[MakeBoxes[#, format] &, A, {2}], Map[MakeBoxes[#, format] &, U, {2}]},
 		{ConstantArray[{""}, Length[B]], Map[MakeBoxes[#, format] &, B, {2}], Map[MakeBoxes[#, format] &, V, {2}]}
@@ -172,8 +170,6 @@ Glm /: HoldPattern[MakeBoxes[Glm[A_List, B_List, U_List, V_List, _List, c_List],
 	ColumnLines -> Join[{True}, ConstantArray[False, Length[c] - 1], {True, False}],
 	RowLines -> Join[ConstantArray[False, Length[c] - 1], {True, False}]
 ];
-
-
 
 
 (* ::Section:: *)
@@ -269,7 +265,7 @@ Glm[A_, B_, U_, V_, W_, c_] /; !With[{
 		s = Length[c],
 		r = Length[V]
 	},
-	s === Length[A] && Dimensions[B] === {s, r} && Dimensions[U] === {r, s} && Length[W] === r
+	s === Length[A] && Dimensions[B] === {r, s} && Dimensions[U] === {s, r} && Length[W] === r
 ] := (Message[Glm::length]; $Failed);
 
 
