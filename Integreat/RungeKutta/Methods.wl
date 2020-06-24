@@ -71,11 +71,14 @@ RungeKutta[HoldPattern[RungeKutta[A_, b_, c_, ___]], bHat_] := RungeKutta[A, b, 
 
 AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
 
-RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_]] := RungeKutta[A, x * b, c];
-RungeKutta /: HoldPattern[x_ * RungeKutta[A_, b_, c_, bHat_]] := RungeKutta[A, x * b, c, x * bHat];
+RungeKutta /: x_ * HoldPattern[RungeKutta[A_, b_, c_]] := RungeKutta[A, x * b, c];
+RungeKutta /: x_ * HoldPattern[RungeKutta[A_, b_, c_, bHat_]] := RungeKutta[A, x * b, c, x * bHat];
 
 RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, bHat1_] + RungeKutta[A2_, b2_, c2_, bHat2_]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
 RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, ___] + RungeKutta[A2_, b2_, c2_, ___]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2]];
+
+RungeKutta /: HoldPattern[RungeKutta[A_, b_, c_]]^-1 := RungeKutta[A - ConstantArray[b, Length[b]], -b, c - 1];
+RungeKutta /: HoldPattern[RungeKutta[A_, b_, c_, d_]]^-1 := RungeKutta[A - ConstantArray[b, Length[b]], -b, c - 1, -d];
 
 RungeKuttaType[HoldPattern[RungeKutta[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
 
