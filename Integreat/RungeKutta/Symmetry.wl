@@ -12,7 +12,7 @@ RungeKuttaTranspose::usage = "The discrete adjoint of the Runge-Kutta method";
 Begin["`Private`"];
 
 
-RungeKuttaReflection[rk:HoldPattern[RungeKutta[A_, b_, c_, d___]]] := RungeKutta[ConstantArray[RungeKuttaB[rk], Length[rk]] - A, b, 1 - c, d];
+RungeKuttaReflection[rk:HoldPattern[RungeKutta[A_, b_, c_, d___]]] := RungeKutta[ConstantArray[RungeKuttaB[rk], Length[b]] - A, b, 1 - c, d];
 
 (*RungeKuttaSymmetric[rk*)
 

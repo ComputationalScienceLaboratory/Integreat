@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["CSL`OdeUtils`Lmm`LinearStability`"];
+BeginPackage["Integreat`Lmm`LinearStability`"];
 
 
-CSL`OdeUtils`Lmm`LinearStability::usage = "Package containing functions for analyzing the linear stability of linear multistep methods";
+Integreat`Lmm`LinearStability::usage = "Package containing functions for analyzing the linear stability of linear multistep methods";
 
 
 Begin["`Private`"];
