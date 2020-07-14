@@ -11,6 +11,10 @@
 <<Integreat`RungeKutta`Simplify`;
 
 
+<<Integreat`Rosenbrock`Methods`;
+<<Integreat`Rosenbrock`LinearStability`;
+
+
 <<Integreat`Lmm`Methods`;
 <<Integreat`Lmm`OrderConditions`;
 <<Integreat`Lmm`Simplify`;
