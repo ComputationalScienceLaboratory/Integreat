@@ -11,6 +11,7 @@ Glm::usage = "Constructs an association containing general linear method coeffic
 GlmCompose::usage = "";
 GlmDimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
 GlmPeer::usage = "Constructs a peer type general linear method";
+GlmOneLeg::usage = "Constructs a one leg method";
 GlmParallelEnsemble::usage = "Constructs a parallel emsemble general linear method";
 GlmA::usage = "Gets the A coefficients of a general linear method";
 GlmB::usage = "Gets the B coefficients of a general linear method";
@@ -76,17 +77,15 @@ Glm[rk_RungeKutta] := Glm[rk, RungeKuttaOrder[rk]];
 (*Glm[lmm_Lmm] := With[{
 		k = Length[lmm],
 		a = LmmAlpha[lmm],
-		b = LmmBeta[lmm],
-		v = SeriesVander[Range[Length[lmm], 1, -1], -1, Length[lmm] - 1]
+		b = LmmBeta[lmm]
 	},
 	Glm[
-		Last[b] / Last[a],
-		Transpose[{(Most[b]  - Last[b] / Last[a] * Most[a]) / Last[a]}],
-		UnitVector[k, k],
-		MapThread[Append, {IdentityMatrix[{k,k-1}], -Most[a] / Last[a]}],
-		{Last[b] / Last[a]},
-		0,
-		ToeplitzMatrix[Most[a] / Last[a], First[a] / Last[a] * UnitVector[k, 1]].SeriesVander[
+		{{Last[b] / Last[a]}},
+		Transpose[{Most[b]  - Last[b] / Last[a] * Most[a]}],
+		{Append[ConstantArray[0, k - 1], 1 / Last[a]]},
+		Transpose[CompanionMatrix[-Most[a] / Last[a]]],
+		
+		{Last[b] / Last[a]}
 	]
 ];*)
 
@@ -117,6 +116,14 @@ GlmPeer[B_?MatrixQ, A_?SquareMatrixQ, R_?SquareMatrixQ, c_?VectorQ, p_Integer] :
 		BA = ArrayFlatten[{{B, A}}]
 	},
 	Glm[R, ArrayFlatten[{{R}, {IdentityMatrix[Length[R]]}}], BA, KroneckerProduct[{{1}, {0}}, BA], ArrayFlatten[{{SeriesVander[c - 1, 0, p]}, {SeriesVander[c - 1, -1, p - 1]}}], c]
+];
+
+GlmOneLeg[a_List, b_List, p_Integer] := With[{
+		q = Length[a] - 1,
+		aq = Last[a],
+		bq = Last[b]
+	},
+	Glm[{{bq / aq}}, Append[ConstantArray[{0}, q - 1], {1 / aq}], {Most[b] - bq / aq * Most[a]}, CompanionMatrix[-Most[a] / aq], SeriesVander[Range[1 - q, 0], 0, p], {b.Range[1-q,1]}]
 ];
 
 GlmParallelEnsemble[c_?VectorQ, \[Lambda]_:0] := With[{
