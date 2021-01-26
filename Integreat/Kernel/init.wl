@@ -1,6 +1,7 @@
 (* ::Package:: *)
 
 <<Integreat`Tableaus`;
+<<Integreat`Trees`;
 
 
 <<Integreat`RungeKutta`Methods`;

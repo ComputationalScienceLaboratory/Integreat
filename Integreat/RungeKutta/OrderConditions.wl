@@ -45,7 +45,7 @@ ErrOrder[err_, y_] := If[PossibleZeroQ[err], \[Infinity], (
 )];
 
 
-RungeKuttaOrderCondition[rk_RungeKutta, p_Integer?Positive] := RungeKuttaReplace[RungeKuttaOrderConditions[p, RungeKuttaStages[rk]], rk];
+RungeKuttaOrderCondition[rk_RungeKutta, p_Integer?Positive] := RungeKuttaReplace[RungeKuttaOrderConditions[p, Length[rk]], rk];
 
 RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {1}] := Total[RungeKuttaB[rk]] == 1;
 RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {p_Integer?Positive}] := RungeKuttaB[rk].RungeKuttaC[rk]^(p - 1) == 1 / p;
@@ -64,7 +64,7 @@ RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, {zeta_Integer?Positive}] := With
 ];
 RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := Table[RungeKuttaSimplifyingAssumptionD[rk, {k}], {k, zeta}];
 
-RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, RungeKuttaStages[rk]], rk];
+RungeKuttaPrincipalError[rk_RungeKutta, p_Integer] := RungeKuttaReplace[ButcherPrincipalError[p, Length[rk]], rk];
 RungeKuttaPrincipalError[rk_RungeKutta] := RungeKuttaPrincipalError[rk, RungeKuttaOrder[rk]];
 
 RungeKuttaOrder[rk_RungeKutta] := (

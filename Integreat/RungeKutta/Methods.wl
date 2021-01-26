@@ -19,8 +19,6 @@ RungeKuttaDenseOutput::usage = "Gets the interpolatory b coeffients as a functio
 RungeKuttaB::usage = "Gets the b coefficients of a Runge-Kutta method.  Optionally the second argument is a boolean for whether to return to return the embedded b coefficients.";
 RungeKuttaC::usage = "Gets the c coefficients of a Runge-Kutta method";
 RungeKuttaBHat::usage = "Gets the embedded coefficients of a Runge-Kutta method";
-RungeKuttaGraph::usage = "Creates a weighted directed graph from the Runge-Kutta coefficients";
-RungeKuttaStages::usage = "The number of stages in a Runge-Kutta method";
 
 
 (* ::Section:: *)
@@ -105,7 +103,7 @@ RungeKuttaC[HoldPattern[RungeKutta[_, _, c_, ___]]] := c;
 
 RungeKuttaBHat[HoldPattern[RungeKutta[_, _, _, bHat_]]] := bHat;
 
-RungeKuttaGraph[rk:HoldPattern[RungeKutta[A_, _, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
+RungeKutta /: Graph[rk:HoldPattern[RungeKutta[A_, _, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
 		K = Replace[Join[A, {RungeKuttaB[rk], bHat}], 0 -> Infinity, {2}],
 		s = Length[A]
 	},
@@ -117,8 +115,6 @@ RungeKuttaGraph[rk:HoldPattern[RungeKutta[A_, _, _, bHat___]], opts:OptionsPatte
 		VertexLabels -> Table[i -> Which[i <= s, StringForm["\!\(\*SubscriptBox[\(Y\), \(``\)]\)", i], i == s + 1, "\!\(\*SubscriptBox[\(y\), \(n\)]\)", True, "\!\(\*SubscriptBox[OverscriptBox[\(y\), \(^\)], \(n\)]\)"], {i, Length[K]}]
 	]
 ];
-
-RungeKuttaStages[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Length[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
@@ -190,10 +186,10 @@ AddCatalog[
 		{0,1+1/Sqrt[3],1/12*(9-Sqrt[3])}
 	]},
 	{"SDIRK 3(2)3", RungeKutta[
-		{{Root[-1+9 #-18 #^2+6 #^3&,2], 0, 0},{Root[2-9 #1+24 #1^3&,2], Root[-1+9 #-18 #^2+6 #^3&,2], 0},{Root[-7+36 #1-54 #1^2+24 #1^3&,3],Root[-8+27 #1^2+12 #1^3&,2],Root[-1+9 #-18 #^2+6 #^3&,2]}},
-		{Root[-7+36 #1-54 #1^2+24 #1^3&,3],Root[-8+27 #1^2+12 #1^3&,2],Root[-1+9 #-18 #^2+6 #^3&,2]},
-		{Root[-1+9 #-18 #^2+6 #^3&,2],Root[-17+63 #1-72 #1^2+24 #1^3&,2],1},
-		{Root[1-6 #1+3 #1^2+4 #1^3&,3],Root[-2+12 #1-15 #1^2+4 #1^3&,1],0}
+		{{Root[-1+9 #-18 #^2+6 #^3&,2], 0, 0},{Root[2-9 #+24 #^3&,2], Root[-1+9 #-18 #^2+6 #^3&,2], 0},{Root[-7+36 #-54 #^2+24 #^3&,3],Root[-8+27 #^2+12 #^3&,2],Root[-1+9 #-18 #^2+6 #^3&,2]}},
+		{Root[-7+36 #-54 #^2+24 #^3&,3],Root[-8+27 #^2+12 #^3&,2],Root[-1+9 #-18 #^2+6 #^3&,2]},
+		{Root[-1+9 #-18 #^2+6 #^3&,2],Root[-17+63 #-72 #^2+24 #^3&,2],1},
+		{Root[1-6 #+3 #^2+4 #^3&,3],Root[-2+12 #-15 #^2+4 #^3&,1],0}
 	]},
 	{"SDIRK 3(2)3P", RungeKutta[
 		{{\[FormalGamma],0,0},{(2-6 (-2+\[FormalGamma]) (-1+\[FormalGamma]) \[FormalGamma])/(3+6 (-2+\[FormalGamma]) \[FormalGamma]),\[FormalGamma],0},{(-1+4 \[FormalGamma])/(-4+12 (-2+\[FormalGamma]) (-1+\[FormalGamma]) \[FormalGamma]),-((3 (1+2 (-2+\[FormalGamma]) \[FormalGamma])^2)/(-4+12 (-2+\[FormalGamma]) (-1+\[FormalGamma]) \[FormalGamma])),\[FormalGamma]}},
@@ -203,10 +199,10 @@ AddCatalog[
 	]},
 	{"SDIRK 3(2)3A", RungeKutta[RungeKutta[{{1/3,0,0},{1/6,1/3,0},{5/6,-5/12,1/3}}, {6/5,-1,4/5}], {15/13,-12/13,10/13}]},
 	{"ESDIRK 3(2)4", RungeKutta[
-		{{0,0,0,0},{1+Root[-4-9 #1+6 #1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0,0},{1/384 Root[2539044-51786 #1+162 #1^2+#1^3&,3],1/384 Root[-415332-8586 #1+126 #1^2+#1^3&,2],1+Root[-4-9 #1+6 #1^3&,2],0},{Root[-43+636 #1-3000 #1^2+4448 #1^3&,2],Root[1-684 #1+3816 #1^2+7968 #1^3&,1],Root[32768-73728 #1+6768 #1^2+34611 #1^3&,3],1+Root[-4-9 #1+6 #1^3&,2]}},
-		{Root[-43+636 #1-3000 #1^2+4448 #1^3&,2],Root[1-684 #1+3816 #1^2+7968 #1^3&,1],Root[32768-73728 #1+6768 #1^2+34611 #1^3&,3],1+Root[-4-9 #1+6 #1^3&,2]},
-		{0,2 (1+Root[-4-9 #1+6 #1^3&,2]),1/24 (18+Root[-144-54 #1+#1^3&,2]),1},
-		{Root[19177-289836 #1+1044864 #1^2+213504 #1^3&,2],Root[-95821+549972 #1+1050624 #1^2+382464 #1^3&,2],Root[-1270016+3346992 #1-1961496 #1^2+103833 #1^3&,2],Root[434-3519 #1+4752 #1^2+576 #1^3&,3]}
+		{{0,0,0,0},{Root[-1+9*#-18*#^2+6*#^3&,2],Root[-1+9*#-18*#^2+6*#^3&,2],0,0},{Root[70529-552384*#+663552*#^2+1572864*#^3&,3],Root[-11537-91584*#+516096*#^2+1572864*#^3&,2],Root[-1+9*#-18*#^2+6*#^3&,2], 0},{Root[-43+636*#-3000*#^2+4448*#^3&,2],Root[1-684*#+3816*#^2+7968*#^3&,1],Root[32768-73728*#+6768*#^2+34611*#^3&,3],Root[-1+9*#-18*#^2+6*#^3&,2]}},
+		{Root[-43+636 #-3000 #^2+4448 #^3&,2],Root[1-684 #+3816 #^2+7968 #^3&,1],Root[32768-73728 #+6768 #^2+34611 #^3&,3],Root[-1+9 #-18 #^2+6 #^3&,2]},
+		{0,Root[-4+18 #-18 #^2+3 #^3&,2],Root[-139+612 #-864 #^2+384*#^3&,2],1},
+		{Root[19177-289836 #+1044864 #^2+213504 #^3&,2],Root[-95821+549972 #+1050624 #^2+382464 #^3&,2],Root[-1270016+3346992 #-1961496 #^2+103833 #^3&,2],Root[434-3519 #+4752 #^2+576 #^3&,3]}
 	]},
 	{"ESDIRK 3(2)4P", RungeKutta[
 		{{0,0,0,0},{\[FormalGamma],\[FormalGamma],0,0},{-((9+16 \[FormalGamma] (-12+\[FormalGamma] (95+3 \[FormalGamma] (-117+8 \[FormalGamma] (26+3 \[FormalGamma] (-7+2 \[FormalGamma]))))))/(64 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma])^2)),-(((3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma]))))/(64 \[FormalGamma] (1+6 (-1+\[FormalGamma]) \[FormalGamma])^2)),\[FormalGamma],0},{(-1+6 \[FormalGamma] (-1+2 \[FormalGamma]) (-3+8 \[FormalGamma]))/(12 \[FormalGamma] (3+4 \[FormalGamma] (-5+6 \[FormalGamma]))),(-1+6 \[FormalGamma])/(12 \[FormalGamma] (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma])))),-((16 (1+6 (-1+\[FormalGamma]) \[FormalGamma])^3)/(3 (3+4 \[FormalGamma] (-5+6 \[FormalGamma])) (-3+4 \[FormalGamma] (7+6 \[FormalGamma] (-3+2 \[FormalGamma]))))),\[FormalGamma]}},
