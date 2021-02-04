@@ -21,7 +21,7 @@ Begin["`Private`"];
 
 RungeKuttaDJIrreducibleStages[rk_] := With[{
 		s = Length[rk],
-		graph = RungeKuttaGraph[rk]
+		graph = Graph[rk]
 	},
 	Sort[Select[VertexOutComponent[graph, Range[s + 1, VertexCount[graph]]], # <= s &]]
 ];
