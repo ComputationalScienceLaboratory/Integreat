@@ -43,6 +43,8 @@ Scan[Needs, {
 
 TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
 
+HankelBR[x_] := HankelMatrix[Append[ConstantArray[0, Length[x] - 2], First[x]], Most[x]];
+
 GlmComp[m_] := With[{
 		n = Length[m]
 	},
@@ -74,20 +76,21 @@ DimsimB[A_, v_, c_] := D0[c] - A.D1[c] + ConstantArray[v.(A - D2[c]), Length[v]]
 Glm[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := Glm[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
 Glm[rk_RungeKutta, p_Integer] := Glm[RungeKuttaA[rk], {RungeKuttaB[rk]}, ConstantArray[1, {Length[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RungeKuttaC[rk]];
 Glm[rk_RungeKutta] := Glm[rk, RungeKuttaOrder[rk]];
-(*Glm[lmm_Lmm] := With[{
+Glm[lmm_Lmm] := With[{
 		k = Length[lmm],
 		a = LmmAlpha[lmm],
-		b = LmmBeta[lmm]
+		b = LmmBeta[lmm],
+		c = 1 - LengthWhile[Reverse[LmmBeta[lmm]], PossibleZeroQ]
 	},
 	Glm[
 		{{Last[b] / Last[a]}},
 		Transpose[{Most[b]  - Last[b] / Last[a] * Most[a]}],
 		{Append[ConstantArray[0, k - 1], 1 / Last[a]]},
 		Transpose[CompanionMatrix[-Most[a] / Last[a]]],
-		
-		{Last[b] / Last[a]}
+		With[{v = SeriesVander[Range[c - k, c - 1], -1, k]}, HankelBR[b].v[[All, ;;-2]] - HankelBR[a].v[[All, 2;;]]],
+		{c}
 	]
-];*)
+];
 
 AddComposition[Glm, GlmCompose, GlmComp];
 
