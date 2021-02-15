@@ -5,6 +5,8 @@
 
 
 <<Integreat`RungeKutta`Methods`;
+<<Integreat`RungeKutta`Catalog`;
+<<Integreat`RungeKutta`Validation`;
 <<Integreat`RungeKutta`LinearStability`;
 <<Integreat`RungeKutta`NonlinearStability`;
 <<Integreat`RungeKutta`OrderConditions`;
