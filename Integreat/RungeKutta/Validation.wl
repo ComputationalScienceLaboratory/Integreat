@@ -5,6 +5,7 @@ Integreat`RungeKutta`Validation::usage = "Package containing functions for valid
 
 
 Begin["`Private`"];
+Needs["Integreat`RungeKutta`Methods`"];
 
 
 RungeKutta::args = "RungeKutta called with `1` arguments; must have an A, b, c, and possibly \!\(\*OverscriptBox[\(b\), \(^\)]\).";
