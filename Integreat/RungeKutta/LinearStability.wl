@@ -24,12 +24,14 @@ RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method 
 Begin["`Private`"];
 Scan[Needs, {"Integreat`RungeKutta`Methods`", "Integreat`Internal`LinearStability`"}];
 
+StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray[b, s] - A)];
+
 
 (* ::Section:: *)
 (*Package Definitions*)
 
 
-RungeKuttaLinearStability[rk_RungeKutta, lim_DirectedInfinity, p:Repeated[_, {0, 1}]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> lim];
+RungeKuttaLinearStability[rk_RungeKutta, lim_DirectedInfinity, p_ | PatternSequence[]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> lim];
 RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]], {2}][[p]];
 RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
 
@@ -37,28 +39,22 @@ RungeKuttaOrderStarPlot[rk_RungeKutta, args___] := OrderStarPlot[Evaluate[Abs[Ru
 
 RungeKuttaLinearStabilityPlot[rk_RungeKutta, args___] := LinearStabilityPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
 
-RungeKuttaLinearStabilityP[rk_RungeKutta, z_, p_] := With[{
-		A = RungeKuttaA[rk],
-		s = Length[rk]
+RungeKuttaLinearStabilityP[rk_RungeKutta, z_, p_Integer] := With[{
+		A = RungeKuttaA[rk]
 	},
-	(*Computes P for all stages.  More efficient implementation?*)
-	Map[Det[IdentityMatrix[s] + z * (ConstantArray[#, s] - A)] &, A][[p]]
+	StabilityNumerator[A, A[[p]], Length[rk], z]
 ];
 
-RungeKuttaLinearStabilityP[rk_RungeKutta, z_] := With[{
-		s = Length[rk]
-	},
-	Det[IdentityMatrix[s] + z * (ConstantArray[RungeKuttaB[rk], s] - RungeKuttaA[rk])]
-];
+RungeKuttaLinearStabilityP[rk_RungeKutta, z_] := StabilityNumerator[RungeKuttaA[rk], RungeKuttaB[rk], Length[rk], z];
 
 RungeKuttaLinearStabilityQ[rk_RungeKutta, z_] := Det[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]];
 
-RungeKuttaEPolynomial[rk_RungeKutta, y_] := ComplexExpand[
+RungeKuttaEPolynomial[rk_RungeKutta, y_, p_Integer | PatternSequence[]] := ComplexExpand[
 	RungeKuttaLinearStabilityQ[rk, y * I] * RungeKuttaLinearStabilityQ[rk, -y * I]
-	- RungeKuttaLinearStabilityP[rk, y * I] * RungeKuttaLinearStabilityP[rk, -y * I]
+	- RungeKuttaLinearStabilityP[rk, y * I, p] * RungeKuttaLinearStabilityP[rk, -y * I, p]
 ];
 
-RungeKuttaAStableCondition[rk_RungeKutta, p:Repeated[_, {0, 1}]] := Resolve[ForAll[y, RungeKuttaEPolynomial[rk, y, p] >= 0], Reals]
+RungeKuttaAStableCondition[rk_RungeKutta, p_Integer | PatternSequence[]] := Resolve[ForAll[y, RungeKuttaEPolynomial[rk, y, p] >= 0], Reals]
 
 RungeKuttaStifflyAccurateCondition[rk_RungeKutta] := And @@ Thread[Last[RungeKuttaA[rk]] == RungeKuttaB[rk]];
 
