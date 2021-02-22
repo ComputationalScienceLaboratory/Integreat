@@ -32,8 +32,6 @@ Scan[Needs, {
 	"Integreat`Internal`Composition`"
 }];
 
-LagrangeBasis[t_, c_, i_] := Product[(t - c[[l]]) / (c[[i]] - c[[l]]), {l, DeleteCases[Range[Length[c]], i]}];
-
 RkCompose[m_] := RungeKutta[
 	ArrayFlatten[Table[Which[
 		i == j, m[[i, 2]] * RungeKuttaA[m[[i, 1]]],
@@ -54,8 +52,8 @@ RkCompose[m_] := RungeKutta[
 RungeKutta[s_Integer, OptionsPattern[{Type -> "FIRK"}]] := RungeKutta[
 	Switch[OptionValue[Type], "ERK", TableauExplicit, "ESDIRK", TableauEsdirk, "SDIRK", TableauSdirk, "DIRK", TableauDirk, _, TableauFirk][s],
 	Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
-RungeKutta[A_] := RungeKutta[A, Last[A]];
-RungeKutta[A_, b_] := RungeKutta[A, b, Total[A, {2}]];
+RungeKutta[A_?SquareMatrixQ] := RungeKutta[A, Last[A]];
+RungeKutta[A_?SquareMatrixQ, b_List] := RungeKutta[A, b, Total[A, {2}]];
 RungeKutta[HoldPattern[RungeKutta[A_, b_, c_, ___]], bHat_] := RungeKutta[A, b, c, bHat];
 
 AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
@@ -78,10 +76,10 @@ RungeKuttaEmbedded[HoldPattern[RungeKutta[A_, _, c_, bHat_]]] := RungeKutta[A, b
 RungeKuttaPairQ[HoldPattern[RungeKutta[_, _, _, _]]] := True;
 RungeKuttaPairQ[_] := False;
 
-RungeKuttaCollocation[c_List?VectorQ] := RungeKutta[
-	Table[Integrate[LagrangeBasis[t, c, j], {t, 0, c[[i]]}], {i, Length[c]}, {j, Length[c]}],
-	Table[Integrate[LagrangeBasis[t, c, i], {t, 0, \[FormalTheta]}], {i, Length[c]}],
-	c
+RungeKuttaCollocation[c_List?VectorQ] := With[{
+		V = SeriesVander[Append[c, 1], 1, Length[c]].Inverse[SeriesVander[c, 0, Length[c] - 1]]
+	},
+	RungeKutta[Most[V], Last[V], c]
 ];
 
 RungeKuttaA[HoldPattern[RungeKutta[A_, __]]] := A;
