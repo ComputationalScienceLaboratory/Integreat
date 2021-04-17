@@ -11,6 +11,7 @@ RungeKuttaSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumptio
 RungeKuttaSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
 RungeKuttaPrincipalError::usage = "?";
 RungeKuttaOrder::usage = "?";
+RungeKuttaExtrapolation::usage = "?";
 RungeKuttaErrorA::usage = "The 2-norm of the principal error";
 RungeKuttaErrorAHat::usage = "The 2-norm of the embedded principal error";
 RungeKuttaErrorB::usage = "The ratio of the embedded second error terms' norm to leading error terms' norm";
@@ -71,6 +72,13 @@ RungeKuttaOrder[rk_RungeKutta] := (
 	For[p = 1, FreeQ[PossibleZeroQ[RungeKuttaPrincipalError[rk, p]], False], p++];
 	p
 );
+
+RungeKuttaExtrapolation[m_RungeKutta, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
+		n = Length[steps],
+		p = RungeKuttaOrder[m]
+	},
+	Inner[#1 * m^#2 &, LinearSolve[Append[Table[1 / steps^(jump * i + p), {i, 0, n - 2}], ConstantArray[1, n]], UnitVector[n, n]], steps, Plus]
+];
 
 RungeKuttaErrorA[rk_RungeKutta, p_Integer] := Norm[FullSimplify[RungeKuttaPrincipalError[rk, p - 1]]];
 RungeKuttaErrorA[rk_RungeKutta] := RungeKuttaErrorA[rk, RungeKuttaOrder[rk] + 1];
