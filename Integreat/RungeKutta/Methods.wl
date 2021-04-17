@@ -8,6 +8,7 @@ BeginPackage["Integreat`RungeKutta`Methods`"];
 Integreat`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
+RungeKuttaRescale::usage = "Rescales the timestep";
 RungeKuttaType::usage = "A string representation of the type of Runge-Kutta method";
 RungeKuttaPrimary::usage = "Removes the embedded method from a Runge-Kutta method";
 RungeKuttaEmbedded::usage = "Gets the embedded Runge-Kutta method";
@@ -61,11 +62,13 @@ AddComposition[RungeKutta, RungeKuttaCompose, RkCompose];
 RungeKutta /: x_ * HoldPattern[RungeKutta[A_, b_, c_]] := RungeKutta[A, x * b, c];
 RungeKutta /: x_ * HoldPattern[RungeKutta[A_, b_, c_, bHat_]] := RungeKutta[A, x * b, c, x * bHat];
 
+RungeKuttaRescale[HoldPattern[RungeKutta[a__]], x_] := Apply[RungeKutta, x * {a}];
+
 RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, bHat1_] + RungeKutta[A2_, b2_, c2_, bHat2_]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
 RungeKutta /: HoldPattern[RungeKutta[A1_, b1_, c1_, ___] + RungeKutta[A2_, b2_, c2_, ___]] := RungeKutta[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2]];
 
-RungeKutta /: HoldPattern[RungeKutta[A_, b_, c_]]^-1 := RungeKutta[A - ConstantArray[b, Length[b]], -b, c - 1];
-RungeKutta /: HoldPattern[RungeKutta[A_, b_, c_, d_]]^-1 := RungeKutta[A - ConstantArray[b, Length[b]], -b, c - 1, -d];
+RungeKutta /: Power[rk:HoldPattern[RungeKutta[A_, b_, c_]], -1] := RungeKutta[A - ConstantArray[RungeKuttaB[rk], Length[c]], -b, c - 1];
+RungeKutta /: Power[rk:HoldPattern[RungeKutta[A_, b_, c_, bHat_]], -1] := RungeKutta[A - ConstantArray[RungeKuttaB[rk], Length[c]], -b, c - 1, -bHat];
 
 RungeKuttaType[HoldPattern[RungeKutta[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
 
