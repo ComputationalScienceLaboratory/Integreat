@@ -104,7 +104,7 @@ RungeKutta /: Graph[rk:HoldPattern[RungeKutta[A_, _, _, bHat___]], opts:OptionsP
 		opts,
 		DirectedEdges -> True,
 		EdgeLabels -> "EdgeWeight",
-		VertexLabels -> Table[i -> Which[i <= s, StringForm["\!\(\*SubscriptBox[\(Y\), \(``\)]\)", i], i == s + 1, "\!\(\*SubscriptBox[\(y\), \(n\)]\)", True, "\!\(\*SubscriptBox[OverscriptBox[\(y\), \(^\)], \(n\)]\)"], {i, Length[K]}]
+		VertexLabels -> i_ -> Which[i <= s, StringForm["\!\(\*SubscriptBox[\(Y\), \(``\)]\)", i], i == s + 1, "\!\(\*SubscriptBox[\(y\), \(n+1\)]\)", True, "\!\(\*SubscriptBox[OverscriptBox[\(y\), \(^\)], \(n+1\)]\)"]
 	]
 ];
 
