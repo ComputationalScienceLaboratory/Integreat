@@ -62,12 +62,6 @@ GlmComp[m_] := With[{
 	]
 ];
 
-Phi[x_, c_, i_] := Product[x - c[[j]], {j, DeleteCases[Range[Length[c]], i]}];
-D0[c_] := Table[Integrate[Phi[x, c, j], {x, 0, 1 + c[[i]]}] / Phi[c[[j]], c, j], {i, Length[c]}, {j, Length[c]}];
-D1[c_] := Table[Phi[1 + c[[i]], c, j] / Phi[c[[j]], c, j], {i, Length[c]}, {j, Length[c]}];
-D2[c_] := Table[Integrate[Phi[x, c, j], {x, 0, c[[i]]}] / Phi[c[[j]], c, j], {i, Length[c]}, {j, Length[c]}];
-DimsimB[A_, v_, c_] := D0[c] - A.D1[c] + ConstantArray[v.(A - D2[c]), Length[v]];
-
 
 (* ::Section:: *)
 (*Package Definitions*)
@@ -107,11 +101,16 @@ GlmDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 2}]] := With[
 	},
 	GlmDimsim[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
 ];
-GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ, p_Integer] /; Length[c] === Length[v] === p := With[{
-		s = Length[c],
-		C = SeriesVander[c, -1, Length[c]]
+GlmDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ] /; Length[A] === Length[v] === Length[c] := With[{
+		C = SeriesVander[c, -1, Length[c]],
+		s = Length[c]
 	},
-	GlmDimsim[A, DimsimB[A, v, c], v, C[[All, 2;;p + 2]] - A.C[[All, 1;;p + 1]], c]
+	With[{
+			Q = C[[All, 2;;]] - A.C[[All, ;;-2]],
+			mu = ToeplitzMatrix[Join[{1, 1}, ConstantArray[0, s - 1]], 1 / Range[s]!]
+		},
+		GlmDimsim[A, (Q.mu - ConstantArray[v.Q[[All, 2;;]], s]).Inverse[C[[All, 2;;-2]]], v, Q, c]
+	]
 ];
 GlmDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := Glm[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
 
