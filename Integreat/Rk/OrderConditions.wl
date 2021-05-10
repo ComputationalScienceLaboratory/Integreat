@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`OrderConditions`"];
+BeginPackage["Integreat`Rk`OrderConditions`"];
 
 
-Integreat`RungeKutta`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
+Integreat`Rk`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
 
 RungeKuttaOrderCondition::usage = "?";
 RungeKuttaSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
@@ -26,8 +26,8 @@ RungeKuttaDissipationOrder::usage = "Dissipation order of Runge-Kutta method app
 
 Begin["`Private`"];
 Scan[Needs, {
-	"Integreat`RungeKutta`Methods`",
-	"Integreat`RungeKutta`LinearStability`",
+	"Integreat`Rk`Methods`",
+	"Integreat`Rk`LinearStability`",
 	"Integreat`Internal`MathUtils`",
 	"NumericalDifferentialEquationAnalysis`"
 }];

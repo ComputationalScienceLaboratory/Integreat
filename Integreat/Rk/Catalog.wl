@@ -1,11 +1,11 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`Catalog`"];
-Integreat`RungeKutta`Catalog::usage = "Package containing Runge-Kutta methods from the literature";
+BeginPackage["Integreat`Rk`Catalog`"];
+Integreat`Rk`Catalog::usage = "Package containing Runge-Kutta methods from the literature";
 
 
 Begin["`Private`"];
-Needs["Integreat`RungeKutta`Methods`"]; (* Might be able to remove this once all constructors use 3 or 4 arg form *)
+Needs["Integreat`Rk`Methods`"]; (* Might be able to remove this once all constructors use 3 or 4 arg form *)
 Needs["Integreat`Internal`Catalog`"];
 
 Erk2Fam[c2_, d1_] := RungeKutta[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];

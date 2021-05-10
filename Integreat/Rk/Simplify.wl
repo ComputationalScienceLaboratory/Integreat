@@ -4,10 +4,10 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`Simplify`", {"Integreat`RungeKutta`Methods`"}];
+BeginPackage["Integreat`Rk`Simplify`", {"Integreat`Rk`Methods`"}];
 
 
-Integreat`RungeKutta`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
+Integreat`Rk`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
 RungeKuttaDJReduce::usage = "Removes unused stages from a Runge-Kutta method";
 RungeKuttaDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-reducible and False otherwise";

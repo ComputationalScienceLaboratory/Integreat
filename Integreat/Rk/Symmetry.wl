@@ -1,9 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`Symmetry`", {"Integreat`RungeKutta`Methods`"}];
+BeginPackage["Integreat`Rk`Symmetry`", {"Integreat`Rk`Methods`"}];
 
 
-Integreat`RungeKutta`Symmetry::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
+Integreat`Rk`Symmetry::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
 RungeKuttaReflection::usage = "The Runge-Kutta method from taking a step backward in time then swapping the input and output states";
 RungeKuttaTranspose::usage = "The discrete adjoint of the Runge-Kutta method";

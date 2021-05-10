@@ -1,11 +1,11 @@
 (* ::Package:: *)
 
-BeginPackage["Integreat`RungeKutta`Validation`"];
-Integreat`RungeKutta`Validation::usage = "Package containing functions for validating Runge-Kutta methods";
+BeginPackage["Integreat`Rk`Validation`"];
+Integreat`Rk`Validation::usage = "Package containing functions for validating Runge-Kutta methods";
 
 
 Begin["`Private`"];
-Needs["Integreat`RungeKutta`Methods`"];
+Needs["Integreat`Rk`Methods`"];
 
 
 RungeKutta::args = "RungeKutta called with `1` arguments; must have an A, b, c, and possibly \!\(\*OverscriptBox[\(b\), \(^\)]\).";

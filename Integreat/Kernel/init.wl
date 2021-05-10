@@ -4,14 +4,14 @@
 <<Integreat`Trees`;
 
 
-<<Integreat`RungeKutta`Methods`;
-<<Integreat`RungeKutta`Catalog`;
-<<Integreat`RungeKutta`Validation`;
-<<Integreat`RungeKutta`LinearStability`;
-<<Integreat`RungeKutta`NonlinearStability`;
-<<Integreat`RungeKutta`OrderConditions`;
-<<Integreat`RungeKutta`Symmetry`;
-<<Integreat`RungeKutta`Simplify`;
+<<Integreat`Rk`Methods`;
+<<Integreat`Rk`Catalog`;
+<<Integreat`Rk`Validation`;
+<<Integreat`Rk`LinearStability`;
+<<Integreat`Rk`NonlinearStability`;
+<<Integreat`Rk`OrderConditions`;
+<<Integreat`Rk`Symmetry`;
+<<Integreat`Rk`Simplify`;
 
 
 <<Integreat`Rosenbrock`Methods`;

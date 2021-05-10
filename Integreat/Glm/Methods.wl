@@ -33,8 +33,8 @@ GlmTransform::usage = "Transforms a general linear method into an equivalent for
 Begin["`Private`"];
 Scan[Needs, {
 	"Integreat`Tableaus`",
-	"Integreat`RungeKutta`Methods`",
-	"Integreat`RungeKutta`OrderConditions`",
+	"Integreat`Rk`Methods`",
+	"Integreat`Rk`OrderConditions`",
 	"Integreat`Lmm`Methods`",
 	"Integreat`Internal`MathUtils`",
 	"Integreat`Internal`Catalog`",

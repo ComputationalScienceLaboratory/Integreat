@@ -4,8 +4,8 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`LinearStability`"];
-Integreat`RungeKutta`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
+BeginPackage["Integreat`Rk`LinearStability`"];
+Integreat`Rk`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
 RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method applied to y'=\[Lambda]y";
 RungeKuttaOrderStarPlot::usage = "Plots the order star";
@@ -22,7 +22,7 @@ RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method 
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`RungeKutta`Methods`", "Integreat`Internal`LinearStability`"}];
+Scan[Needs, {"Integreat`Rk`Methods`", "Integreat`Internal`LinearStability`"}];
 
 StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray[b, s] - A)];
 

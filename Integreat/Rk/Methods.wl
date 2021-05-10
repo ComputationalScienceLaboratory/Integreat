@@ -4,8 +4,8 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RungeKutta`Methods`"];
-Integreat`RungeKutta`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
+BeginPackage["Integreat`Rk`Methods`"];
+Integreat`Rk`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
 RungeKutta::usage = "Constructs a Runge-Kutta method";
 RungeKuttaRescale::usage = "Rescales the timestep";
