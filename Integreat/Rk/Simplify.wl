@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`Rk`Simplify`", {"Integreat`Rk`Methods`"}];
+BeginPackage["Integreat`Rk`Simplify`"];
 
 
 Integreat`Rk`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
@@ -18,6 +18,7 @@ RungeKuttaDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-redu
 
 
 Begin["`Private`"];
+Needs["Integreat`Rk`Methods`"];
 
 RungeKuttaDJIrreducibleStages[rk_] := With[{
 		s = Length[rk],
