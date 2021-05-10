@@ -32,6 +32,7 @@ GlmPreconsistencyCondition[glm_Glm] := With[{
 	}, {2}]
 ];
 
+GlmOrderCondition[glm_Glm] := GlmOrderCondition[glm, GlmOrder[glm]];
 GlmOrderCondition[glm_Glm, q_Integer, \[Omega]_:1] /; (GlmOrder[glm] - 1 <= q <= GlmOrder[glm] <= q + 1) := With[{
 		C = SeriesVander[GlmC[glm], -1, GlmOrder[glm]],
 		\[CapitalOmega] = DiagonalMatrix[\[Omega]^Range[0, GlmOrder[glm]]],
