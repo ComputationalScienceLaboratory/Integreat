@@ -1,11 +1,12 @@
 (* ::Package:: *)
 
+(* ::Section:: *)
+(*Usage*)
+
+
 BeginPackage["Integreat`Tableaus`"];
+Integreat`Tableaus::usage = "Functions for generating matrices (tableaus) with specific structures";
 
-
-Integreat`Tableaus::usage = "Functions for generating tableaus with general or specific structure";
-
-TableauPattern::usage = "Creates a Butcher tableau from a pattern matrix.  A False in the pattern matrix indicates a 0, a True indicates an indexed entry, and anything else will be copied";
 TableauZeros::usage = "Creates a Butcher tableau of zeros";
 TableauZerosQ::usage = "Returns True if input is a Butcher tableau of zeros, and False otherwise";
 TableauExplicit::usage = "Creates an explicit Butcher tableau";
@@ -24,53 +25,57 @@ TableauDiagonal::usage = "Creates a diagonal Butcher tableau";
 TableauDiagonalQ::usage = "Returns True if input is a diagonal Butcher tableau, and False otherwise";
 
 
+(* ::Section:: *)
+(*Private Members*)
+
+
 Begin["`Private`"];
 
+SetAttributes[Tableau, HoldFirst];
+Tableau[expr_, s_Integer] := Table[expr, {i, s}, {j, s}];
+Tableau[expr_, {s_Integer, t_Integer}] := Table[expr, {i, s}, {j, t}];
 
-TableauPattern[pattern_List?MatrixQ, entry_:\[FormalA]] := MapIndexed[Switch[#1, True, Subscript[entry, First[#2], Last[#2]], False, 0, _, #1] &, pattern, {2}];
 
-TableauZeros[{s_Integer, t_Integer}] := ConstantArray[0, {s, t}];
-TableauZeros[s_Integer] := TableauZeros[{s, s}];
+(* ::Section:: *)
+(*Package Definitions*)
+
+
+TableauZeros[s: _Integer | {_Integer, _Integer}] := Tableau[0, s];
 
 TableauZerosQ[x_] := SquareMatrixQ[x] && MatchQ[x, {{0..}..}];
 
-TableauExplicit[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i > j, Subscript[entry, i, j], 0], {i, s}, {j, t}];
-TableauExplicit[s_Integer, entry_:\[FormalA]] := TableauExplicit[{s, s}, entry];
+TableauExplicit[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := Tableau[If[i > j, Subscript[entry, i, j], 0], s];
 
-TableauExplicitQ[x_] := SquareMatrixQ[x] && x === LowerTriangularize[x, -1];
+TableauExplicitQ[x_] := SquareMatrixQ[x] && LowerTriangularMatrixQ[x, -1];
 
-TableauFirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[Subscript[entry, i, j], {i, s}, {j, t}];
-TableauFirk[s_Integer, entry_:\[FormalA]] := TableauFirk[{s, s}, entry];
+TableauFirk[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := Tableau[Subscript[entry, i, j], s];
 
-TableauFirkQ[x_] := SquareMatrixQ[x] && x =!= LowerTriangularize[x];
+TableauFirkQ[x_] := SquareMatrixQ[x] && !LowerTriangularMatrixQ[x];
 
-TableauDirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i < j, 0, Subscript[entry, i, j]], {i, s}, {j, t}];
-TableauDirk[s_Integer, entry_:\[FormalA]] := TableauDirk[{s, s}, entry];
+TableauDirk[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := Tableau[If[i < j, 0, Subscript[entry, i, j]], s];
 
-TableauDirkQ[x_] := SquareMatrixQ[x] && x === LowerTriangularize[x] && !MatchQ[Diagonal[x], {0..}];
+TableauDirkQ[x_] := SquareMatrixQ[x] && LowerTriangularMatrixQ[x] && !MatchQ[Diagonal[x], {0..}];
 
-TableauEdirk[{s_Integer, t_Integer}, entry_:\[FormalA]] := Table[If[i == 1 || i < j, 0, Subscript[entry, i, j]], {i, s}, {j, t}];
-TableauEdirk[s_Integer, entry_:\[FormalA]] := TableauEdirk[{s, s}, entry];
+TableauEdirk[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := Tableau[If[i == 1 || i < j, 0, Subscript[entry, i, j]], s];
 
 TableauEdirkQ[x_] := TableauDirkQ[x] && x[[1,1]] === 0;
 
-TableauSdirk[{s_Integer, t_Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := LowerTriangularize[Table[If[i == j, diagEntry, Subscript[entry, i,j]], {i, s}, {j, t}]];
-TableauSdirk[s_Integer, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := TableauSdirk[{s, s}, entry, diagEntry];
+TableauSdirk[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := Tableau[Which[i > j, Subscript[entry, i, j], i == j, diagEntry, True, 0], s];
 
 TableauSdirkQ[x_] := TableauDirkQ[x] && SameQ @@ Diagonal[x];
 
-TableauEsdirk[{s_Integer, t_Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := Table[Which[i == 1, 0, i == j, diagEntry, i > j, Subscript[entry, i,j], True, 0], {i, s}, {j, t}];
-TableauEsdirk[s_Integer, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := TableauEsdirk[{s, s}, entry, diagEntry];
+TableauEsdirk[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := Tableau[Which[i > j, Subscript[entry, i, j], i == j > 1, diagEntry, True, 0], s];
 
 TableauEsdirkQ[x_] := TableauEdirkQ[x] && SameQ @@ Rest[Diagonal[x]];
 
-TableauDiagonal[{s_Integer, t_Integer}, diagEntry_:\[FormalGamma]] := diagEntry * IdentityMatrix[{s, t}];
-TableauDiagonal[s_Integer, diagEntry_:\[FormalGamma]] := TableauDiagonal[{s, s}, diagEntry];
+TableauDiagonal[s: _Integer | {_Integer, _Integer}, diagEntry_:\[FormalGamma]] := Tableau[If[i == j, diagEntry, 0], s];
 
-TableauDiagonalQ[x_] := SquareMatrixQ[x] && DiagonalMatrix[Diagonal[x]] === x;
+TableauDiagonalQ[x_] := SquareMatrixQ[x] && DiagonalMatrixQ[x];
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];
-
-
 EndPackage[];
