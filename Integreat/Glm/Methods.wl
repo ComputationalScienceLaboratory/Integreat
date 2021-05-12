@@ -171,13 +171,14 @@ GlmTransform[HoldPattern[Glm[A_, B_, U_, V_, W_, c_]], T_?SquareMatrixQ] := With
 
 Glm /: Variables[HoldPattern[Glm[a___]]] := Variables[{a}];
 
-Glm /: MakeBoxes[HoldPattern[Glm[A_List, B_List, U_List, V_List, _List, c_List]], format_] := GridBox[
-	ArrayFlatten[{
-		{Map[{MakeBoxes[#, format]} &, c], Map[MakeBoxes[#, format] &, A, {2}], Map[MakeBoxes[#, format] &, U, {2}]},
-		{ConstantArray[{""}, Length[B]], Map[MakeBoxes[#, format] &, B, {2}], Map[MakeBoxes[#, format] &, V, {2}]}
-	}],
-	ColumnLines -> Join[{True}, ConstantArray[False, Length[c] - 1], {True, False}],
-	RowLines -> Join[ConstantArray[False, Length[c] - 1], {True, False}]
+Glm /: MakeBoxes[HoldPattern[Glm[A_List, B_List, U_List, V_List, _List, c_List]], format_] := With[{
+		s = Length[c]
+	},
+	TagBox[GridBox[
+		Map[If[# === "", #, MakeBoxes[#, format]] &, ArrayFlatten[{{ArrayReshape[c, {s, 1}], A, U}, {"", B, V}}], {2}],
+		ColumnLines -> Join[{True}, ConstantArray[False, s - 1], {True, False}],
+		RowLines -> Join[ConstantArray[False, s - 1], {True, False}]
+	], Grid]
 ];
 
 

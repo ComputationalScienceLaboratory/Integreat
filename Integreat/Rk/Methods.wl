@@ -112,11 +112,11 @@ RungeKutta /: Length[HoldPattern[RungeKutta[A_, __]]] := Length[A];
 
 RungeKutta /: Variables[HoldPattern[RungeKutta[a___]]] := Variables[{a}];
 
-RungeKutta /: MakeBoxes[rk:HoldPattern[RungeKutta[A_List, b_List, c_List, bHat___]], format_] := GridBox[
-	Join[Map[MakeBoxes[#, format] &, MapThread[Prepend, {A, c}], {2}], Map[Prepend[#, ""] &, Map[MakeBoxes[#, format] &, {RungeKuttaB[rk], bHat}, {2}]]],
+RungeKutta /: MakeBoxes[rk:HoldPattern[RungeKutta[A_List, b_List, c_List, bHat___]], format_] := TagBox[GridBox[
+	Map[If[# === "", #, MakeBoxes[#, format]] &, ArrayFlatten[{{ArrayReshape[c, {Length[c], 1}], A}, {"", {RungeKuttaB[rk], bHat}}}], {2}],
 	ColumnLines -> {True, False},
-	RowLines -> Append[ConstantArray[False, Length[A] - 1], True]
-];
+	RowLines -> Append[ConstantArray[False, Length[c] - 1], True]
+], Grid];
 
 
 (* ::Section:: *)
