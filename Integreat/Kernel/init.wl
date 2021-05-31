@@ -19,6 +19,7 @@
 
 
 <<Integreat`Lmm`Methods`;
+<<Integreat`Lmm`LinearStability`;
 <<Integreat`Lmm`OrderConditions`;
 <<Integreat`Lmm`Simplify`;
 
