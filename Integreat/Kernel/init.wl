@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 <<Integreat`Tableaus`;
-<<Integreat`Trees`;
+<<Integreat`BTrees`;
 
 
 <<Integreat`Rk`Methods`;
