@@ -7,8 +7,8 @@
 BeginPackage["Integreat`Rk`Symmetry`"];
 Integreat`Rk`Symmetry::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
-RungeKuttaReflection::usage = "The Runge-Kutta method from taking a step backward in time then swapping the input and output states";
-RungeKuttaTranspose::usage = "The discrete adjoint of the Runge-Kutta method";
+RkReflection::usage = "The Runge-Kutta method from taking a step backward in time then swapping the input and output states";
+RkTranspose::usage = "The discrete adjoint of the Runge-Kutta method";
 
 
 (* ::Section:: *)
@@ -23,18 +23,18 @@ Needs["Integreat`Rk`Methods`"];
 (*Package Definitions*)
 
 
-RungeKuttaReflection[rk:HoldPattern[RungeKutta[A_, b_, c_, d___]]] := RungeKutta[ConstantArray[RungeKuttaB[rk], Length[b]] - A, b, 1 - c, d];
+RkReflection[rk:HoldPattern[Rk[A_, b_, c_, d___]]] := Rk[ConstantArray[RkB[rk], Length[b]] - A, b, 1 - c, d];
 
-(*RungeKuttaSymmetric[rk*)
+(*RkSymmetric[rk*)
 
-RungeKuttaTranspose[rk:HoldPattern[RungeKutta[A_, bdo_, c_, d___]]] /; NoneTrue[RungeKuttaB[rk], PossibleZeroQ] := With[{
+RkTranspose[rk:HoldPattern[Rk[A_, bdo_, c_, d___]]] /; NoneTrue[RkB[rk], PossibleZeroQ] := With[{
 		s = Length[rk],
-		b = RungeKuttaB[rk]
+		b = RkB[rk]
 	},
-	RungeKutta[Table[b[[j]] * A[[j, i]] / b[[i]], {i, s}, {j, s}], bdo, 1 - c, d]
+	Rk[Table[b[[j]] * A[[j, i]] / b[[i]], {i, s}, {j, s}], bdo, 1 - c, d]
 ];
 
-RungeKutta /: Transpose[rk_RungeKutta] := RungeKuttaTranspose[rk];
+Rk /: Transpose[rk_Rk] := RkTranspose[rk];
 
 
 (* ::Section:: *)

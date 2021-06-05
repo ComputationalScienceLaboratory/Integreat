@@ -5,9 +5,9 @@ BeginPackage["Integreat`Rk`NonlinearStability`"];
 
 Integreat`Rk`NonlinearStability::usage = "Package containing functions for analyzing the nonlinear stability of Runge-Kutta methods";
 
-RungeKuttaAlgebraicStabilityMatrix::usage = "The algebraic stability matrix of a Runge-Kutta method";
-RungeKuttaAlgebraicallyStableQ::usage = "Returns True if the Runge-Kutta method is algebraically stable and False otherwise";
-RungeKuttaSymplecticCondition::usage = "The condition for the Runge-Kutta method to by symplectic";
+RkAlgebraicStabilityMatrix::usage = "The algebraic stability matrix of a Runge-Kutta method";
+RkAlgebraicallyStableQ::usage = "Returns True if the Runge-Kutta method is algebraically stable and False otherwise";
+RkSymplecticCondition::usage = "The condition for the Runge-Kutta method to by symplectic";
 
 
 Begin["`Private`"];
@@ -16,19 +16,17 @@ Needs["Integreat`Rk`Methods`"];
 AlgMat[A_, b_, s_] := Table[b[[i]] * A[[i,j]] + b[[j]] * A[[j,i]] - b[[i]] * b[[j]], {i, s}, {j, s}]
 
 
-RungeKuttaAlgebraicStabilityMatrix[rk_RungeKutta, p_Integer] := With[{
-		A = RungeKuttaA[rk]
+RkAlgebraicStabilityMatrix[rk_Rk, p_Integer] := With[{
+		A = RkA[rk]
 	},
 	AlgMat[A, A[[p]], Length[rk]]
 ];
-RungeKuttaAlgebraicStabilityMatrix[rk_RungeKutta] := AlgMat[RungeKuttaA[rk], RungeKuttaB[rk], Length[rk]];
+RkAlgebraicStabilityMatrix[rk_Rk] := AlgMat[RkA[rk], RkB[rk], Length[rk]];
 
-RungeKuttaAlgebraicallyStableQ[rk_RungeKutta, p_Integer | PatternSequence[]] := PositiveSemidefiniteMatrixQ[RungeKuttaAlgebraicStabilityMatrix[rk, p]];
+RkAlgebraicallyStableQ[rk_Rk, p_Integer | PatternSequence[]] := PositiveSemidefiniteMatrixQ[RkAlgebraicStabilityMatrix[rk, p]];
 
-RungeKuttaSymplecticCondition[rk_RungeKutta, p_Integer | PatternSequence[]] := And @@ Thread[Flatten[RungeKuttaAlgebraicStabilityMatrix[rk, p]] == 0];
+RkSymplecticCondition[rk_Rk, p_Integer | PatternSequence[]] := And @@ Thread[Flatten[RkAlgebraicStabilityMatrix[rk, p]] == 0];
 
 
 End[];
-
-
 EndPackage[];

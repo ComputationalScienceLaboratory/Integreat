@@ -5,23 +5,23 @@ BeginPackage["Integreat`Rk`OrderConditions`"];
 
 Integreat`Rk`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
 
-RungeKuttaOrderCondition::usage = "?";
-RungeKuttaDaeOrderCondition::usage = "?";
-RungeKuttaSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
-RungeKuttaSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
-RungeKuttaSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
-RungeKuttaOrder::usage = "?";
-RungeKuttaExtrapolation::usage = "?";
-RungeKuttaErrorA::usage = "The 2-norm of the principal error";
-RungeKuttaErrorAHat::usage = "The 2-norm of the embedded principal error";
-RungeKuttaErrorB::usage = "The ratio of the embedded second error terms' norm to leading error terms' norm";
-RungeKuttaErrorC::usage = "The ratio of the norm of the difference in second error terms to the norm of embedded leading error terms";
-RungeKuttaErrorD::usage = "The maximum entry in the Butcher tableau by absolute value";
-RungeKuttaErrorE::usage = "The ratio of the second error terms' norm to embedded leading error terms' norm";
-RungeKuttaDispersionError::usage = "Dispersion error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RungeKuttaDispersionOrder::usage = "Dispersion order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RungeKuttaDissipationError::usage = "Dissipation error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RungeKuttaDissipationOrder::usage = "Dissipation order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RkOrderCondition::usage = "?";
+RkDaeOrderCondition::usage = "?";
+RkSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
+RkSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
+RkSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
+RkOrder::usage = "?";
+RkExtrapolation::usage = "?";
+RkErrorA::usage = "The 2-norm of the principal error";
+RkErrorAHat::usage = "The 2-norm of the embedded principal error";
+RkErrorB::usage = "The ratio of the embedded second error terms' norm to leading error terms' norm";
+RkErrorC::usage = "The ratio of the norm of the difference in second error terms to the norm of embedded leading error terms";
+RkErrorD::usage = "The maximum entry in the Butcher tableau by absolute value";
+RkErrorE::usage = "The ratio of the second error terms' norm to embedded leading error terms' norm";
+RkDispersionError::usage = "Dispersion error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RkDispersionOrder::usage = "Dispersion order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RkDissipationError::usage = "Dissipation error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RkDissipationOrder::usage = "Dissipation order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
 
 
 Begin["`Private`"];
@@ -47,65 +47,65 @@ errOrder[err_?PossibleZeroQ, _] := Infinity;
 errOrder[err_, y_] := NestWhile[# + 1 &, 0, PossibleZeroQ[SeriesCoefficient[err, {y, 0, #}]] &] - 1;
 
 
-RungeKuttaOrderCondition[rk: Repeated[_RungeKutta, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RungeKuttaTreeOrderCondition[rk, BTree[p]];
+RkOrderCondition[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderCondition[rk, BTree[p]];
 
-RungeKuttaDaeOrderCondition[rk: Repeated[_RungeKutta, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RungeKuttaTreeOrderCondition[rk, BTreeDiffAlg[p]];
+RkDaeOrderCondition[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderCondition[rk, BTreeDiffAlg[p]];
 
-RungeKuttaTreeOrderCondition[rk_RungeKutta, t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, RungeKuttaA[rk], RungeKuttaB[rk], RungeKuttaC[rk]];
-RungeKuttaTreeOrderCondition[t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, \[FormalA], \[FormalB], \[FormalC]];
-SetAttributes[RungeKuttaTreeOrderCondition, Listable];
+RkTreeOrderCondition[rk_Rk, t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, RkA[rk], RkB[rk], RkC[rk]];
+RkTreeOrderCondition[t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, \[FormalA], \[FormalB], \[FormalC]];
+SetAttributes[RkTreeOrderCondition, Listable];
 
-RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {1}] := Total[RungeKuttaB[rk]] - 1;
-RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, {p_Integer?Positive}] := RungeKuttaB[rk].RungeKuttaC[rk]^(p - 1) - 1 / p;
-RungeKuttaSimplifyingAssumptionB[rk_RungeKutta, p_Integer?Positive] := Table[RungeKuttaSimplifyingAssumptionB[rk, {k}], {k, p}];
+RkSimplifyingAssumptionB[rk_Rk, {1}] := Total[RkB[rk]] - 1;
+RkSimplifyingAssumptionB[rk_Rk, {p_Integer?Positive}] := RkB[rk].RkC[rk]^(p - 1) - 1 / p;
+RkSimplifyingAssumptionB[rk_Rk, p_Integer?Positive] := Table[RkSimplifyingAssumptionB[rk, {k}], {k, p}];
 
-RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, {1}, stages_:All] := Total[RungeKuttaA[rk][[stages]], {2}] - RungeKuttaC[rk][[stages]];
-RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, {eta_Integer?Positive}, stages_:All] := RungeKuttaA[rk][[stages]].RungeKuttaC[rk]^(eta - 1) - RungeKuttaC[rk][[stages]]^eta / eta;
-RungeKuttaSimplifyingAssumptionC[rk_RungeKutta, eta_Integer?Positive, stages_:All] := Table[RungeKuttaSimplifyingAssumptionC[rk, {k}, stages], {k, eta}];
+RkSimplifyingAssumptionC[rk_Rk, {1}, stages_:All] := Total[RkA[rk][[stages]], {2}] - RkC[rk][[stages]];
+RkSimplifyingAssumptionC[rk_Rk, {eta_Integer?Positive}, stages_:All] := RkA[rk][[stages]].RkC[rk]^(eta - 1) - RkC[rk][[stages]]^eta / eta;
+RkSimplifyingAssumptionC[rk_Rk, eta_Integer?Positive, stages_:All] := Table[RkSimplifyingAssumptionC[rk, {k}, stages], {k, eta}];
 
-RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, {1}] := RungeKuttaB[rk].RungeKuttaA[rk] - RungeKuttaB[rk] * (1 - RungeKuttaC[rk]);
-RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, {zeta_Integer?Positive}] := With[{
-		b = RungeKuttaB[rk],
-		c = RungeKuttaC[rk]
+RkSimplifyingAssumptionD[rk_Rk, {1}] := RkB[rk].RkA[rk] - RkB[rk] * (1 - RkC[rk]);
+RkSimplifyingAssumptionD[rk_Rk, {zeta_Integer?Positive}] := With[{
+		b = RkB[rk],
+		c = RkC[rk]
 	},
-	(b * c^(zeta - 1)).RungeKuttaA[rk] - b * (1 - c^zeta) / zeta
+	(b * c^(zeta - 1)).RkA[rk] - b * (1 - c^zeta) / zeta
 ];
-RungeKuttaSimplifyingAssumptionD[rk_RungeKutta, zeta_Integer] := Table[RungeKuttaSimplifyingAssumptionD[rk, {k}], {k, zeta}];
+RkSimplifyingAssumptionD[rk_Rk, zeta_Integer] := Table[RkSimplifyingAssumptionD[rk, {k}], {k, zeta}];
 
-RungeKuttaOrder[rk_RungeKutta] := NestWhile[# + 1 &, 0, And @@ PossibleZeroQ[RungeKuttaOrderCondition[rk, {# + 1}]] &];
+RkOrder[rk_Rk] := NestWhile[# + 1 &, 0, And @@ PossibleZeroQ[RkOrderCondition[rk, {# + 1}]] &];
 
-RungeKuttaExtrapolation[m_RungeKutta, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
+RkExtrapolation[m_Rk, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
 		n = Length[steps],
-		p = RungeKuttaOrder[m]
+		p = RkOrder[m]
 	},
 	Inner[#1 * m^#2 &, LinearSolve[Append[Table[1 / steps^(jump * i + p), {i, 0, n - 2}], ConstantArray[1, n]], UnitVector[n, n]], steps, Plus]
 ];
 
-RungeKuttaErrorA[rk_RungeKutta, p_Integer?NonNegative] := Norm[RungeKuttaOrderCondition[rk, {p}]];
-RungeKuttaErrorA[rk_RungeKutta] := RungeKuttaErrorA[rk, RungeKuttaOrder[rk] + 1];
+RkErrorA[rk_Rk, p_Integer?NonNegative] := Norm[RkOrderCondition[rk, {p}]];
+RkErrorA[rk_Rk] := RkErrorA[rk, RkOrder[rk] + 1];
 
-RungeKuttaErrorAHat[rk_?RungeKuttaPairQ, pHat: Repeated[_Integer?NonNegative, {0, 1}]] := RungeKuttaErrorA[RungeKuttaEmbedded[rk], pHat];
+RkErrorAHat[rk_?RkPairQ, pHat: Repeated[_Integer?NonNegative, {0, 1}]] := RkErrorA[RkEmbedded[rk], pHat];
 
-RungeKuttaErrorB[rk_?RungeKuttaPairQ, pHat_Integer?Positive] := RungeKuttaErrorAHat[rk, pHat] / RungeKuttaErrorAHat[rk, pHat - 1];
-RungeKuttaErrorB[rk_?RungeKuttaPairQ] := RungeKuttaErrorB[rk, RungeKuttaOrder[rk] + 1];
+RkErrorB[rk_?RkPairQ, pHat_Integer?Positive] := RkErrorAHat[rk, pHat] / RkErrorAHat[rk, pHat - 1];
+RkErrorB[rk_?RkPairQ] := RkErrorB[rk, RkOrder[rk] + 1];
 
-RungeKuttaErrorC[rk_?RungeKuttaPairQ, pHat_Integer?Positive] := Norm[
-		RungeKuttaOrderCondition[rk, {pHat}] - RungeKuttaOrderCondition[RungeKuttaEmbedded[rk], {pHat}]
-	] / RungeKuttaErrorAHat[rk, pHat - 1];
-RungeKuttaErrorC[rk_?RungeKuttaPairQ] := RungeKuttaErrorC[rk, RungeKuttaOrder[rk] + 1];
+RkErrorC[rk_?RkPairQ, pHat_Integer?Positive] := Norm[
+		RkOrderCondition[rk, {pHat}] - RkOrderCondition[RkEmbedded[rk], {pHat}]
+	] / RkErrorAHat[rk, pHat - 1];
+RkErrorC[rk_?RkPairQ] := RkErrorC[rk, RkOrder[rk] + 1];
 
-RungeKuttaErrorD[HoldPattern[RungeKutta[args__]]] := Max[Abs[{args}]];
+RkErrorD[HoldPattern[Rk[args__]]] := Max[Abs[{args}]];
 
-RungeKuttaErrorE[rk_?RungeKuttaPairQ, pHat_Integer?Positive] := RungeKuttaErrorA[rk, pHat] / RungeKuttaErrorAHat[rk, pHat - 1];
-RungeKuttaErrorE[rk_?RungeKuttaPairQ] := RungeKuttaErrorE[rk, RungeKuttaOrder[rk] + 1];
+RkErrorE[rk_?RkPairQ, pHat_Integer?Positive] := RkErrorA[rk, pHat] / RkErrorAHat[rk, pHat - 1];
+RkErrorE[rk_?RkPairQ] := RkErrorE[rk, RkOrder[rk] + 1];
 
-RungeKuttaDispersionError[rk_RungeKutta, y_] := y - ComplexExpand[Arg[RungeKuttaLinearStability[rk, y * I]], TargetFunctions -> {Re, Im}];
+RkDispersionError[rk_Rk, y_] := y - ComplexExpand[Arg[RkLinearStability[rk, y * I]], TargetFunctions -> {Re, Im}];
 
-RungeKuttaDispersionOrder[rk_RungeKutta] := errOrder[RungeKuttaDispersionError[rk, y], y];
+RkDispersionOrder[rk_Rk] := errOrder[RkDispersionError[rk, y], y];
 
-RungeKuttaDissipationError[rk_RungeKutta, y_] := 1 - ComplexExpand[Abs[RungeKuttaLinearStability[rk, y * I]]];
+RkDissipationError[rk_Rk, y_] := 1 - ComplexExpand[Abs[RkLinearStability[rk, y * I]]];
 
-RungeKuttaDissipationOrder[rk_RungeKutta] := errOrder[RungeKuttaDissipationError[rk, y], y];
+RkDissipationOrder[rk_Rk] := errOrder[RkDissipationError[rk, y], y];
 
 
 End[];

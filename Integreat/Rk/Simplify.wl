@@ -9,8 +9,8 @@ BeginPackage["Integreat`Rk`Simplify`"];
 
 Integreat`Rk`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
-RungeKuttaDJReduce::usage = "Removes unused stages from a Runge-Kutta method";
-RungeKuttaDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-reducible and False otherwise";
+RkDJReduce::usage = "Removes unused stages from a Runge-Kutta method";
+RkDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-reducible and False otherwise";
 
 
 (* ::Section:: *)
@@ -20,19 +20,19 @@ RungeKuttaDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-redu
 Begin["`Private`"];
 Needs["Integreat`Rk`Methods`"];
 
-RungeKuttaDJIrreducibleStages[rk_] := With[{
+RkDJIrreducibleStages[rk_] := With[{
 		s = Length[rk],
 		graph = Graph[rk]
 	},
 	Sort[Select[VertexOutComponent[graph, Range[s + 1, VertexCount[graph]]], # <= s &]]
 ];
 
-RungeKuttaSubset[rk_, {}] := RungeKuttaSubset[rk, {1}];
-RungeKuttaSubset[rk_, p_] := RungeKutta[
-	RungeKuttaA[rk][[p, p]],
-	RungeKuttaDenseOutput[rk][[p]],
-	RungeKuttaC[rk][[p]],
-	If[RungeKuttaPairQ[rk], RungeKuttaBHat[rk][[p]], Unevaluated[Sequence[]]]
+RkSubset[rk_, {}] := RkSubset[rk, {1}];
+RkSubset[rk_, p_] := Rk[
+	RkA[rk][[p, p]],
+	RkDenseOutput[rk][[p]],
+	RkC[rk][[p]],
+	If[RkPairQ[rk], RkBHat[rk][[p]], Unevaluated[Sequence[]]]
 ]
 
 
@@ -40,9 +40,9 @@ RungeKuttaSubset[rk_, p_] := RungeKutta[
 (*Package Definitions*)
 
 
-RungeKuttaDJReduce[rk_RungeKutta] := RungeKuttaSubset[rk, RungeKuttaDJIrreducibleStages[rk]];
+RkDJReduce[rk_Rk] := RkSubset[rk, RkDJIrreducibleStages[rk]];
 
-RungeKuttaDJReducibleQ[rk_RungeKutta] := Length[RungeKuttaDJIrreducibleStages[rk]] =!= Length[rk];
+RkDJReducibleQ[rk_Rk] := Length[RkDJIrreducibleStages[rk]] =!= Length[rk];
 
 
 (* ::Section:: *)

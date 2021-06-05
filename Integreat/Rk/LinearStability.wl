@@ -7,14 +7,14 @@
 BeginPackage["Integreat`Rk`LinearStability`"];
 Integreat`Rk`LinearStability::usage = "Package containing functions for analyzing the linear stability of Runge-Kutta methods";
 
-RungeKuttaLinearStability::usage = "The linear stability function for a Runge-Kutta method applied to y'=\[Lambda]y";
-RungeKuttaOrderStarPlot::usage = "Plots the order star";
-RungeKuttaLinearStabilityPlot::usage = "Plots the region of linear stability";
-RungeKuttaLinearStabilityP::usage = "The numerator of the linear stability function";
-RungeKuttaLinearStabilityQ::usage = "The denominator of the linear stability function";
-RungeKuttaEPolynomial::usage = "The E-polynomial to test for I-stability";
-RungeKuttaAStableCondition::usage = "Returns True if the Runge-Kutta method is A-stable, and False otherwise";
-RungeKuttaStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
+RkLinearStability::usage = "The linear stability function for a Runge-Kutta method applied to y'=\[Lambda]y";
+RkOrderStarPlot::usage = "Plots the order star";
+RkLinearStabilityPlot::usage = "Plots the region of linear stability";
+RkLinearStabilityP::usage = "The numerator of the linear stability function";
+RkLinearStabilityQ::usage = "The denominator of the linear stability function";
+RkEPolynomial::usage = "The E-polynomial to test for I-stability";
+RkAStableCondition::usage = "Returns True if the Runge-Kutta method is A-stable, and False otherwise";
+RkStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
 
 
 (* ::Section:: *)
@@ -31,32 +31,32 @@ StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray
 (*Package Definitions*)
 
 
-RungeKuttaLinearStability[rk_RungeKutta, lim_DirectedInfinity, p_ | PatternSequence[]] := Limit[RungeKuttaLinearStability[rk, z, p], z -> lim];
-RungeKuttaLinearStability[rk_RungeKutta, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]], {2}][[p]];
-RungeKuttaLinearStability[rk_RungeKutta, z_] := 1 + z * RungeKuttaB[rk].RungeKuttaLinearStability[rk, z, All];
+RkLinearStability[rk_Rk, lim_DirectedInfinity, p_ | PatternSequence[]] := Limit[RkLinearStability[rk, z, p], z -> lim];
+RkLinearStability[rk_Rk, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RkA[rk]], {2}][[p]];
+RkLinearStability[rk_Rk, z_] := 1 + z * RkB[rk].RkLinearStability[rk, z, All];
 
-RungeKuttaOrderStarPlot[rk_RungeKutta, args___] := OrderStarPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
+RkOrderStarPlot[rk_Rk, args___] := OrderStarPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
 
-RungeKuttaLinearStabilityPlot[rk_RungeKutta, args___] := LinearStabilityPlot[Evaluate[Abs[RungeKuttaLinearStability[rk, #]]] &, args];
+RkLinearStabilityPlot[rk_Rk, args___] := LinearStabilityPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
 
-RungeKuttaLinearStabilityP[rk_RungeKutta, z_, p_Integer] := With[{
-		A = RungeKuttaA[rk]
+RkLinearStabilityP[rk_Rk, z_, p_Integer] := With[{
+		A = RkA[rk]
 	},
 	StabilityNumerator[A, A[[p]], Length[rk], z]
 ];
 
-RungeKuttaLinearStabilityP[rk_RungeKutta, z_] := StabilityNumerator[RungeKuttaA[rk], RungeKuttaB[rk], Length[rk], z];
+RkLinearStabilityP[rk_Rk, z_] := StabilityNumerator[RkA[rk], RkB[rk], Length[rk], z];
 
-RungeKuttaLinearStabilityQ[rk_RungeKutta, z_] := Det[IdentityMatrix[Length[rk]] - z * RungeKuttaA[rk]];
+RkLinearStabilityQ[rk_Rk, z_] := Det[IdentityMatrix[Length[rk]] - z * RkA[rk]];
 
-RungeKuttaEPolynomial[rk_RungeKutta, y_, p_Integer | PatternSequence[]] := ComplexExpand[
-	RungeKuttaLinearStabilityQ[rk, y * I] * RungeKuttaLinearStabilityQ[rk, -y * I]
-	- RungeKuttaLinearStabilityP[rk, y * I, p] * RungeKuttaLinearStabilityP[rk, -y * I, p]
+RkEPolynomial[rk_Rk, y_, p_Integer | PatternSequence[]] := ComplexExpand[
+	RkLinearStabilityQ[rk, y * I] * RkLinearStabilityQ[rk, -y * I]
+	- RkLinearStabilityP[rk, y * I, p] * RkLinearStabilityP[rk, -y * I, p]
 ];
 
-RungeKuttaAStableCondition[rk_RungeKutta, p_Integer | PatternSequence[]] := Resolve[ForAll[y, RungeKuttaEPolynomial[rk, y, p] >= 0], Reals]
+RkAStableCondition[rk_Rk, p_Integer | PatternSequence[]] := Resolve[ForAll[y, RkEPolynomial[rk, y, p] >= 0], Reals]
 
-RungeKuttaStifflyAccurateCondition[rk_RungeKutta] := And @@ Thread[Last[RungeKuttaA[rk]] == RungeKuttaB[rk]];
+RkStifflyAccurateCondition[rk_Rk] := And @@ Thread[Last[RkA[rk]] == RkB[rk]];
 
 
 (* ::Section:: *)

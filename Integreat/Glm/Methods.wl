@@ -68,8 +68,8 @@ GlmComp[m_] := With[{
 
 
 Glm[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := Glm[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
-Glm[rk_RungeKutta, p_Integer] := Glm[RungeKuttaA[rk], {RungeKuttaB[rk]}, ConstantArray[1, {Length[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RungeKuttaC[rk]];
-Glm[rk_RungeKutta] := Glm[rk, RungeKuttaOrder[rk]];
+Glm[rk_Rk, p_Integer] := Glm[RkA[rk], {RkB[rk]}, ConstantArray[1, {Length[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RkC[rk]];
+Glm[rk_Rk] := Glm[rk, RkOrder[rk]];
 Glm[lmm_Lmm] := With[{
 		k = Length[lmm],
 		a = LmmAlpha[lmm],
