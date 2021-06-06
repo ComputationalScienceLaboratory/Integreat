@@ -7,6 +7,7 @@ Integreat`Rk`OrderConditions::usage = "Package containing functions for determin
 
 RkOrderConditions::usage = "?";
 RkDaeOrderConditions::usage = "?";
+RkTreeOrderConditions::usage = "";
 RkSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
 RkSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
 RkSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
