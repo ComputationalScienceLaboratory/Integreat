@@ -44,7 +44,7 @@ phiBranches[t_Times, a_, c_] := Map[phiBranches[#, a, c] &, t];
 phiBranches[\[FormalF][t_], a_, c_] := a . phiBranches[t, a, c];
 
 errOrder[err_?PossibleZeroQ, _] := Infinity;
-errOrder[err_, y_] := NestWhile[# + 1 &, 0, PossibleZeroQ[SeriesCoefficient[err, {y, 0, #}]] &] - 1;
+errOrder[err_, y_] := CountZeros[SeriesCoefficient[err, {y, 0, #}] &, 1] - 1;
 
 
 RkOrderConditions[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderConditions[rk, BTree[p]];
@@ -72,7 +72,7 @@ RkSimplifyingAssumptionD[rk_Rk, {zeta_Integer?Positive}] := With[{
 ];
 RkSimplifyingAssumptionD[rk_Rk, zeta_Integer] := Table[RkSimplifyingAssumptionD[rk, {k}], {k, zeta}];
 
-RkOrder[rk_Rk] := NestWhile[# + 1 &, 0, VectorQ[RkOrderConditions[rk, {# + 1}], PossibleZeroQ] &];
+RkOrder[rk_Rk] := CountZeros[RkOrderConditions[rk, {#}] &, 1] - 1;
 
 RkExtrapolation[m_Rk, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
 		n = Length[steps],

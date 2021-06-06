@@ -34,7 +34,7 @@ LmmOrder[lmm_Lmm] := With[{
 		b = LmmBeta[lmm],
 		i = Range[0, LmmSteps[lmm]]
 	},
-	NestWhile[# + 1 &, -1, PossibleZeroQ[a.SeriesVander[i, # + 1] - b.SeriesVander[i, #]] &]
+	CountZeros[a.SeriesVander[i, #] - b.SeriesVander[i, # - 1] &] - 1
 ];
 
 
