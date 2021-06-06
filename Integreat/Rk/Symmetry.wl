@@ -25,8 +25,6 @@ Needs["Integreat`Rk`Methods`"];
 
 RkReflection[rk:HoldPattern[Rk[A_, b_, c_, d___]]] := Rk[ConstantArray[RkB[rk], Length[b]] - A, b, 1 - c, d];
 
-(*RkSymmetric[rk*)
-
 RkTranspose[rk:HoldPattern[Rk[A_, bdo_, c_, d___]]] /; NoneTrue[RkB[rk], PossibleZeroQ] := With[{
 		s = Length[rk],
 		b = RkB[rk]

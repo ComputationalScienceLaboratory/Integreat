@@ -5,8 +5,8 @@ BeginPackage["Integreat`Rk`OrderConditions`"];
 
 Integreat`Rk`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
 
-RkOrderCondition::usage = "?";
-RkDaeOrderCondition::usage = "?";
+RkOrderConditions::usage = "?";
+RkDaeOrderConditions::usage = "?";
 RkSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
 RkSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
 RkSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
@@ -32,7 +32,7 @@ Scan[Needs, {
 	"Integreat`BTrees`"
 }];
 
-orderCondition[r:_[t_], theta_, a_, b_, c_] := (phi[t, a, b, c] - theta^BTreeOrder[r] / BTreeGamma[r]) / BTreeSigma[r];
+orderConditions[r:_[t_], theta_, a_, b_, c_] := (phi[t, a, b, c] - theta^BTreeOrder[r] / BTreeGamma[r]) / BTreeSigma[r];
 
 phi[\[FormalY], __] := 1;
 phi[\[FormalF], _, b_, _] := Total[b];
@@ -47,13 +47,13 @@ errOrder[err_?PossibleZeroQ, _] := Infinity;
 errOrder[err_, y_] := NestWhile[# + 1 &, 0, PossibleZeroQ[SeriesCoefficient[err, {y, 0, #}]] &] - 1;
 
 
-RkOrderCondition[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderCondition[rk, BTree[p]];
+RkOrderConditions[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderConditions[rk, BTree[p]];
 
-RkDaeOrderCondition[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderCondition[rk, BTreeDiffAlg[p]];
+RkDaeOrderConditions[rk: Repeated[_Rk, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}] := RkTreeOrderConditions[rk, BTreeDiffAlg[p]];
 
-RkTreeOrderCondition[rk_Rk, t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, RkA[rk], RkB[rk], RkC[rk]];
-RkTreeOrderCondition[t:(_BTree | _BTreeDiffAlg)] := orderCondition[t, 1, \[FormalA], \[FormalB], \[FormalC]];
-SetAttributes[RkTreeOrderCondition, Listable];
+RkTreeOrderConditions[rk_Rk, t:(_BTree | _BTreeDiffAlg)] := orderConditions[t, 1, RkA[rk], RkB[rk], RkC[rk]];
+RkTreeOrderConditions[t:(_BTree | _BTreeDiffAlg)] := orderConditions[t, 1, \[FormalA], \[FormalB], \[FormalC]];
+SetAttributes[RkTreeOrderConditions, Listable];
 
 RkSimplifyingAssumptionB[rk_Rk, {1}] := Total[RkB[rk]] - 1;
 RkSimplifyingAssumptionB[rk_Rk, {p_Integer?Positive}] := RkB[rk].RkC[rk]^(p - 1) - 1 / p;
@@ -72,7 +72,7 @@ RkSimplifyingAssumptionD[rk_Rk, {zeta_Integer?Positive}] := With[{
 ];
 RkSimplifyingAssumptionD[rk_Rk, zeta_Integer] := Table[RkSimplifyingAssumptionD[rk, {k}], {k, zeta}];
 
-RkOrder[rk_Rk] := NestWhile[# + 1 &, 0, And @@ PossibleZeroQ[RkOrderCondition[rk, {# + 1}]] &];
+RkOrder[rk_Rk] := NestWhile[# + 1 &, 0, VectorQ[RkOrderConditions[rk, {# + 1}], PossibleZeroQ] &];
 
 RkExtrapolation[m_Rk, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
 		n = Length[steps],
@@ -81,7 +81,7 @@ RkExtrapolation[m_Rk, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps],
 	Inner[#1 * m^#2 &, LinearSolve[Append[Table[1 / steps^(jump * i + p), {i, 0, n - 2}], ConstantArray[1, n]], UnitVector[n, n]], steps, Plus]
 ];
 
-RkErrorA[rk_Rk, p_Integer?NonNegative] := Norm[RkOrderCondition[rk, {p}]];
+RkErrorA[rk_Rk, p_Integer?NonNegative] := Norm[RkOrderConditions[rk, {p}]];
 RkErrorA[rk_Rk] := RkErrorA[rk, RkOrder[rk] + 1];
 
 RkErrorAHat[rk_?RkPairQ, pHat: Repeated[_Integer?NonNegative, {0, 1}]] := RkErrorA[RkEmbedded[rk], pHat];
@@ -90,7 +90,7 @@ RkErrorB[rk_?RkPairQ, pHat_Integer?Positive] := RkErrorAHat[rk, pHat] / RkErrorA
 RkErrorB[rk_?RkPairQ] := RkErrorB[rk, RkOrder[rk] + 1];
 
 RkErrorC[rk_?RkPairQ, pHat_Integer?Positive] := Norm[
-		RkOrderCondition[rk, {pHat}] - RkOrderCondition[RkEmbedded[rk], {pHat}]
+		RkOrderConditions[rk, {pHat}] - RkOrderConditions[RkEmbedded[rk], {pHat}]
 	] / RkErrorAHat[rk, pHat - 1];
 RkErrorC[rk_?RkPairQ] := RkErrorC[rk, RkOrder[rk] + 1];
 

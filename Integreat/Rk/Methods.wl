@@ -20,6 +20,7 @@ RkDenseOutput::usage = "Gets the interpolatory b coeffients as a function of \[F
 RkB::usage = "Gets the b coefficients of a Runge-Kutta method.  Optionally the second argument is a boolean for whether to return to return the embedded b coefficients.";
 RkC::usage = "Gets the c coefficients of a Runge-Kutta method";
 RkBHat::usage = "Gets the embedded coefficients of a Runge-Kutta method";
+RkStages::usage = "Gets the number of stages of a Runge-Kutta method";
 
 
 (* ::Section:: *)
@@ -95,6 +96,8 @@ RkC[HoldPattern[Rk[_, _, c_, ___]]] := c;
 
 RkBHat[HoldPattern[Rk[_, _, _, bHat_]]] := bHat;
 
+RkStages[HoldPattern[Rk[_, _, c_, ___]]] := Length[c];
+
 Rk /: Graph[rk:HoldPattern[Rk[A_, _, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
 		K = Replace[Join[A, {RkB[rk], bHat}], 0 -> Infinity, {2}],
 		s = Length[A]
@@ -107,8 +110,6 @@ Rk /: Graph[rk:HoldPattern[Rk[A_, _, _, bHat___]], opts:OptionsPattern[WeightedA
 		VertexLabels -> i_ -> Which[i <= s, StringForm["\!\(\*SubscriptBox[\(Y\), \(``\)]\)", i], i == s + 1, "\!\(\*SubscriptBox[\(y\), \(n+1\)]\)", True, "\!\(\*SubscriptBox[OverscriptBox[\(y\), \(^\)], \(n+1\)]\)"]
 	]
 ];
-
-Rk /: Length[HoldPattern[Rk[A_, __]]] := Length[A];
 
 Rk /: Variables[HoldPattern[Rk[a___]]] := Variables[{a}];
 

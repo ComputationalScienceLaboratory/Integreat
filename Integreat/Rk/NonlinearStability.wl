@@ -7,7 +7,7 @@ Integreat`Rk`NonlinearStability::usage = "Package containing functions for analy
 
 RkAlgebraicStabilityMatrix::usage = "The algebraic stability matrix of a Runge-Kutta method";
 RkAlgebraicallyStableQ::usage = "Returns True if the Runge-Kutta method is algebraically stable and False otherwise";
-RkSymplecticCondition::usage = "The condition for the Runge-Kutta method to by symplectic";
+RkSymplecticQ::usage = "Returns True if the Runge-Kutta method is symplectic and False otherwise";
 
 
 Begin["`Private`"];
@@ -25,7 +25,7 @@ RkAlgebraicStabilityMatrix[rk_Rk] := AlgMat[RkA[rk], RkB[rk], Length[rk]];
 
 RkAlgebraicallyStableQ[rk_Rk, p_Integer | PatternSequence[]] := PositiveSemidefiniteMatrixQ[RkAlgebraicStabilityMatrix[rk, p]];
 
-RkSymplecticCondition[rk_Rk, p_Integer | PatternSequence[]] := And @@ Thread[Flatten[RkAlgebraicStabilityMatrix[rk, p]] == 0];
+RkSymplecticQ[rk_Rk, p_Integer | PatternSequence[]] := MatrixQ[RkAlgebraicStabilityMatrix[rk, p], PossibleZeroQ];
 
 
 End[];

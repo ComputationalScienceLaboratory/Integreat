@@ -14,7 +14,7 @@ RkLinearStabilityP::usage = "The numerator of the linear stability function";
 RkLinearStabilityQ::usage = "The denominator of the linear stability function";
 RkEPolynomial::usage = "The E-polynomial to test for I-stability";
 RkAStableCondition::usage = "Returns True if the Runge-Kutta method is A-stable, and False otherwise";
-RkStifflyAccurateCondition::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
+RkStifflyAccurateQ::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
 
 
 (* ::Section:: *)
@@ -56,7 +56,7 @@ RkEPolynomial[rk_Rk, y_, p_Integer | PatternSequence[]] := ComplexExpand[
 
 RkAStableCondition[rk_Rk, p_Integer | PatternSequence[]] := Resolve[ForAll[y, RkEPolynomial[rk, y, p] >= 0], Reals]
 
-RkStifflyAccurateCondition[rk_Rk] := And @@ Thread[Last[RkA[rk]] == RkB[rk]];
+RkStifflyAccurateQ[rk_Rk] := VectorQ[Last[RkA[rk]] - RkB[rk], PossibleZeroQ];
 
 
 (* ::Section:: *)
