@@ -26,7 +26,7 @@ Needs["Integreat`Rk`Methods`"];
 RkReflection[rk:HoldPattern[Rk[A_, b_, c_, d___]]] := Rk[ConstantArray[RkB[rk], Length[b]] - A, b, 1 - c, d];
 
 RkTranspose[rk:HoldPattern[Rk[A_, bdo_, c_, d___]]] /; NoneTrue[RkB[rk], PossibleZeroQ] := With[{
-		s = Length[rk],
+		s = RkStages[rk],
 		b = RkB[rk]
 	},
 	Rk[Table[b[[j]] * A[[j, i]] / b[[i]], {i, s}, {j, s}], bdo, 1 - c, d]

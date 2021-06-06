@@ -21,7 +21,7 @@ Begin["`Private`"];
 Needs["Integreat`Rk`Methods`"];
 
 RkDJIrreducibleStages[rk_] := With[{
-		s = Length[rk],
+		s = RkStages[rk],
 		graph = Graph[rk]
 	},
 	Sort[Select[VertexOutComponent[graph, Range[s + 1, VertexCount[graph]]], # <= s &]]
@@ -42,7 +42,7 @@ RkSubset[rk_, p_] := Rk[
 
 RkDJReduce[rk_Rk] := RkSubset[rk, RkDJIrreducibleStages[rk]];
 
-RkDJReducibleQ[rk_Rk] := Length[RkDJIrreducibleStages[rk]] =!= Length[rk];
+RkDJReducibleQ[rk_Rk] := Length[RkDJIrreducibleStages[rk]] =!= RkStages[rk];
 
 
 (* ::Section:: *)

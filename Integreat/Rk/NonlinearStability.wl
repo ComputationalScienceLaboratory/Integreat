@@ -19,9 +19,9 @@ AlgMat[A_, b_, s_] := Table[b[[i]] * A[[i,j]] + b[[j]] * A[[j,i]] - b[[i]] * b[[
 RkAlgebraicStabilityMatrix[rk_Rk, p_Integer] := With[{
 		A = RkA[rk]
 	},
-	AlgMat[A, A[[p]], Length[rk]]
+	AlgMat[A, A[[p]], RkStages[rk]]
 ];
-RkAlgebraicStabilityMatrix[rk_Rk] := AlgMat[RkA[rk], RkB[rk], Length[rk]];
+RkAlgebraicStabilityMatrix[rk_Rk] := AlgMat[RkA[rk], RkB[rk], RkStages[rk]];
 
 RkAlgebraicallyStableQ[rk_Rk, p_Integer | PatternSequence[]] := PositiveSemidefiniteMatrixQ[RkAlgebraicStabilityMatrix[rk, p]];
 

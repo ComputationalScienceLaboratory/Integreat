@@ -21,7 +21,7 @@ GlmQ::usage = "Gets the Q coefficients of a general linear method";
 GlmC::usage = "Gets the c coefficients of a general linear method";
 GlmInternalStages::usage = "Returns the number of internal stages in a general linear method";
 GlmExternalStages::usage = "Returns the number of external stages in a general linear method";
-GlmOrder::usage = "Returns the order of a general linear method";
+GlmP::usage = "Returns the order to which external stages are expanded for a general linear method";
 GlmType::usage = "Returns the type number of the general linear method";
 GlmTransform::usage = "Transforms a general linear method into an equivalent formulation";
 
@@ -57,7 +57,7 @@ GlmComp[m_] := With[{
 		ArrayFlatten[{Table[m[[i, 2]] * Dot @@ Map[GlmV, m[[n;;i + 1;;-1, 1]]] . GlmB[m[[n + 1 - i, 1]]], {i, n}]}],
 		ArrayFlatten[Table[{GlmU[m[[i, 1]]] . Dot @@ Map[GlmV, m[[1;;i - 1, 1]]]}, {i, n}]],
 		Dot @@ Map[GlmV, m[[All, 1]]],
-		GlmQ[m[[1, 1]]] . DiagonalMatrix[m[[1, 2]] ^ Range[0, GlmOrder[m[[1, 1]]]]],
+		GlmQ[m[[1, 1]]] . DiagonalMatrix[m[[1, 2]] ^ Range[0, GlmP[m[[1, 1]]]]],
 		Catenate[Map[Last[#] * GlmC[First[#]] &, m] + FoldList[Plus, 0, m[[1 ;; -2, 2]]]]
 	]
 ];
@@ -68,10 +68,10 @@ GlmComp[m_] := With[{
 
 
 Glm[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := Glm[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
-Glm[rk_Rk, p_Integer] := Glm[RkA[rk], {RkB[rk]}, ConstantArray[1, {Length[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RkC[rk]];
+Glm[rk_Rk, p_Integer] := Glm[RkA[rk], {RkB[rk]}, ConstantArray[1, {RkStages[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RkC[rk]];
 Glm[rk_Rk] := Glm[rk, RkOrder[rk]];
 Glm[lmm_Lmm] := With[{
-		k = Length[lmm],
+		k = LmmSteps[lmm],
 		a = LmmAlpha[lmm],
 		b = LmmBeta[lmm],
 		c = 1 - LengthWhile[Reverse[LmmBeta[lmm]], PossibleZeroQ]
@@ -153,7 +153,7 @@ GlmInternalStages[HoldPattern[Glm[A_, __]]] := Length[A];
 
 GlmExternalStages[HoldPattern[Glm[_, B_, __]]] := Length[B];
 
-GlmOrder[HoldPattern[Glm[_, _, _, _, Q_, __]]] := Dimensions[Q][[2]] - 1;
+GlmP[HoldPattern[Glm[_, _, _, _, Q_, __]]] := Dimensions[Q][[2]] - 1;
 
 GlmType[HoldPattern[Glm[A_, __]]] := Which[
 	TableauZerosQ[A], 3,

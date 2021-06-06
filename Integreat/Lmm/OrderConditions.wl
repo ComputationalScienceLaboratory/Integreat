@@ -24,15 +24,15 @@ Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`Lmm`Methods`"}];
 
 
 LmmOrderConditions[lmm_Lmm, p_Integer?NonNegative] := With[{
-		i = Range[0, Length[lmm]]
+		i = Range[0, LmmSteps[lmm]]
 	},
-	ThreadEqual[LmmAlpha[lmm].SeriesVander[i, 0, p], LmmBeta[lmm].SeriesVander[i, -1, p - 1]]
+	LmmAlpha[lmm].SeriesVander[i, 0, p] - LmmBeta[lmm].SeriesVander[i, -1, p - 1]
 ];
 
 LmmOrder[lmm_Lmm] := With[{
 		a = LmmAlpha[lmm],
 		b = LmmBeta[lmm],
-		i = Range[0, Length[lmm]]
+		i = Range[0, LmmSteps[lmm]]
 	},
 	NestWhile[# + 1 &, -1, PossibleZeroQ[a.SeriesVander[i, # + 1] - b.SeriesVander[i, #]] &]
 ];

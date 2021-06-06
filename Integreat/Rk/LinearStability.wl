@@ -32,7 +32,7 @@ StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray
 
 
 RkLinearStability[rk_Rk, lim_DirectedInfinity, p_ | PatternSequence[]] := Limit[RkLinearStability[rk, z, p], z -> lim];
-RkLinearStability[rk_Rk, z_, p_] := Total[Inverse[IdentityMatrix[Length[rk]] - z * RkA[rk]], {2}][[p]];
+RkLinearStability[rk_Rk, z_, p_] := Total[Inverse[IdentityMatrix[RkStages[rk]] - z * RkA[rk]], {2}][[p]];
 RkLinearStability[rk_Rk, z_] := 1 + z * RkB[rk].RkLinearStability[rk, z, All];
 
 RkOrderStarPlot[rk_Rk, args___] := OrderStarPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
@@ -42,12 +42,12 @@ RkLinearStabilityPlot[rk_Rk, args___] := LinearStabilityPlot[Evaluate[Abs[RkLine
 RkLinearStabilityP[rk_Rk, z_, p_Integer] := With[{
 		A = RkA[rk]
 	},
-	StabilityNumerator[A, A[[p]], Length[rk], z]
+	StabilityNumerator[A, A[[p]], RkStages[rk], z]
 ];
 
-RkLinearStabilityP[rk_Rk, z_] := StabilityNumerator[RkA[rk], RkB[rk], Length[rk], z];
+RkLinearStabilityP[rk_Rk, z_] := StabilityNumerator[RkA[rk], RkB[rk], RkStages[rk], z];
 
-RkLinearStabilityQ[rk_Rk, z_] := Det[IdentityMatrix[Length[rk]] - z * RkA[rk]];
+RkLinearStabilityQ[rk_Rk, z_] := Det[IdentityMatrix[RkStages[rk]] - z * RkA[rk]];
 
 RkEPolynomial[rk_Rk, y_, p_Integer | PatternSequence[]] := ComplexExpand[
 	RkLinearStabilityQ[rk, y * I] * RkLinearStabilityQ[rk, -y * I]

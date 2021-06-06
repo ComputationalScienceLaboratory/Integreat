@@ -63,8 +63,6 @@ LmmBetaGeneratingPolynomial[HoldPattern[Lmm[_, b_]], xi_] := Sum[b[[k]] * xi^(k 
 
 LmmSteps[HoldPattern[Lmm[a_, _]]] := Length[a] - 1;
 
-Lmm /: Length[HoldPattern[Lmm[a_, _]]] := Length[a] - 1;
-
 Lmm /: Variables[HoldPattern[Lmm[a, b]]] := Variables[{a, b}];
 
 Lmm /: MakeBoxes[HoldPattern[Lmm[a_List, b_List]], format_] := With[{
