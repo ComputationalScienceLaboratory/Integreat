@@ -28,10 +28,9 @@ LmmReducibleQ[lmm_Lmm] := Exponent[PolynomialGCD[LmmAlphaGeneratingPolynomial[lm
 
 LmmReduce[lmm_Lmm] := With[{
 		aPoly = LmmAlphaGeneratingPolynomial[lmm, x],
-		bPoly = LmmBetaGeneratingPolynomial[lmm, x],
-		len = Length[LmmAlpha[lmm]]
+		bPoly = LmmBetaGeneratingPolynomial[lmm, x]
 	},
-	Lmm @@ Map[PadRight[CoefficientList[#, x], len] &, {aPoly, bPoly} / PolynomialGCD[aPoly, bPoly]]
+	Lmm @@ PadRight[CoefficientList[{aPoly, bPoly} / PolynomialGCD[aPoly, bPoly], x]]
 ];
 
 LmmRescale[lmm_Lmm, s_] := Lmm[s * LmmAlpha[lmm], s * LmmBeta[lmm]];
