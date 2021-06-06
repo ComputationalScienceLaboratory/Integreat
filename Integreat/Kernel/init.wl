@@ -14,10 +14,6 @@
 <<Integreat`Rk`Simplify`;
 
 
-<<Integreat`Rosenbrock`Methods`;
-<<Integreat`Rosenbrock`LinearStability`;
-
-
 <<Integreat`Lmm`Methods`;
 <<Integreat`Lmm`LinearStability`;
 <<Integreat`Lmm`OrderConditions`;
