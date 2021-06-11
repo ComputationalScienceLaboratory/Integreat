@@ -90,7 +90,7 @@ RkA[HoldPattern[Rk[A_, __]]] := A;
 
 RkDenseOutput[HoldPattern[Rk[_, b_, __]]] := b;
 
-RkB[HoldPattern[Rk[_, b_, _, bHat_:Null]], embedded_:False]:= If[embedded, bHat, b /. \[FormalTheta] -> 1];
+RkB[HoldPattern[Rk[_, b_, _, bHat_:Null]], embedded_?BooleanQ:False]:= If[embedded, bHat, b /. \[FormalTheta] -> 1];
 
 RkC[HoldPattern[Rk[_, _, c_, ___]]] := c;
 
