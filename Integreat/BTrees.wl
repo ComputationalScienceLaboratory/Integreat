@@ -41,9 +41,9 @@ SetAttributes[tree, Listable];
 (*N-Trees*)
 
 
-treeN[n_, 0] := \[FormalY];
-treeN[n_, 1] := Table[Subscript[\[FormalF], i], {i, n}];
-treeN[n_, p_] := treeN[n, p] = Flatten[Outer[Construct, treeN[n, 1], branches[treeN[n, #] &, p - 1]]];
+treeN[0, n_] := \[FormalY];
+treeN[1, n_] := Table[Subscript[\[FormalF], i], {i, n}];
+treeN[p_, n_] := treeN[p, n] = Flatten[Outer[Construct, treeN[1, n], branches[treeN[#, n] &, p - 1]]];
 SetAttributes[treeN, Listable];
 
 
@@ -106,27 +106,22 @@ treeEdges[t_Times, root_, counter_] := With[{t1 = First[t]}, Join[treeEdges[Rest
 
 
 BTree[{p_Integer?NonNegative}] := Map[BTree, tree[p]];
-BTree[p_Integer?Positive] := BTree[1, p];
-BTree[pStart_Integer?NonNegative, pEnd_Integer?NonNegative] := Map[BTree, tree[Range[pStart, pEnd]], {2}];
+BTree[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTree, tree[Range[pStart, pEnd]], {2}];
 BTree /: MakeBoxes[HoldPattern[BTree[t_]], format_] := MakeBoxes[t, format];
 
-BTreeN[n_Integer?Positive, {p_Integer?NonNegative}] := Map[BTreeN[#, n] &, treeN[n, p]];
-BTreeN[n_Integer?Positive, p_Integer?Positive] := BTreeN[n, 1, p];
-BTreeN[n_Integer?Positive, pStart_Integer?NonNegative, pEnd_Integer?NonNegative] := Map[BTreeN[#, n] &, treeN[n, Range[pStart, pEnd]], {2}];
-BTreeN /: MakeBoxes[HoldPattern[BTreeN[t_, _]], format_] := MakeBoxes[t, format];
+BTreeN[{p_Integer?NonNegative}, n_Integer?Positive] := Map[BTreeN[#, n] &, treeN[p, n]];
+BTreeN[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative, n_Integer?Positive] := Map[BTreeN[#, n] &, treeN[Range[pStart, pEnd], n], {2}];
+BTreeN /: MakeBoxes[HoldPattern[BTreeN[t_ , _Integer?Positive]], format_] := MakeBoxes[t, format];
 
 BTreeDiffAlg[{p_Integer?NonNegative}] := Map[BTreeDiffAlg, treeDiffAlg[p]];
-BTreeDiffAlg[p_Integer?Positive] := BTreeDiffAlg[1, p];
-BTreeDiffAlg[pStart_Integer?NonNegative, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeDiffAlg[Range[pStart, pEnd]], {2}];
+BTreeDiffAlg[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeDiffAlg[Range[pStart, pEnd]], {2}];
 BTreeDiffAlg /: MakeBoxes[HoldPattern[BTreeDiffAlg[t_]], format_] := MakeBoxes[t, format];
 
 BTreeDiff[{p_Integer?NonNegative}] := Map[BTreeDiffAlg, treeDiff[p]];
-BTreeDiff[p_Integer?Positive] := BTreeDiff[1, p];
-BTreeDiff[pStart_Integer?NonNegative, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeDiff[Range[pStart, pEnd]], {2}];
+BTreeDiff[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeDiff[Range[pStart, pEnd]], {2}];
 
 BTreeAlg[{p_Integer?NonNegative}] := Map[BTreeDiffAlg, treeAlg[p]];
-BTreeAlg[p_Integer?Positive] := BTreeAlg[1, p];
-BTreeAlg[pStart_Integer?NonNegative, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeAlg[Range[pStart, pEnd]], {2}];
+BTreeAlg[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeAlg[Range[pStart, pEnd]], {2}];
 
 BTreeOrder[(BTree | BTreeN | BTreeDiffAlg)[t_, ___]] := treeOrder[t];
 SetAttributes[BTreeOrder, Listable];
