@@ -31,9 +31,9 @@ StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray
 (*Package Definitions*)
 
 
-RkLinearStability[rk_Rk, lim_DirectedInfinity, p_ | PatternSequence[]] := Limit[RkLinearStability[rk, z, p], z -> lim];
-RkLinearStability[rk_Rk, z_, p_] := Total[Inverse[IdentityMatrix[RkStages[rk]] - z * RkA[rk]], {2}][[p]];
-RkLinearStability[rk_Rk, z_] := 1 + z * RkB[rk].RkLinearStability[rk, z, All];
+RkLinearStability[rk_Rk, lim_DirectedInfinity, args:(All | _Integer | OptionsPattern[RkB])] := Limit[RkLinearStability[rk, z, args], z -> lim];
+RkLinearStability[rk_Rk, z_, p:(All | _Integer)] := Total[Inverse[IdentityMatrix[RkStages[rk]] - z * RkA[rk]], {2}][[p]];
+RkLinearStability[rk_Rk, z_, opts:OptionsPattern[RkB]] := 1 + z * RkB[rk, opts].RkLinearStability[rk, z, All];
 
 RkOrderStarPlot[rk_Rk, args___] := OrderStarPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
 
@@ -45,16 +45,16 @@ RkLinearStabilityP[rk_Rk, z_, p_Integer] := With[{
 	StabilityNumerator[A, A[[p]], RkStages[rk], z]
 ];
 
-RkLinearStabilityP[rk_Rk, z_] := StabilityNumerator[RkA[rk], RkB[rk], RkStages[rk], z];
+RkLinearStabilityP[rk_Rk, z_, opts:OptionsPattern[RkB]] := StabilityNumerator[RkA[rk], RkB[rk, opts], RkStages[rk], z];
 
 RkLinearStabilityQ[rk_Rk, z_] := Det[IdentityMatrix[RkStages[rk]] - z * RkA[rk]];
 
-RkEPolynomial[rk_Rk, y_, p_Integer | PatternSequence[]] := ComplexExpand[
+RkEPolynomial[rk_Rk, y_, args:(_Integer | OptionsPattern[RkB])] := ComplexExpand[
 	RkLinearStabilityQ[rk, y * I] * RkLinearStabilityQ[rk, -y * I]
-	- RkLinearStabilityP[rk, y * I, p] * RkLinearStabilityP[rk, -y * I, p]
+	- RkLinearStabilityP[rk, y * I, args] * RkLinearStabilityP[rk, -y * I, args]
 ];
 
-RkAStableCondition[rk_Rk, p_Integer | PatternSequence[]] := Resolve[ForAll[y, RkEPolynomial[rk, y, p] >= 0], Reals]
+RkAStableCondition[rk_Rk, args:(_Integer | OptionsPattern[RkB])] := Resolve[ForAll[y, RkEPolynomial[rk, y, args] >= 0], Reals]
 
 RkStifflyAccurateQ[rk_Rk] := VectorQ[Last[RkA[rk]] - RkB[rk], PossibleZeroQ];
 

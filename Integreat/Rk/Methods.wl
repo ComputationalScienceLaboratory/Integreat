@@ -81,7 +81,7 @@ RkPairQ[HoldPattern[Rk[_, _, _, _]]] := True;
 RkPairQ[_] := False;
 
 RkCollocation[c_List?VectorQ] := With[{
-		V = SeriesVander[Append[c, 1], 1, Length[c]].Inverse[SeriesVander[c, 0, Length[c] - 1]]
+		V = SeriesVander[Append[c, \[FormalTheta]], 1, Length[c]].Inverse[SeriesVander[c, 0, Length[c] - 1]]
 	},
 	Rk[Most[V], Last[V], c]
 ];
@@ -90,7 +90,12 @@ RkA[HoldPattern[Rk[A_, __]]] := A;
 
 RkDenseOutput[HoldPattern[Rk[_, b_, __]]] := b;
 
-RkB[HoldPattern[Rk[_, b_, _, bHat_:Null]], embedded_?BooleanQ:False]:= If[embedded, bHat, b /. \[FormalTheta] -> 1];
+Options[RkB] = {Embedded -> False, DenseOutput -> False};
+RkB[HoldPattern[Rk[_, b_, _, bHat_:Null]], OptionsPattern[]] := Which[
+	TrueQ[OptionValue[Embedded]], bHat,
+	TrueQ[OptionValue[DenseOutput]], b,
+	True, b /. \[FormalTheta] -> 1
+];
 
 RkC[HoldPattern[Rk[_, _, c_, ___]]] := c;
 
@@ -98,8 +103,8 @@ RkBHat[HoldPattern[Rk[_, _, _, bHat_]]] := bHat;
 
 RkStages[HoldPattern[Rk[_, _, c_, ___]]] := Length[c];
 
-Rk /: Graph[rk:HoldPattern[Rk[A_, _, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
-		K = Replace[Join[A, {RkB[rk], bHat}], 0 -> Infinity, {2}],
+Rk /: Graph[HoldPattern[Rk[A_, b_, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
+		K = Replace[Join[A, {b, bHat}], _?PossibleZeroQ -> Infinity, {2}],
 		s = Length[A]
 	},
 	WeightedAdjacencyGraph[

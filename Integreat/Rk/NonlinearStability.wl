@@ -21,11 +21,11 @@ RkAlgebraicStabilityMatrix[rk_Rk, p_Integer] := With[{
 	},
 	AlgMat[A, A[[p]], RkStages[rk]]
 ];
-RkAlgebraicStabilityMatrix[rk_Rk] := AlgMat[RkA[rk], RkB[rk], RkStages[rk]];
+RkAlgebraicStabilityMatrix[rk_Rk, opts:OptionsPattern[RkB]] := AlgMat[RkA[rk], RkB[rk, opts], RkStages[rk]];
 
-RkAlgebraicallyStableQ[rk_Rk, p_Integer | PatternSequence[]] := PositiveSemidefiniteMatrixQ[RkAlgebraicStabilityMatrix[rk, p]];
+RkAlgebraicallyStableQ[rk_Rk, args:(_Integer | OptionsPattern[RkB])] := PositiveSemidefiniteMatrixQ[RkAlgebraicStabilityMatrix[rk, args]];
 
-RkSymplecticQ[rk_Rk, p_Integer | PatternSequence[]] := MatrixQ[RkAlgebraicStabilityMatrix[rk, p], PossibleZeroQ];
+RkSymplecticQ[rk_Rk, args:(_Integer | OptionsPattern[RkB])] := MatrixQ[RkAlgebraicStabilityMatrix[rk, args], PossibleZeroQ];
 
 
 End[];
