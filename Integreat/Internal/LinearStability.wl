@@ -12,25 +12,21 @@ OrderStarPlot::usage = "Plots an order star on the complex plane";
 Begin["`Private`"];
 
 
-LinearStabilityPlot[stab_, {xMin_, xMax_}, {yMin_, yMax_}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
+LinearStabilityPlot[stab_, re_:{-6, 2}, im_:{-4, 4}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
 	stab[a + b * I] <= 1,
-	{a, xMin, xMax},
-	{b, yMin, yMax},
+	Prepend[re, a],
+	Prepend[im, b],
 	opts,
 	FrameLabel -> {"Re", "Im"}
 ];
-LinearStabilityPlot[stab_, opts:OptionsPattern[RegionPlot]] := LinearStabilityPlot[stab, {-6, 2}, {-4, 4}, opts];
-LinearStabilityPlot[___] := $Failed;
 
-OrderStarPlot[stab_, {xMin_, xMax_}, {yMin_, yMax_}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
-	stab[a + b * I] >= Exp[a],
-	{a, xMin, xMax},
-	{b, yMin, yMax},
+OrderStarPlot[stab_, re_:{-4, 4}, im_:{-4, 4}, opts:OptionsPattern[RegionPlot]] := RegionPlot[
+	stab[a + b * I] > Exp[a],
+	Prepend[re, a],
+	Prepend[im, b],
 	opts,
 	FrameLabel -> {"Re", "Im"}
 ];
-OrderStarPlot[stab_, opts:OptionsPattern[RegionPlot]] := OrderStarPlot[stab, {-6, 6}, {-6, 6}, opts];
-OrderStarPlot[___] := $Failed;
 
 
 End[];

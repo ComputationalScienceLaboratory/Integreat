@@ -24,7 +24,7 @@ RkStifflyAccurateQ::usage = "Determines if a Runge-Kutta method is stiffly-accur
 Begin["`Private`"];
 Scan[Needs, {"Integreat`Rk`Methods`", "Integreat`Internal`LinearStability`"}];
 
-StabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray[b, s] - A)];
+stabilityNumerator[A_, b_, s_, z_] := Det[IdentityMatrix[s] + z * (ConstantArray[b, s] - A)];
 
 
 (* ::Section:: *)
@@ -35,17 +35,25 @@ RkLinearStability[rk_Rk, lim_DirectedInfinity, args:(All | _Integer | OptionsPat
 RkLinearStability[rk_Rk, z_, p:(All | _Integer)] := Total[Inverse[IdentityMatrix[RkStages[rk]] - z * RkA[rk]], {2}][[p]];
 RkLinearStability[rk_Rk, z_, opts:OptionsPattern[RkB]] := 1 + z * RkB[rk, opts].RkLinearStability[rk, z, All];
 
-RkOrderStarPlot[rk_Rk, args___] := OrderStarPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
+RkOrderStarPlot[rk_Rk, re:{_, _}:{-4, 4}, im:{_, _}:{-4, 4}, opts:OptionsPattern[{RkB, RegionPlot}]] := With[{
+		rkOpts = FilterRules[{opts}, Options[RkB]]
+	},
+	OrderStarPlot[Evaluate[Abs[RkLinearStability[rk, #, rkOpts]]] &, re, im, FilterRules[{opts}, Options[RegionPlot]]]
+];
 
-RkLinearStabilityPlot[rk_Rk, args___] := LinearStabilityPlot[Evaluate[Abs[RkLinearStability[rk, #]]] &, args];
+RkLinearStabilityPlot[rk_Rk, re:{_, _}:{-6, 2}, im:{_, _}:{-4, 4}, opts:OptionsPattern[{RkB, RegionPlot}]] := With[{
+		rkOpts = FilterRules[{opts}, Options[RkB]]
+	},
+	LinearStabilityPlot[Evaluate[Abs[RkLinearStability[rk, #, rkOpts]]] &, re, im, FilterRules[{opts}, Options[RegionPlot]]]
+];
 
 RkLinearStabilityP[rk_Rk, z_, p_Integer] := With[{
 		A = RkA[rk]
 	},
-	StabilityNumerator[A, A[[p]], RkStages[rk], z]
+	stabilityNumerator[A, A[[p]], RkStages[rk], z]
 ];
 
-RkLinearStabilityP[rk_Rk, z_, opts:OptionsPattern[RkB]] := StabilityNumerator[RkA[rk], RkB[rk, opts], RkStages[rk], z];
+RkLinearStabilityP[rk_Rk, z_, opts:OptionsPattern[RkB]] := stabilityNumerator[RkA[rk], RkB[rk, opts], RkStages[rk], z];
 
 RkLinearStabilityQ[rk_Rk, z_] := Det[IdentityMatrix[RkStages[rk]] - z * RkA[rk]];
 

@@ -37,7 +37,7 @@ Scan[Needs, {
 rkCompose[m_] := Rk[
 	ArrayFlatten[Table[Which[
 		i == j, m[[i, 2]] * RkA[m[[i, 1]]],
-		i > j, m[[j, 2]] * ConstantArray[RkB[m[[j, 1]]], Length[m[[i, 1]]]],
+		i > j, m[[j, 2]] * ConstantArray[RkB[m[[j, 1]]], RkStages[m[[i, 1]]]],
 		True, 0
 	], {i, Length[m]}, {j, Length[m]}]],
 	Catenate[Map[Last[#] * RkDenseOutput[First[#]] &, m]],

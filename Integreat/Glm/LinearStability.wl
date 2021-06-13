@@ -7,9 +7,10 @@
 BeginPackage["Integreat`Glm`LinearStability`"];
 Integreat`Glm`LinearStability::usage = "Package containing functions for analyzing the linear stability of general linear methods";
 
-GlmLinearStabilityMatrix::usage = "The linear stability matrix for a general linear method";
-GlmLinearStabilityFunction::usage = "The linear stability function for a general linear method";
+GlmLinearStability::usage = "The linear stability matrix for a general linear method";
+GlmLinearStabilityPolynomial::usage = "The linear stability function for a general linear method";
 GlmLinearStabilityPlot::usage = "Plots the region of linear stability";
+GlmOrderStarPlot::usage = "";
 
 
 (* ::Section:: *)
@@ -24,11 +25,18 @@ Scan[Needs, {"Integreat`Glm`Methods`", "Integreat`Internal`LinearStability`"}];
 (*Package Definitions*)
 
 
-GlmLinearStabilityMatrix[glm_Glm, z_] := GlmV[glm] + z * GlmB[glm] . Inverse[IdentityMatrix[GlmInternalStages[glm]] - z * GlmA[glm]] . GlmU[glm];
+GlmLinearStability[glm_Glm, lim_DirectedInfinity] := Limit[GlmLinearStability[glm, z], z -> lim];
+GlmLinearStability[glm_Glm, z_] := GlmV[glm] + z * GlmB[glm] . Inverse[IdentityMatrix[GlmInternalStages[glm]] - z * GlmA[glm]] . GlmU[glm];
 
-GlmLinearStabilityFunction[glm_Glm, w_, z_] := Det[w * IdentityMatrix[GlmExternalStages[glm]] - GlmLinearStabilityMatrix[glm, z]];
+GlmLinearStabilityPolynomial[glm_Glm, w_, z_] := Det[w * IdentityMatrix[GlmExternalStages[glm]] - GlmLinearStability[glm, z]];
 
-GlmLinearStabilityPlot[glm_Glm, args___] := LinearStabilityPlot[Evaluate[Norm[Eigenvalues[GlmLinearStabilityMatrix[glm, #]], Infinity]] &, args];
+GlmLinearStabilityPlot[glm_Glm, bounds:Repeated[{_, _}, {0, 2}], opts:OptionsPattern[RegionPlot]] := LinearStabilityPlot[
+	Evaluate[Norm[Eigenvalues[GlmLinearStability[glm, #]], Infinity]] &, bounds, opts
+];
+
+GlmOrderStarPlot[glm_Glm, bounds:Repeated[{_, _}, {0, 2}], opts:OptionsPattern[RegionPlot]] := OrderStarPlot[
+	Evaluate[Norm[Eigenvalues[GlmLinearStability[glm, #]], Infinity]] &, bounds, opts
+];
 
 
 (* ::Section:: *)
