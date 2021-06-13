@@ -9,6 +9,7 @@ Integreat`Lmm`OrderConditions::usage = "Package containing functions for determi
 
 LmmOrderConditions::usage = "?";
 LmmOrder::usage = "?";
+LmmErrorConstant::usage = "?";
 
 
 (* ::Section:: *)
@@ -26,7 +27,7 @@ Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`Lmm`Methods`"}];
 LmmOrderConditions[lmm_Lmm, p_Integer?NonNegative] := With[{
 		i = Range[0, LmmSteps[lmm]]
 	},
-	LmmAlpha[lmm].SeriesVander[i, 0, p] - LmmBeta[lmm].SeriesVander[i, -1, p - 1]
+	(LmmAlpha[lmm].SeriesVander[i, 0, p] - LmmBeta[lmm].SeriesVander[i, -1, p - 1]) / Last[LmmAlpha[lmm]]
 ];
 
 LmmOrder[lmm_Lmm] := With[{
@@ -35,6 +36,13 @@ LmmOrder[lmm_Lmm] := With[{
 		i = Range[0, LmmSteps[lmm]]
 	},
 	CountZeros[a.SeriesVander[i, #] - b.SeriesVander[i, # - 1] &] - 1
+];
+
+LmmErrorConstant[lmm_Lmm] := LmmErrorConstant[lmm, LmmOrder[lmm] + 1];
+LmmErrorConstant[lmm_Lmm, p_Integer?NonNegative] := With[{
+		i = Range[0, LmmSteps[lmm]]
+	},
+	(LmmAlpha[lmm].SeriesVander[i, p] - LmmBeta[lmm].SeriesVander[i, p - 1]) / LmmBetaGeneratingPolynomial[lmm, 1]
 ];
 
 
