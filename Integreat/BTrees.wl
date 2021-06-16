@@ -71,7 +71,7 @@ SetAttributes[{treeDiffAlg, treeDiff, treeAlg} , Listable];
 treeOrder[\[FormalY]] := 0;
 treeOrder[_Symbol | _Subscript] := 1;
 treeOrder[Power[t_, p_]] := p * treeOrder[t];
-treeOrder[Times[t__]] := Total[Map[treeOrder, {t}]];
+treeOrder[t_Times] := Total[Map[treeOrder, List @@ t]];
 treeOrder[r:\[FormalG][t_]] := treeOrder[r] = treeOrder[t];
 treeOrder[r:(\[FormalF] | _Subscript)[t_]] := treeOrder[r] = 1 + treeOrder[t];
 
