@@ -22,5 +22,7 @@
 
 
 <<Integreat`Glm`Methods`;
+<<Integreat`Glm`Catalog`;
+<<Integreat`Glm`Validation`;
 <<Integreat`Glm`LinearStability`;
 <<Integreat`Glm`OrderConditions`;
