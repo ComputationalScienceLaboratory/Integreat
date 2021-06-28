@@ -5,11 +5,17 @@
 
 
 BeginPackage["Integreat`Lmm`LinearStability`"];
-Integreat`Lmm`LinearStability::usage = "Package containing functions for analyzing the linear stability of linear multistep methods";
+Integreat`Lmm`LinearStability::usage = "This package contains functions for analyzing the stability of linear multistep methods applied to the linear test problem y' = \[Lambda] y.";
 
-LmmLinearStabilityPolynomial::usage = "";
-LmmLinearStabilityPlot::usage = "Plots the region of linear stability";
-LmmOrderStarPlot::usage = "";
+LmmLinearStabilityPolynomial::usage = "LmmLinearStabilityPolynomial[lmm, \[Zeta], \[Mu]] creates a polynomial in \[Zeta], parameterized by \[Mu] = h \[Lambda], that determines the linear stability of lmm.";
+LmmLinearStabilityPlot::usage =
+	"LmmLinearStabilityPlot[lmm] plots the linear stability region of lmm.\n" <>
+	"LmmLinearStabilityPlot[lmm, {xMin, xMax}, {yMin, yMax}] plots within the specified bounds.\n" <>
+	"LmmLinearStabilityPlot[\[Ellipsis], opts] plots with RegionPlot options opts.";
+LmmOrderStarPlot::usage =
+	"LmmOrderStarPlot[lmm] plots the order star of lmm.\n" <>
+	"LmmOrderStarPlot[lmm, {xMin, xMax}, {yMin, yMax}] plots within the specified bounds.\n" <>
+	"LmmOrderStarPlot[\[Ellipsis], opts] plots with RegionPlot options opts.";
 
 
 (* ::Section:: *)

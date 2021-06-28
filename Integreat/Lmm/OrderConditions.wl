@@ -5,11 +5,13 @@
 
 
 BeginPackage["Integreat`Lmm`OrderConditions`"];
-Integreat`Lmm`OrderConditions::usage = "Package containing functions for determining the order of linear multistep methods";
+Integreat`Lmm`OrderConditions::usage = "This package contains functions for determining the convergence order of linear multistep methods.";
 
-LmmOrderConditions::usage = "?";
-LmmOrder::usage = "?";
-LmmErrorConstant::usage = "?";
+LmmOrderConditions::usage = "LmmOrderConditions[lmm, p] returns a list of order condition residuals for lmm from order 0 to p.  If a residual is zero, the corresponding order condition is satisfied.";
+LmmOrder::usage = "LmmOrder[lmm] determines the order of lmm by evaluating order conditions.";
+LmmErrorConstant::usage =
+	"LmmErrorConstant[lmm] computes the leading error constant of lmm.\n" <>
+	"LmmErrorConstant[lmm, p] computes the error constant of lmm assuming it is order p";
 
 
 (* ::Section:: *)

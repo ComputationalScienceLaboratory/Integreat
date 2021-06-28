@@ -5,19 +5,21 @@
 
 
 BeginPackage["Integreat`Lmm`Methods`"];
-Integreat`Lmm`Methods::usage = "Package containing functions for creating linear multistep methods";
+Integreat`Lmm`Methods::usage = "This package containing functions for creating and accessing basic properties of linear multistep methods.";
 
-Lmm::usage = "Constructs a linear multistep method";
-LmmAdamsBashforth::usage = "Constructs an Adams-Bashforth method";
-LmmAdamsMoulton::usage = "Constructs an Adams-Moulton method";
-LmmNystrom::usage = "";
-LmmMilneSimpson::usage = "";
-LmmBdf::usage = "Constructs a backward differentiation formula method";
-LmmAlpha::usage = "Gets the alpha coefficients of a linear multistep method";
-LmmBeta::usage = "Gets the beta coefficients of a linear multistep method";
-LmmAlphaGeneratingPolynomial::usage = "";
-LmmBetaGeneratingPolynomial::usage = "";
-LmmSteps::usage = "Returns the number of previous steps required to compute the next";
+Lmm::usage =
+	"Lmm[k] creates a generic, k-step linear multistep method\n" <>
+	"Lmm[{\[Alpha]0, \[Alpha]1, \[Ellipsis], \[Alpha]k}, {\[Beta]0, \[Beta]1, \[Ellipsis], \[Beta]k}] create a k-step linear multistep method where the \[Alpha] coefficients multiply y's and the \[Beta] coefficients multiply f(y)'s.  Coefficients should be ordered from oldest to newest.";
+LmmAdamsBashforth::usage = "LmmAdamsBashforth[k] creates a k-step Adams-Bashforth method.";
+LmmAdamsMoulton::usage = "LmmAdamsMoulton[k] creates a k-step Adams-Moulton method.";
+LmmNystrom::usage = "LmmNystrom[k] creates a k-step Nystr\[ODoubleDot]m method.";
+LmmMilneSimpson::usage = "LmmMilneSimpson[k] creates a k-step Milne-Simpson method.";
+LmmBdf::usage = "LmmBdf[k] creates a k-step backward differentiation formula method.";
+LmmAlpha::usage = "LmmAlpha[lmm] gets the list of coefficients multiplying y's from lmm.  They are ordered from oldest to newest.";
+LmmBeta::usage = "LmmBeta[lmm] gets the list of coefficients multiplying f(y)'s from lmm.  They are ordered from oldest to newest.";
+LmmAlphaGeneratingPolynomial::usage = "LmmAlphaGeneratingPolynomial[lmm, \[Zeta]] creates a polynomial in \[Zeta] using the \[Alpha] coefficients of lmm.";
+LmmBetaGeneratingPolynomial::usage = "LmmBetaGeneratingPolynomial[lmm, \[Zeta]] creates a polynomial in \[Zeta] using the \[Beta] coefficients of lmm.";
+LmmSteps::usage = "LmmSteps[lmm] returns the number of previous steps required to compute the next step for lmm.";
 
 
 (* ::Section:: *)
@@ -53,9 +55,9 @@ LmmAlpha[HoldPattern[Lmm[a_, _]]] := a;
 
 LmmBeta[HoldPattern[Lmm[_, b_]]] := b;
 
-LmmAlphaGeneratingPolynomial[HoldPattern[Lmm[a_, _]], xi_] := FromDigits[Reverse[a], xi];
+LmmAlphaGeneratingPolynomial[HoldPattern[Lmm[a_, _]], zeta_] := FromDigits[Reverse[a], zeta];
 
-LmmBetaGeneratingPolynomial[HoldPattern[Lmm[_, b_]], xi_] := FromDigits[Reverse[b], xi];
+LmmBetaGeneratingPolynomial[HoldPattern[Lmm[_, b_]], zeta_] := FromDigits[Reverse[b], zeta];
 
 LmmSteps[HoldPattern[Lmm[a_, _]]] := Length[a] - 1;
 

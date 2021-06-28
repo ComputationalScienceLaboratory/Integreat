@@ -5,11 +5,10 @@
 
 
 BeginPackage["Integreat`Lmm`Simplify`"];
-Integreat`Lmm`Simplify::usage = "Package containing functions for simplifying and reducing linear multistep methods";
+Integreat`Lmm`Simplify::usage = "This package contains functions for simplifying and reducing linear multistep methods.";
 
-LmmReducibleQ::usage = "Returns True if the linear multistep method has a simpler equivalent formulation and False otherwise";
-LmmReduce::usage = "Returns the simplest equivalent formulation of a linear multistep method";
-LmmRescale::usage = "Scales both the \[Alpha] and \[Beta] coefficients yielding an equivalent formulation of the linear multistep method";
+LmmReducibleQ::usage = "LmmReducibleQ[lmm] yields True if lmm has a simpler equivalent formulation, and yields False otherwise.";
+LmmReduce::usage = "LmmReduce[lmm] returns the simplest equivalent formulation of lmm.";
 
 
 (* ::Section:: *)
@@ -32,8 +31,6 @@ LmmReduce[lmm_Lmm] := With[{
 	},
 	Lmm @@ PadRight[CoefficientList[{aPoly, bPoly} / PolynomialGCD[aPoly, bPoly], x]]
 ];
-
-LmmRescale[lmm_Lmm, s_] := Lmm[s * LmmAlpha[lmm], s * LmmBeta[lmm]];
 
 
 (* ::Section:: *)
