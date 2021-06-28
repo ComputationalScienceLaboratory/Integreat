@@ -37,7 +37,7 @@ LmmOrder[lmm_Lmm] := With[{
 		b = LmmBeta[lmm],
 		i = Range[0, LmmSteps[lmm]]
 	},
-	CountZeros[a.SeriesVander[i, #] - b.SeriesVander[i, # - 1] &] - 1
+	CountZeros[a.SeriesVander[i, #] - b.SeriesVander[i, # - 1] &, 0] - 1
 ];
 
 LmmErrorConstant[lmm_Lmm] := LmmErrorConstant[lmm, LmmOrder[lmm] + 1];

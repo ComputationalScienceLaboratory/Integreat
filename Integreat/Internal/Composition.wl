@@ -1,19 +1,29 @@
 (* ::Package:: *)
 
+(* ::Section:: *)
+(*Usage*)
+
+
 BeginPackage["Integreat`Internal`Composition`"];
+Integreat`Internal`Composition::usage = "This is an internal package for generating composite methods.";
+
+AddComposition::usage = "AddComposition[type, op, composer] defines op and overloads the power function for type to provide composision via composer.";
 
 
-Integreat`Internal`Composition::usage = "An internal package for generating composite methods";
-
-AddComposition::usage = "Defines functions and overloads the power function for generic method composition";
+(* ::Section:: *)
+(*Private Members*)
 
 
 Begin["`Private`"];
 
 
+(* ::Section:: *)
+(*Package Definitions*)
+
+
 AddComposition[type_Symbol, op_Symbol, composer_] := (
-	op[args___:{_type, _}] := composer[List[args]];
-	op[args___type] := With[{
+	op[args__:{_type, _}] := composer[List[args]];
+	op[args__type] := With[{
 			m = List[args]
 		},
 		composer[Map[{#, 1 / Length[m]} &, m]]
@@ -21,6 +31,10 @@ AddComposition[type_Symbol, op_Symbol, composer_] := (
 	m1_type[m2_type] := composer[{{m1, 1/2}, {m2, 1/2}}];
 	type /: Power[a_type, d_Integer?Positive] := composer[ConstantArray[{a, 1 / d}, d]];
 );
+
+
+(* ::Section:: *)
+(*End Package*)
 
 
 End[];

@@ -3,10 +3,10 @@
 BeginPackage["Integreat`Internal`LinearStability`"];
 
 
-Integreat`Internal`LinearStability::usage = "An internal package for analyzing linear stability";
+Integreat`Internal`LinearStability::usage = "This internal package contains functions for analyzing linear stability.";
 
-LinearStabilityPlot::usage = "Plots a stability region on the complex plane";
-OrderStarPlot::usage = "Plots an order star on the complex plane";
+LinearStabilityPlot::usage = "LinearStabilityPlotPlots[stab, re, im] plots a stability function stab on the complex plane.";
+OrderStarPlot::usage = "OrderStarPlot[stab, re, im] plots a stability function stab on the complex plane.";
 
 
 Begin["`Private`"];

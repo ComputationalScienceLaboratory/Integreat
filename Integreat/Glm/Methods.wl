@@ -5,7 +5,7 @@
 
 
 BeginPackage["Integreat`Glm`Methods`"];
-Integreat`Glm`Methods::usage = "Package containing functions for creating general linear methods";
+Integreat`Glm`Methods::usage = "This package contains functions for creating and accessing basic properties general linear methods.";
 
 Glm::usage = "Constructs an association containing general linear method coefficients";
 GlmCompose::usage = "";
