@@ -68,12 +68,14 @@ SetAttributes[{treeDiffAlg, treeDiff, treeAlg} , Listable];
 (*Tree Functions*)
 
 
-treeOrder[\[FormalY]] := 0;
-treeOrder[_Symbol | _Subscript] := 1;
-treeOrder[Power[t_, p_]] := p * treeOrder[t];
-treeOrder[t_Times] := Total[Map[treeOrder, List @@ t]];
+treeOrder[\[FormalY], ___] := 0;
+treeOrder[_Symbol] := 1;
+treeOrder[Subscript[\[FormalF], m_], n___] := Boole[m == n];
+treeOrder[Power[t_, p_], n___] := p * treeOrder[t, n];
+treeOrder[t_Times, n___] := Total[Map[treeOrder[#, n] &, List @@ t]];
 treeOrder[r:\[FormalG][t_]] := treeOrder[r] = treeOrder[t];
-treeOrder[r:(\[FormalF] | _Subscript)[t_]] := treeOrder[r] = 1 + treeOrder[t];
+treeOrder[r:\[FormalF][t_]] := treeOrder[r] = 1 + treeOrder[t];
+treeOrder[r:Subscript[\[FormalF], m_][t_], n___] := treeOrder[r, n] = Boole[m == n] + treeOrder[t, n];
 
 treeAlpha[_Symbol | _Subscript] := 1;
 treeAlpha[Power[t_, p_]] := With[{o = treeOrder[t]},
@@ -124,6 +126,7 @@ BTreeAlg[{p_Integer?NonNegative}] := Map[BTreeDiffAlg, treeAlg[p]];
 BTreeAlg[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTreeDiffAlg, treeAlg[Range[pStart, pEnd]], {2}];
 
 BTreeOrder[(BTree | BTreeN | BTreeDiffAlg)[t_, ___]] := treeOrder[t];
+BTreeOrder[BTreeN[t_, _], n_Integer?Positive] := treeOrder[t, n];
 SetAttributes[BTreeOrder, Listable];
 
 BTreeAlpha[(BTree | BTreeN | BTreeDiffAlg)[t_, ___]] := treeAlpha[t];
