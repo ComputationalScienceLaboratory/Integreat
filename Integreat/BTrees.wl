@@ -41,7 +41,7 @@ SetAttributes[tree, Listable];
 (*N-Trees*)
 
 
-treeN[0, n_] := \[FormalY];
+treeN[0, n_] := {\[FormalY]};
 treeN[1, n_] := Table[Subscript[\[FormalF], i], {i, n}];
 treeN[p_, n_] := treeN[p, n] = Flatten[Outer[Construct, treeN[1, n], branches[treeN[#, n] &, p - 1]]];
 SetAttributes[treeN, Listable];
@@ -51,16 +51,15 @@ SetAttributes[treeN, Listable];
 (*DAE-Trees*)
 
 
-treeDiffAlg[0] := \[FormalY];
+treeDiffAlg[0] := {\[FormalY]};
 treeDiffAlg[p_] := Join[treeDiff[p], treeAlg[p]];
 
-treeDiff[0] := \[FormalY];
+treeDiff[0] := {\[FormalY]};
 treeDiff[1] := {\[FormalF]};
 treeDiff[p_] := treeDiff[p] = Map[\[FormalF], branches[treeDiffAlg, p - 1]];
 
-treeAlg[0] := \[FormalY];
-treeAlg[1] := {\[FormalG][\[FormalF]]};
-treeAlg[p_] := treeAlg[k] = Map[\[FormalG], Join[branches[treeDiffAlg, p, {2, p}], treeDiff[p]]];
+treeAlg[0] := {\[FormalY]};
+treeAlg[p_] := treeAlg[p] = Map[\[FormalG], Join[branches[treeDiffAlg, p, {2, p}], treeDiff[p]]];
 SetAttributes[{treeDiffAlg, treeDiff, treeAlg} , Listable];
 
 
