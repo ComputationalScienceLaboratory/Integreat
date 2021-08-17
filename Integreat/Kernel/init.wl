@@ -5,7 +5,7 @@
 
 
 <<Integreat`Rk`Methods`;
-<<Integreat`Rk`Catalog`;
+<<Integreat`Rk`Catalog2`;
 <<Integreat`Rk`Validation`;
 <<Integreat`Rk`LinearStability`;
 <<Integreat`Rk`NonlinearStability`;
