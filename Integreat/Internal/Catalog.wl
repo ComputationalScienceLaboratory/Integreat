@@ -21,10 +21,11 @@ AddCatalogSearch[type_Symbol] := (
 	type[name_String] := type[][SelectFirst[StringMatchQ[name, #Names, IgnoreCase -> True] &], "Method"];
 );
 
-CatalogEntry[names:{__String}, method_, notes_String, title_String, authors:{__String}, year_Integer, url_String, extra___Rule] := <|
+CatalogEntry[names:{__String}, method_, notes_String, sourceType_String, title_String, authors:{__String}, year_Integer, url_String, extra___Rule] := <|
 	"Names" -> names,
 	"Method" -> method,
 	"Source" -> <|
+		"Source Type" -> sourceType,
 		"Title" -> title,
 		"Authors" -> authors,
 		"Year" -> year,
