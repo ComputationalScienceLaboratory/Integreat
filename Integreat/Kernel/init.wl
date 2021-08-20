@@ -4,25 +4,25 @@
 <<Integreat`BTrees`;
 
 
-<<Integreat`Rk`Methods`;
-<<Integreat`Rk`Catalog`;
-<<Integreat`Rk`Validation`;
-<<Integreat`Rk`LinearStability`;
-<<Integreat`Rk`NonlinearStability`;
-<<Integreat`Rk`OrderConditions`;
-<<Integreat`Rk`Symmetry`;
-<<Integreat`Rk`Simplify`;
+<<Integreat`RK`Methods`;
+<<Integreat`RK`Catalog`;
+<<Integreat`RK`Validation`;
+<<Integreat`RK`LinearStability`;
+<<Integreat`RK`NonlinearStability`;
+<<Integreat`RK`OrderConditions`;
+<<Integreat`RK`Symmetry`;
+<<Integreat`RK`Simplify`;
 
 
-<<Integreat`Lmm`Methods`;
-<<Integreat`Lmm`Validation`;
-<<Integreat`Lmm`LinearStability`;
-<<Integreat`Lmm`OrderConditions`;
-<<Integreat`Lmm`Simplify`;
+<<Integreat`LMM`Methods`;
+<<Integreat`LMM`Validation`;
+<<Integreat`LMM`LinearStability`;
+<<Integreat`LMM`OrderConditions`;
+<<Integreat`LMM`Simplify`;
 
 
-<<Integreat`Glm`Methods`;
-<<Integreat`Glm`Catalog`;
-<<Integreat`Glm`Validation`;
-<<Integreat`Glm`LinearStability`;
-<<Integreat`Glm`OrderConditions`;
+<<Integreat`GLM`Methods`;
+<<Integreat`GLM`Catalog`;
+<<Integreat`GLM`Validation`;
+<<Integreat`GLM`LinearStability`;
+<<Integreat`GLM`OrderConditions`;
