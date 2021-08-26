@@ -21,18 +21,15 @@ Begin["`Private`"];
 Needs["Integreat`RK`Methods`"];
 
 RKDJIrreducibleStages[rk_] := With[{
-		s = RKStages[rk],
-		graph = Graph[rk]
+		s = RKStages[rk]
 	},
-	Sort[Select[VertexOutComponent[graph, Range[s + 1, VertexCount[graph]]], # <= s &]]
+	Sort[Select[VertexOutComponent[Graph[rk], v_ /; v > s], LessEqualThan[s]]]
 ];
 
 RKSubset[rk_, {}] := RKSubset[rk, {1}];
-RKSubset[rk_, p_] := RK[
-	RKA[rk][[p, p]],
-	RKDenseOutput[rk][[p]],
-	RKC[rk][[p]],
-	If[RKPairQ[rk], RKBHat[rk][[p]], Unevaluated[Sequence[]]]
+RKSubset[HoldPattern[RK[a_, b___]], p_] := RK[
+	a[[p, p]],
+	Sequence @@ {b}[[All, p]]
 ]
 
 
