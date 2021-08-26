@@ -68,8 +68,16 @@ RKRescale[HoldPattern[RK[a__]], x_] := Apply[RK, x * {a}];
 RK /: HoldPattern[RK[A1_, b1_, c1_, bHat1_] + RK[A2_, b2_, c2_, bHat2_]] := RK[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2], Join[bHat1, bHat2]];
 RK /: HoldPattern[RK[A1_, b1_, c1_, ___] + RK[A2_, b2_, c2_, ___]] := RK[BlockDiag[A1, A2], Join[b1, b2], Join[c1, c2]];
 
-RK /: Power[rk:HoldPattern[RK[A_, b_, c_]], -1] := RK[A - ConstantArray[RKB[rk], Length[c]], -b, c - 1];
-RK /: Power[rk:HoldPattern[RK[A_, b_, c_, bHat_]], -1] := RK[A - ConstantArray[RKB[rk], Length[c]], -b, c - 1, -bHat];
+RK /: Power[rk:HoldPattern[RK[A_, bDO_, c_]], -1] := With[{
+		b = RKB[rk]
+	},
+	RK[A - ConstantArray[b, Length[b]], -bDO, c - Total[b]]
+];
+RK /: Power[rk:HoldPattern[RK[A_, bDO_, c_, bHat_]], -1] := With[{
+		b = RKB[rk]
+	},
+	RK[A - ConstantArray[b, Length[b]], -bDO, c - Total[b], -bHat]
+];
 
 RKType[HoldPattern[RK[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
 
