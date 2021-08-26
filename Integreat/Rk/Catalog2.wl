@@ -30,6 +30,23 @@ Rk[] := Rk[] = Dataset[{
 		"Volume" -> "1"
 	],
 	CatalogEntry[
+		{"Coriolis' Method"},
+		Rk[
+			{{0, 0}, {1, 0}},
+			{1/2, 1/2},
+			{0, 0}
+		],
+		"This method is an extension of the trapezoidal rule used to approximate definite integrals.  Coriolis incorrectly thought the order was two, but the abscissae makes the method first order.",
+		"Article",
+		"M\[EAcute]moire sur le degr\[EAcute] d\[CloseCurlyQuote]approximation qu\[CloseCurlyQuote]on obtient pour les valeurs num\[EAcute]riques d\[CloseCurlyQuote]une variable qui satisfaita une \[EAcute]quation diff\[EAcute]rentielle, en employant pour calculer ces valeurs diverses \[EAcute]quations aux diff\[EAcute]rences plus ou moins approch\[EAcute]es.",
+		{"Gaspard-Gustave de Coriolis"},
+		1837,
+		"https://archive.org/details/s1journaldemat02liou",
+		"Journal" -> "Journal de Math\[EAcute]matiques Pures et Appliqu\[EAcute]es",
+		"Volume" -> "2",
+		"Pages" -> "229\[Dash]244"
+	],
+	CatalogEntry[
 		{"Fehlberg's 1(2) method", "Runge\[Dash]Kutta\[Dash]Fehlberg 1(2)", "RKF1(2)", "RKF12"},
 		Rk[
 			{{0, 0, 0}, {1/2, 0, 0}, {1/256, 255/256, 0}}, {1/256, 255/256, 0},
@@ -54,15 +71,16 @@ Rk[] := Rk[] = Dataset[{
 			{1/2, 1/2},
 			{0, 1}
 		],
-		"This method is an extension of the trapezoidal rule used to approximate definite integrals.  It was rediscovered by Carl Runge in 1895.",
+		"This method is an extension of the trapezoidal rule used to approximate definite integrals.",
 		"Article",
-		"M\[EAcute]moire sur le degr\[EAcute] d\[CloseCurlyQuote]approximation qu\[CloseCurlyQuote]on obtient pour les valeurs num\[EAcute]riques d\[CloseCurlyQuote]une variable qui satisfaita une \[EAcute]quation diff\[EAcute]rentielle, en employant pour calculer ces valeurs diverses \[EAcute]quations aux diff\[EAcute]rences plus ou moins approch\[EAcute]es.",
-		{"Gaspard-Gustave de Coriolis"},
-		1837,
-		"https://archive.org/details/s1journaldemat02liou",
-		"Journal" -> "Journal de Math\[EAcute]matiques Pures et Appliqu\[EAcute]es",
-		"Volume" -> "2",
-		"Pages" -> "229\[Dash]244"
+		"Ueber die numerische Aufl\[ODoubleDot]sung von Differentialgleichungen",
+		{"Carl Runge"},
+		1895,
+		"https://doi.org/10.1007/BF01446807",
+		"Journal" -> "Mathematische Annalen",
+		"Volume" -> "46",
+		"Number" -> "2",
+		"Pages" -> "167\[Dash]178"
 	],
 	CatalogEntry[
 		{"Explicit midpoint method", "Explicit midpoint rule"},
