@@ -16,7 +16,7 @@ TableauExplicit::usage =
 	"TableauExplicit[s, entry] creates an explicit tableau where the elements are entry with subscripts.\n" <>
 	"TableauExplicit[{s, t}, \[Ellipsis]] creates an explicit tableau of size s by t.";
 TableauExplicitQ::usage = "TableauExplicitQ[expr] yields True if expr is a square, strictly lower triangular matrix, and yields False otherwise.";
-TableauFirk::usage =
+TableauFIRK::usage =
 	"TableauFIRK[s] creates an s by s matrix with subscripted elements.\n" <>
 	"TableauFIRK[s, entry] creates a fully implicit tableau where the elements are entry with subscripts.\n" <>
 	"TableauFIRK[{s, t}, \[Ellipsis]] creates a fully implicit tableau of size s by t.";
