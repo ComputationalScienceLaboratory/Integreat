@@ -52,7 +52,7 @@ rkCompose[m_] := RK[
 
 
 RK[s_Integer, OptionsPattern[{Type -> "FIRK"}]] := RK[
-	Switch[OptionValue[Type], "ERK", TableauExplicit, "ESDIRK", TableauEsdirk, "SDIRK", TableauSdirk, "DIRK", TableauDirk, _, TableauFirk][s],
+	Switch[OptionValue[Type], "ERK", TableauExplicit, "ESDIRK", TableauESDIRK, "SDIRK", TableauSDIRK, "DIRK", TableauDIRK, _, TableauFIRK][s],
 	Table[Subscript[\[FormalB], i], {i, s}], Table[Subscript[\[FormalC], i], {i, s}]];
 RK[A_?SquareMatrixQ] := RK[A, Last[A]];
 RK[A_?SquareMatrixQ, b_List] := RK[A, b, Total[A, {2}]];
@@ -79,7 +79,7 @@ RK /: Power[rk:HoldPattern[RK[A_, bDO_, c_, bHat_]], -1] := With[{
 	RK[A - ConstantArray[b, Length[b]], -bDO, c - Total[b], -bHat]
 ];
 
-RKType[HoldPattern[RK[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauEsdirkQ[A], "ESDIRK", TableauSdirkQ[A], "SDIRK", TableauDirkQ[A], "DIRK", True, "FIRK"];
+RKType[HoldPattern[RK[A_, __]]] := Which[TableauExplicitQ[A], "ERK", TableauESDIRKQ[A], "ESDIRK", TableauSDIRKQ[A], "SDIRK", TableauDIRKQ[A], "DIRK", True, "FIRK"];
 
 RKPrimary[HoldPattern[RK[A_, b_, c_, ___]]] := RK[A, b, c];
 

@@ -40,7 +40,7 @@ Scan[Needs, {
 	"Integreat`Internal`Composition`"
 }];
 
-TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSdirk, 3, TableauZeros, 4, TableauDiagonal, _, TableauFirk];
+TypeToTableau[type_] := Switch[type, 1, TableauExplicit, 2, TableauSDIRK, 3, TableauZeros, 4, TableauDiagonal, _, TableauFIRK];
 
 HankelBR[x_] := HankelMatrix[Append[ConstantArray[0, Length[x] - 2], First[x]], Most[x]];
 
@@ -66,7 +66,7 @@ GLMComp[m_] := With[{
 (*Package Definitions*)
 
 
-GLM[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := GLM[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], TableauFirk[{s, r}, \[FormalU]], TableauFirk[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
+GLM[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := GLM[TypeToTableau[OptionValue[Type]][s], TableauFIRK[{r, s}, \[FormalB]], TableauFIRK[{s, r}, \[FormalU]], TableauFIRK[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
 GLM[rk_RK, p_Integer] := GLM[RKA[rk], {RKB[rk]}, ConstantArray[1, {RKStages[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RKC[rk]];
 GLM[rk_RK] := GLM[rk, RKOrder[rk]];
 GLM[lmm_LMM] := With[{
@@ -98,7 +98,7 @@ GLM /: HoldPattern[GLM[A1_, B1_, U1_, V1_, Q1_, c1_] + GLM[A2_, B2_, U2_, V2_, Q
 GLMDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 2}]] := With[{
 		v1 = Table[Subscript[\[FormalV], i], {i, r - 1}]
 	},
-	GLMDimsim[TypeToTableau[OptionValue[Type]][s], TableauFirk[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
+	GLMDimsim[TypeToTableau[OptionValue[Type]][s], TableauFIRK[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
 ];
 GLMDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ] /; Length[A] === Length[v] === Length[c] := With[{
 		C = SeriesVander[c, -1, Length[c]],
@@ -158,7 +158,7 @@ GLMType[HoldPattern[GLM[A_, __]]] := Which[
 	TableauZerosQ[A], 3,
 	TableauDiagonalQ[A], 4,
 	TableauExplicitQ[A], 1,
-	TableauSdirkQ[A], 2,
+	TableauSDIRKQ[A], 2,
 	True, Undefined
 ];
 
