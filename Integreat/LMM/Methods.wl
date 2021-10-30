@@ -14,7 +14,7 @@ LMMAdamsBashforth::usage = "LMMAdamsBashforth[k] creates a k-step Adams-Bashfort
 LMMAdamsMoulton::usage = "LMMAdamsMoulton[k] creates a k-step Adams-Moulton method.";
 LMMNystrom::usage = "LMMNystrom[k] creates a k-step Nystr\[ODoubleDot]m method.";
 LMMMilneSimpson::usage = "LMMMilneSimpson[k] creates a k-step Milne-Simpson method.";
-LMMBdf::usage = "LMMBdf[k] creates a k-step backward differentiation formula method.";
+LMMBDF::usage = "LMMBDF[k] creates a k-step backward differentiation formula method.";
 LMMAlpha::usage = "LMMAlpha[lmm] gets the list of coefficients multiplying y's from lmm.  They are ordered from oldest to newest.";
 LMMBeta::usage = "LMMBeta[lmm] gets the list of coefficients multiplying f(y)'s from lmm.  They are ordered from oldest to newest.";
 LMMAlphaGeneratingPolynomial::usage = "LMMAlphaGeneratingPolynomial[lmm, \[Zeta]] creates a polynomial in \[Zeta] using the \[Alpha] coefficients of lmm.";
@@ -45,7 +45,7 @@ LMMNystrom[k_Integer?Positive] := LMM @@ PadLeft[{{-1, 0, 1}, Append[vanderSolve
 
 LMMMilneSimpson[k_Integer?NonNegative] := LMM @@ PadLeft[{{-1, 0, 1}, vanderSolve[k, Table[If[OddQ[i], 2 / i, 0], {i, k + 1}]]}];
 
-LMMBdf[k_Integer?Positive] := With[{
+LMMBDF[k_Integer?Positive] := With[{
 		i = Range[k, 1, -1]
 	},
 	LMM[Append[(-1)^i * Binomial[k, i] / i, HarmonicNumber[k]], UnitVector[k + 1, k + 1]]
