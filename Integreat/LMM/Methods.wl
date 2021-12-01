@@ -63,9 +63,10 @@ LMMSteps[HoldPattern[LMM[a_, _]]] := Length[a] - 1;
 
 LMM /: Variables[HoldPattern[LMM[args__]]] := Variables[{args}];
 
-LMM /: MakeBoxes[HoldPattern[LMM[a_List, b_List]], format_] := With[{
-		m = Sum[a[[i]] * Subscript[\[FormalY], \[FormalN] + i - 1], {i, Length[a]}] == \[FormalH] * Sum[b[[i]] * Subscript[\[FormalF], \[FormalN] + i - 1], {i, Length[a]}]
-	}, MakeBoxes[m, format]];
+LMM /: MakeBoxes[HoldPattern[LMM[a_List, b_List]], format_] := ToBoxes[
+	Sum[a[[i]] * Subscript[\[FormalY], \[FormalN] + i - 1], {i, Length[a]}] == \[FormalH] * Sum[b[[i]] * Subscript[\[FormalF], \[FormalN] + i - 1], {i, Length[a]}],
+	format
+];
 
 
 (* ::Section:: *)
