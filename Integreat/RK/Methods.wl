@@ -99,10 +99,13 @@ RKA[HoldPattern[RK[A_, __]]] := A;
 RKDenseOutput[HoldPattern[RK[_, b_, __]]] := b;
 
 Options[RKB] = {Embedded -> False, DenseOutput -> False};
-RKB[HoldPattern[RK[_, b_, _, bHat_:Null]], OptionsPattern[]] := Which[
-	TrueQ[OptionValue[Embedded]], bHat,
-	TrueQ[OptionValue[DenseOutput]], b,
-	True, b /. \[FormalTheta] -> 1
+RKB[HoldPattern[RK[_, b_, _, bHat_:Null]], OptionsPattern[]] := With[{
+		do = OptionValue[DenseOutput]
+	},
+	If[OptionValue[Embedded],
+		bHat,
+		If[do, b, b /. \[FormalTheta] -> 1, b /. \[FormalTheta] -> do]
+	]
 ];
 
 RKC[HoldPattern[RK[_, _, c_, ___]]] := c;
