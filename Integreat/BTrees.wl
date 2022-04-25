@@ -140,6 +140,12 @@ toGraph[t_] := With[{
 	]
 ];
 
+If[
+	TrueQ[$VersionNumber >= 12.3],
+	toBoxes[t_, format_] := ToBoxes[toGraph[t], format],
+	toBoxes[t_, format_] := ToBoxes[t, format]
+];
+
 
 (* ::Section:: *)
 (*Package Definitions*)
@@ -149,7 +155,7 @@ BTree[{p_Integer?NonNegative}] := Map[BTree, tree[p]];
 BTree[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTree, tree[Range[pStart, pEnd]], {2}];
 BTree /: Tree[HoldPattern[BTree[t_]]] := toTree[t];
 BTree /: Graph[HoldPattern[BTree[t_]]] := toGraph[t];
-BTree /: MakeBoxes[HoldPattern[BTree[t_]], format_] := ToBoxes[toGraph[t], format];
+BTree /: MakeBoxes[HoldPattern[BTree[t_]], format_] := toBoxes[t, format];
 
 Options[BTreeN] = {"Partitions" -> 2};
 BTreeN[{p_Integer?NonNegative}, OptionsPattern[]] := With[{
@@ -164,7 +170,7 @@ BTreeN[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative, OptionsPattern[]
 ];
 BTreeN /: Tree[HoldPattern[BTreeN[t_, _Integer]]] := toTree[t];
 BTreeN /: Graph[HoldPattern[BTreeN[t_, _Integer]]] := toGraph[t];
-BTreeN /: MakeBoxes[HoldPattern[BTreeN[t_, _Integer]], format_] := ToBoxes[toGraph[t], format];
+BTreeN /: MakeBoxes[HoldPattern[BTreeN[t_, _Integer]], format_] := toBoxes[t, format];
 
 Options[BTreeDAE] = {"Index" -> 1, "Type" -> "All"};
 BTreeDAE[{p_Integer?NonNegative}, OptionsPattern[]] := With[{
@@ -181,7 +187,7 @@ BTreeDAE[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative, OptionsPattern
 ];
 BTreeDAE /: Tree[HoldPattern[BTreeDAE[t_, _Integer]]] := toTree[t];
 BTreeDAE /: Graph[HoldPattern[BTreeDAE[t_, _Integer]]] := toGraph[t];
-BTreeDAE /: MakeBoxes[HoldPattern[BTreeDAE[t_, _Integer]], format_] := ToBoxes[toGraph[t], format];
+BTreeDAE /: MakeBoxes[HoldPattern[BTreeDAE[t_, _Integer]], format_] := toBoxes[t, format];
 
 BTreeOrder[(BTree | BTreeN | BTreeDAE)[t_, ___]] := treeOrder[t];
 BTreeOrder[BTreeN[t_, _], n_Integer?Positive] := treeOrder[t, n];
