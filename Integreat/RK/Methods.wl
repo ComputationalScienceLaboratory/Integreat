@@ -46,6 +46,12 @@ rkCompose[m_] := RK[
 	If[AllTrue[m[[All, 1]], RKPairQ], Catenate[Map[Last[#] * RKBHat[First[#]] &, m]], Unevaluated[Sequence[]]]
 ];
 
+rkB[False, None, True, _, b_, _] := b;
+rkB[False, None, False, _, b_, _] := b /. \[FormalTheta] -> 1;
+rkB[False, None, do_, _, b_, _] := b /. \[FormalTheta] -> do;
+rkB[False, i_Integer, _, A_, _, _] := A[[i]];
+rkB[True, _, _, _, _, bHat_] := bHat;
+
 
 (* ::Section:: *)
 (*Package Definitions*)
@@ -98,14 +104,13 @@ RKA[HoldPattern[RK[A_, __]]] := A;
 
 RKDenseOutput[HoldPattern[RK[_, b_, __]]] := b;
 
-Options[RKB] = {Embedded -> False, DenseOutput -> False};
-RKB[HoldPattern[RK[_, b_, _, bHat_:Null]], OptionsPattern[]] := With[{
+Options[RKB] = {Embedded -> False, Stage -> None, DenseOutput -> False};
+RKB[HoldPattern[RK[A_, b_, _, bHat_:True]], OptionsPattern[]] := With[{
+		em = OptionValue[Embedded],
+		s = OptionValue[Stage],
 		do = OptionValue[DenseOutput]
 	},
-	If[OptionValue[Embedded],
-		bHat,
-		If[do, b, b /. \[FormalTheta] -> 1, b /. \[FormalTheta] -> do]
-	]
+	rkB[em, s, do, A, b, bHat] /; BooleanQ[em] && (s === None || IntegerQ[s]) && bHat =!= em
 ];
 
 RKC[HoldPattern[RK[_, _, c_, ___]]] := c;

@@ -27,8 +27,9 @@ LMMSteps::usage = "LMMSteps[lmm] returns the number of previous steps required t
 
 
 Begin["`Private`"];
+Needs["Integreat`Internal`MathUtils`"];
 
-vanderSolve[k_, rhs_] := LinearSolve[Table[If[i == 0, 1, j^i], {i, 0, Length[rhs] - 1}, {j, 1 - k, Length[rhs] - k}], rhs];
+vanderSolve[k_, rhs_] := LinearSolve[Table[SafePow[j, i], {i, 0, Length[rhs] - 1}, {j, 1 - k, Length[rhs] - k}], rhs];
 
 
 (* ::Section:: *)

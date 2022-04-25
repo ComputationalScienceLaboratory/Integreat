@@ -6,8 +6,6 @@ BeginPackage["Integreat`RK`OrderConditions`"];
 Integreat`RK`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
 
 RKOrderConditions::usage = "?";
-RKDaeOrderConditions::usage = "?";
-RKTreeOrderConditions::usage = "";
 RKSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
 RKSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
 RKSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
@@ -32,10 +30,16 @@ Scan[Needs, {
 	"Integreat`BTrees`"
 }];
 
-SetAttributes[denseOne, HoldFirst];
-denseOne[p_, OptionsPattern[RKB]] := If[TrueQ[OptionValue[DenseOutput]], \[FormalTheta]^p, 1]
+SetAttributes[rkOrderConditions, Listable];
+rkOrderConditions[rk_, t_, opts___] := (phi[First[t], RKA[rk], RKB[rk, opts], RKC[rk]] - one[BTreeOrder[t], rk, opts] / BTreeGamma[t]) / BTreeSigma[t];
 
-orderConditions[r:_[t_], a_, b_, c_, opts:OptionsPattern[RKB]] := (phi[t, a, b, c] - denseOne[BTreeOrder[r], opts] / BTreeGamma[r]) / BTreeSigma[r];
+SetAttributes[one, HoldFirst];
+one[p_, rk_, OptionsPattern[RKB]] := one[p, rk, OptionValue[Embedded], OptionValue[Stage], OptionValue[DenseOutput]];
+one[_, _, True, _, _] := 1;
+one[p_, rk_ , False, i_Integer, _] := SafePow[RKC[rk][[i]], p];
+one[p_, _, False, None, True] := SafePow[\[FormalTheta], p];
+one[p_, _, False, None, False] := 1;
+one[p_, _, False, None, do_] := SafePow[do, p];
 
 phi[\[FormalY], __] := 1;
 phi[\[FormalF], _, b_, _] := Total[b];
@@ -50,28 +54,26 @@ errOrder[err_?PossibleZeroQ, _] := Infinity;
 errOrder[err_, y_] := CountZeros[SeriesCoefficient[err, {y, 0, #}] &] - 1;
 
 
-RKOrderConditions[rk: Repeated[_RK, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}, opts:OptionsPattern[RKB]] := RKTreeOrderConditions[rk, BTree[p], opts];
+RKOrderConditions[rk_RK, p:_Integer?Positive | {_Integer?NonNegative}, opts:OptionsPattern[RKB]] := rKOrderConditions[rk, BTree[p], opts];
+RKOrderConditions[rk_RK, t_BTree, opts:OptionsPattern[RKB]] := rKOrderConditions[rk, t, opts];
 
-RKDaeOrderConditions[rk: Repeated[_RK, {0, 1}], p:_Integer?Positive | {_Integer?NonNegative}, opts:OptionsPattern[RKB]] := RKTreeOrderConditions[rk, BTreeDiffAlg[p], opts];
-
-SetAttributes[RKTreeOrderConditions, Listable];
-RKTreeOrderConditions[rk_RK, t:(_BTree | _BTreeDiffAlg), opts:OptionsPattern[RKB]] := orderConditions[t, RKA[rk], RKB[rk, opts], RKC[rk], opts];
-RKTreeOrderConditions[t:(_BTree | _BTreeDiffAlg), opts:OptionsPattern[RKB]] := orderConditions[t, \[FormalA], If[TrueQ[OptionValue[Embedded]], OverHat[\[FormalB]], \[FormalB]], \[FormalC], opts];
-
-RKSimplifyingAssumptionB[rk_RK, {1}, opts:OptionsPattern[RKB]] := Total[RKB[rk, opts]] - denseOne[1, opts];
-RKSimplifyingAssumptionB[rk_RK, {p_Integer?Positive}, opts:OptionsPattern[RKB]] := RKB[rk, opts] . RKC[rk]^(p - 1) - denseOne[p, opts] / p;
+RKSimplifyingAssumptionB[rk_RK, {p_Integer?Positive}, opts:OptionsPattern[RKB]] := RKB[rk, opts] . SafePow[RKC[rk], p - 1] - one[p, rk, opts] / p;
 RKSimplifyingAssumptionB[rk_RK, p_Integer?Positive, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionB[rk, {k}, opts], {k, p}];
 
-RKSimplifyingAssumptionC[rk_RK, {1}, stages_:All] := Total[RKA[rk][[stages]], {2}] - RKC[rk][[stages]];
-RKSimplifyingAssumptionC[rk_RK, {eta_Integer?Positive}, stages_:All] := RKA[rk][[stages]] . RKC[rk]^(eta - 1) - RKC[rk][[stages]]^eta / eta;
-RKSimplifyingAssumptionC[rk_RK, eta_Integer?Positive, stages_:All] := Table[RKSimplifyingAssumptionC[rk, {k}, stages], {k, eta}];
+Options[RKSimplifyingAssumptionC] = {Stage -> All};
+RKSimplifyingAssumptionC[rk_RK, {eta_Integer?Positive}, OptionsPattern[]] := With[{
+		stages = OptionValue[Stage],
+		c = RKC[rk]
+	},
+	RKA[rk][[stages]] . SafePow[c, eta - 1] - Pow[c[[stages]], eta] / eta
+];
+RKSimplifyingAssumptionC[rk_RK, eta_Integer?Positive, opts:OptionsPattern[]] := Table[RKSimplifyingAssumptionC[rk, {k}, opts], {k, eta}];
 
-RKSimplifyingAssumptionD[rk_RK, {1}, opts:OptionsPattern[RKB]] := RKB[rk, opts] . RKA[rk] - RKB[rk, opts] * (denseOne[1, opts] - RKC[rk]);
 RKSimplifyingAssumptionD[rk_RK, {zeta_Integer?Positive}, opts:OptionsPattern[RKB]] := With[{
 		b = RKB[rk, opts],
 		c = RKC[rk]
 	},
-	(b * c^(zeta - 1)) . RKA[rk] - b * (denseOne[zeta, opts] - c^zeta) / zeta
+	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, opts] - Pow[c, zeta]) / zeta
 ];
 RKSimplifyingAssumptionD[rk_RK, zeta_Integer, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionD[rk, {k}, opts], {k, zeta}];
 
@@ -95,14 +97,14 @@ RKErrorC[rk_?RKPairQ, pHat_Integer?Positive] := Norm[
 	] / RKErrorA[rk, pHat - 1, Embedded -> True];
 RKErrorC[rk_?RKPairQ] := RKErrorC[rk, RKOrder[rk] + 1];
 
-RKErrorD[HoldPattern[RK[args__]]] := Max[Abs[{args}]];
+RKErrorD[rk_RK] := Max[Abs[List @@ rk]];
 
 RKErrorE[rk_?RKPairQ, pHat_Integer?Positive] := RKErrorA[rk, pHat] / RKErrorA[rk, pHat - 1, Embedded -> True];
 RKErrorE[rk_?RKPairQ] := RKErrorE[rk, RKOrder[rk] + 1];
 
 RKDispersionOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDispersionError[rk, y, opts], y];
 
-RKDispersionError[rk_RK, y_, opts:OptionsPattern[RKB]] := y - ComplexExpand[Arg[RKLinearStability[rk, y * I, opts]], TargetFunctions -> {Re, Im}];
+RKDispersionError[rk_RK, y_, opts:OptionsPattern[RKB]] := one[1, rk, opts] * y - ComplexExpand[Arg[RKLinearStability[rk, y * I, opts]], TargetFunctions -> {Re, Im}];
 
 RKDissipationOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDissipationError[rk, y, opts], y];
 

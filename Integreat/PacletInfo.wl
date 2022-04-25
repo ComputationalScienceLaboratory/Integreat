@@ -2,7 +2,7 @@
 
 Paclet[
 	"Name" -> "Integreat",
-	"Version" -> "0.1.0",
+	"Version" -> "0.1.1",
 	"WolframVersion" -> "12.1+",
 	"Description" -> "Package for the analysis of time integration methods",
 	"Creator" -> "Steven Roberts",
