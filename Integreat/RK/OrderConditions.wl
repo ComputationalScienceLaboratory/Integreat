@@ -54,8 +54,8 @@ errOrder[err_?PossibleZeroQ, _] := Infinity;
 errOrder[err_, y_] := CountZeros[SeriesCoefficient[err, {y, 0, #}] &] - 1;
 
 
-RKOrderConditions[rk_RK, p:_Integer?Positive | {_Integer?NonNegative}, opts:OptionsPattern[RKB]] := rKOrderConditions[rk, BTree[p], opts];
-RKOrderConditions[rk_RK, t_BTree, opts:OptionsPattern[RKB]] := rKOrderConditions[rk, t, opts];
+RKOrderConditions[rk_RK, p:_Integer?Positive | {_Integer?NonNegative}, opts:OptionsPattern[RKB]] := rkOrderConditions[rk, BTree[p], opts];
+RKOrderConditions[rk_RK, t_BTree, opts:OptionsPattern[RKB]] := rkOrderConditions[rk, t, opts];
 
 RKSimplifyingAssumptionB[rk_RK, {p_Integer?Positive}, opts:OptionsPattern[RKB]] := RKB[rk, opts] . SafePow[RKC[rk], p - 1] - one[p, rk, opts] / p;
 RKSimplifyingAssumptionB[rk_RK, p_Integer?Positive, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionB[rk, {k}, opts], {k, p}];
@@ -65,7 +65,7 @@ RKSimplifyingAssumptionC[rk_RK, {eta_Integer?Positive}, OptionsPattern[]] := Wit
 		stages = OptionValue[Stage],
 		c = RKC[rk]
 	},
-	RKA[rk][[stages]] . SafePow[c, eta - 1] - Pow[c[[stages]], eta] / eta
+	RKA[rk][[stages]] . SafePow[c, eta - 1] - SafePow[c[[stages]], eta] / eta
 ];
 RKSimplifyingAssumptionC[rk_RK, eta_Integer?Positive, opts:OptionsPattern[]] := Table[RKSimplifyingAssumptionC[rk, {k}, opts], {k, eta}];
 
@@ -73,7 +73,7 @@ RKSimplifyingAssumptionD[rk_RK, {zeta_Integer?Positive}, opts:OptionsPattern[RKB
 		b = RKB[rk, opts],
 		c = RKC[rk]
 	},
-	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, opts] - Pow[c, zeta]) / zeta
+	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, opts] - SafePow[c, zeta]) / zeta
 ];
 RKSimplifyingAssumptionD[rk_RK, zeta_Integer, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionD[rk, {k}, opts], {k, zeta}];
 
