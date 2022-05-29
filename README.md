@@ -13,7 +13,7 @@ A comprehensive Mathematica package for analyzing time integration methods inclu
 The easiest way to install or update to the latest release of Integreat is to evaluate
 
 ```mathematica
-ResourceFunction["GitHubInstall"]["ComputationalScienceLaboratory", "Integreat"]
+PacletInstall["https://github.com/ComputationalScienceLaboratory/Integreat/releases/latest/download/Integreat.paclet"]
 ```
 
 within Mathematica.  For local development, it can be installed by running
