@@ -21,7 +21,7 @@ Begin["`Private`"];
 Needs["Integreat`GLM`Methods`"];
 
 stabilityPlot[glm_, ref_, opts___] := With[{
-		stab = Norm[Eigenvalues[GLMLinearStability[glm, z]], Infinity] < ref
+		stab = Norm[Eigenvalues[GLMLinearStability[glm, z]], Infinity] <= ref
 	},
 	ComplexRegionPlot[stab, opts, FrameLabel -> {"Re", "Im"}]
 ];

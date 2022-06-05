@@ -29,7 +29,7 @@ rkLinearStability[rk_, z_, None, opts___] := 1 + z * RKB[rk, opts] . rkLinearSta
 rkLinearStability[rk_, z_, stages_, ___] := Total[Inverse[IdentityMatrix[RKStages[rk]] - z * RKA[rk]], {2}][[stages]];
 
 stabilityPlot[rk_, ref_, bounds_, opts___] := With[{
-		stab = Abs[RKLinearStability[rk, z, FilterRules[{opts}, Options[RKB]]]] < ref,
+		stab = Abs[RKLinearStability[rk, z, FilterRules[{opts}, Options[RKB]]]] <= ref,
 		plotOpts = FilterRules[{opts}, Except[Options[RKB]]]
 	},
 	ComplexRegionPlot[stab, bounds, plotOpts, FrameLabel -> {"Re", "Im"}]
