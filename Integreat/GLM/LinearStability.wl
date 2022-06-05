@@ -18,7 +18,13 @@ GLMOrderStarPlot::usage = "";
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`GLM`Methods`", "Integreat`Internal`LinearStability`"}];
+Needs["Integreat`GLM`Methods`"];
+
+stabilityPlot[glm_, ref_, opts___] := With[{
+		stab = Norm[Eigenvalues[GLMLinearStability[glm, z]], Infinity] < ref
+	},
+	ComplexRegionPlot[stab, opts, FrameLabel -> {"Re", "Im"}]
+];
 
 
 (* ::Section:: *)
@@ -30,13 +36,17 @@ GLMLinearStability[glm_GLM, z_] := GLMV[glm] + z * GLMB[glm] . Inverse[IdentityM
 
 GLMLinearStabilityPolynomial[glm_GLM, w_, z_] := Det[w * IdentityMatrix[GLMExternalStages[glm]] - GLMLinearStability[glm, z]];
 
-GLMLinearStabilityPlot[glm_GLM, bounds:Repeated[{_, _}, {0, 2}], opts:OptionsPattern[RegionPlot]] := LinearStabilityPlot[
-	Evaluate[Norm[Eigenvalues[GLMLinearStability[glm, #]], Infinity]] &, bounds, opts
-];
+GLMOrderStarPlot[
+	glm_GLM,
+	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, 4],
+	opts:OptionsPattern[ComplexRegionPlot]
+] := stabilityPlot[glm, Exp[Re[z]], {z, zMin, zMax}, opts];
 
-GLMOrderStarPlot[glm_GLM, bounds:Repeated[{_, _}, {0, 2}], opts:OptionsPattern[RegionPlot]] := OrderStarPlot[
-	Evaluate[Norm[Eigenvalues[GLMLinearStability[glm, #]], Infinity]] &, bounds, opts
-];
+GLMLinearStabilityPlot[
+	glm_GLM,
+	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, {-6 - 4I, 2 + 4I}],
+	opts:OptionsPattern[ComplexRegionPlot]
+] := stabilityPlot[glm, 1, {z, zMin, zMax}, opts];
 
 
 (* ::Section:: *)
