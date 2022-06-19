@@ -55,6 +55,7 @@ TableauDiagonalQ::usage = "TableauDiagonalQ[expr] yields True if expr is a squar
 
 
 Begin["`Private`"];
+Needs["Integreat`Internal`MathUtils`"];
 
 SetAttributes[tableau, HoldFirst];
 tableau[expr_, s_Integer] := Table[expr, {i, s}, {j, s}];
@@ -67,7 +68,7 @@ tableau[expr_, {s_Integer, t_Integer}] := Table[expr, {i, s}, {j, t}];
 
 TableauZeros[s: _Integer | {_Integer, _Integer}] := tableau[0, s];
 
-TableauZerosQ[expr_] := SquareMatrixQ[expr] && MatrixQ[expr, PossibleZeroQ];
+TableauZerosQ[expr_] := SquareMatrixQ[expr] && MatrixQ[expr, ZeroQ];
 
 TableauExplicit[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := tableau[If[i > j, Subscript[entry, i, j], 0], s];
 
@@ -79,11 +80,11 @@ TableauFIRKQ[expr_] := SquareMatrixQ[expr] && !LowerTriangularMatrixQ[expr];
 
 TableauDIRK[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := tableau[If[i < j, 0, Subscript[entry, i, j]], s];
 
-TableauDIRKQ[expr_] := SquareMatrixQ[expr] && LowerTriangularMatrixQ[expr] && !VectorQ[Diagonal[expr], PossibleZeroQ];
+TableauDIRKQ[expr_] := SquareMatrixQ[expr] && LowerTriangularMatrixQ[expr] && !VectorQ[Diagonal[expr], ZeroQ];
 
 TableauEDIRK[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA]] := tableau[If[i == 1 || i < j, 0, Subscript[entry, i, j]], s];
 
-TableauEDIRKQ[expr_] := TableauDIRKQ[expr] && PossibleZeroQ[expr[[1, 1]]];
+TableauEDIRKQ[expr_] := TableauDIRKQ[expr] && ZeroQ[expr[[1, 1]]];
 
 TableauSDIRK[s: _Integer | {_Integer, _Integer}, entry_:\[FormalA], diagEntry_:\[FormalGamma]] := tableau[Which[i > j, Subscript[entry, i, j], i == j, diagEntry, True, 0], s];
 

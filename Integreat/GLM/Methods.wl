@@ -73,7 +73,7 @@ GLM[lmm_LMM] := With[{
 		k = LMMSteps[lmm],
 		a = LMMAlpha[lmm],
 		b = LMMBeta[lmm],
-		c = 1 - LengthWhile[Reverse[LMMBeta[lmm]], PossibleZeroQ]
+		c = 1 - LengthWhile[Reverse[LMMBeta[lmm]], ZeroQ]
 	},
 	GLM[
 		{{Last[b] / Last[a]}},

@@ -23,7 +23,7 @@ RKStifflyAccurateQ::usage = "Determines if a Runge-Kutta method is stiffly-accur
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"];
+Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
 
 rkLinearStability[rk_, lim_DirectedInfinity, stages_, opts___] := Limit[rkLinearStability[rk, z, stages, opts], z -> lim];
 rkLinearStability[rk_, z_, None, opts___] := 1 + z * RKB[rk, opts] . rkLinearStability[rk, z, All];
@@ -72,7 +72,7 @@ RKAStableCondition[rk_RK, opts:OptionsPattern[RKB]] := And[
 	FunctionAnalytic[{RKLinearStability[rk, z], Re[z] < 0}, z, Complexes]
 ];
 
-RKStifflyAccurateQ[rk_RK] := VectorQ[Last[RKA[rk]] - RKB[rk], PossibleZeroQ];
+RKStifflyAccurateQ[rk_RK] := VectorQ[Last[RKA[rk]] - RKB[rk], ZeroQ];
 
 
 (* ::Section:: *)

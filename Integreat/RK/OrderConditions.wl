@@ -50,7 +50,7 @@ phiBranches[Power[t_, p_], a_, c_] := phiBranches[t, a, c]^p;
 phiBranches[t_Times, a_, c_] := Map[phiBranches[#, a, c] &, t];
 phiBranches[\[FormalF][t_], a_, c_] := a . phiBranches[t, a, c];
 
-errOrder[err_?PossibleZeroQ, _] := Infinity;
+errOrder[err_?ZeroQ, _] := Infinity;
 errOrder[err_, y_] := CountZeros[SeriesCoefficient[err, {y, 0, #}] &] - 1;
 
 

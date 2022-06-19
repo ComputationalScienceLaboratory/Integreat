@@ -120,7 +120,7 @@ RKBHat[HoldPattern[RK[_, _, _, bHat_]]] := bHat;
 RKStages[HoldPattern[RK[_, _, c_, ___]]] := Length[c];
 
 RK /: Graph[HoldPattern[RK[A_, b_, _, bHat___]], opts:OptionsPattern[WeightedAdjacencyGraph]] := With[{
-		K = Replace[Join[A, {b, bHat}], 0 | _?PossibleZeroQ -> Infinity, {2}],
+		K = Replace[Join[A, {b, bHat}], 0 | _?ZeroQ -> Infinity, {2}],
 		s = Length[A]
 	},
 	WeightedAdjacencyGraph[

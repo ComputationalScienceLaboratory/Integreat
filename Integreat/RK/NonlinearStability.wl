@@ -12,7 +12,7 @@ RKAbsoluteMonotonicityRadius::usage = "Radius of absolute monotonicty";
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"];
+Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
 
 AlgMat[A_, b_, s_] := Table[b[[i]] * A[[i,j]] + b[[j]] * A[[j,i]] - b[[i]] * b[[j]], {i, s}, {j, s}];
 
@@ -23,7 +23,7 @@ RKAlgebraicStabilityMatrix[rk_RK, opts:OptionsPattern[RKB]] := AlgMat[RKA[rk], R
 
 RKAlgebraicallyStableQ[rk_RK, opts:OptionsPattern[RKB]] := PositiveSemidefiniteMatrixQ[RKAlgebraicStabilityMatrix[rk, opts]];
 
-RKSymplecticQ[rk_RK, opts:OptionsPattern[RKB]] := MatrixQ[RKAlgebraicStabilityMatrix[rk, opts], PossibleZeroQ];
+RKSymplecticQ[rk_RK, opts:OptionsPattern[RKB]] := MatrixQ[RKAlgebraicStabilityMatrix[rk, opts], ZeroQ];
 
 RKAbsoluteMonotonicityRadius[rk_RK, opts:OptionsPattern[RKB]] := PiecewiseExpand[Max[
 	Quiet[

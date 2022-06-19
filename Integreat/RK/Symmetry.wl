@@ -16,7 +16,7 @@ RKTranspose::usage = "The discrete adjoint of the Runge-Kutta method";
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"];
+Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
 
 
 (* ::Section:: *)
@@ -25,7 +25,7 @@ Needs["Integreat`RK`Methods`"];
 
 RKReflection[rk:HoldPattern[RK[A_, b_, c_, d___]]] := RK[ConstantArray[RKB[rk], Length[b]] - A, b, 1 - c, d];
 
-RKTranspose[rk:HoldPattern[RK[A_, bdo_, c_, d___]]] /; NoneTrue[RKB[rk], PossibleZeroQ] := With[{
+RKTranspose[rk:HoldPattern[RK[A_, bdo_, c_, d___]]] /; NoneTrue[RKB[rk], ZeroQ] := With[{
 		s = RKStages[rk],
 		b = RKB[rk]
 	},

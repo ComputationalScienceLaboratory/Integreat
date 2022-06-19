@@ -13,7 +13,7 @@ Integreat`LMM`Validation::usage = "Package containing functions for validating l
 
 
 Begin["`Private`"];
-Needs["Integreat`LMM`Methods`"];
+Scan[Needs, {"Integreat`LMM`Methods`", "Integreat`Internal`MathUtils`"}];
 
 
 (* ::Section:: *)
@@ -28,7 +28,7 @@ LMM[args___] /; Length[{args}] =!= 2 := (Message[LMM::args, Length[{args}]]; $Fa
 LMM::length = "LMM coefficients must have the same lengths.";
 LMM[a_, b_] /; Length[a] =!= Length[b] := (Message[LMM::length]; $Failed);
 LMM::solvable = "The last \[Alpha] coefficient must be nonzero.";
-LMM[a_, _] /; PossibleZeroQ[Last[a]] := (Message[LMM::solvable]; $Failed);
+LMM[a_, _] /; ZeroQ[Last[a]] := (Message[LMM::solvable]; $Failed);
 
 
 (* ::Section:: *)
