@@ -13,6 +13,7 @@ RKLinearStabilityPlot::usage = "Plots the region of linear stability";
 RKLinearStabilityP::usage = "The numerator of the linear stability function";
 RKLinearStabilityQ::usage = "The denominator of the linear stability function";
 RKEPolynomial::usage = "The E-polynomial to test for I-stability";
+RKIStableCondition::usage = "Returns True if the Runge-Kutta method is I-stable, and False otherwise";
 RKAStableCondition::usage = "Returns True if the Runge-Kutta method is A-stable, and False otherwise";
 RKStifflyAccurateQ::usage = "Determines if a Runge-Kutta method is stiffly-accurate";
 
@@ -61,11 +62,15 @@ RKLinearStabilityP[rk_RK, z_, opts:OptionsPattern[RKB]] := Det[
 RKLinearStabilityQ[rk_RK, z_] := Det[IdentityMatrix[RKStages[rk]] - z * RKA[rk]];
 
 RKEPolynomial[rk_RK, y_, opts:OptionsPattern[RKB]] := ComplexExpand[
-	RKLinearStabilityQ[rk, y * I] * RKLinearStabilityQ[rk, -y * I]
-	- RKLinearStabilityP[rk, y * I, opts] * RKLinearStabilityP[rk, -y * I, opts]
+	Total[ReIm[RKLinearStabilityQ[rk, y * I]]^2 - ReIm[RKLinearStabilityP[rk, y * I, opts]]^2]
 ];
 
-RKAStableCondition[rk_RK, opts:OptionsPattern[RKB]] := Resolve[ForAll[y, RKEPolynomial[rk, y, opts] >= 0], Reals]
+RKIStableCondition[rk_RK, opts:OptionsPattern[RKB]] := Resolve[ForAll[y, RKEPolynomial[rk, y, opts] >= 0], Reals];
+
+RKAStableCondition[rk_RK, opts:OptionsPattern[RKB]] := And[
+	RKIStableCondition[rk, opts],
+	FunctionAnalytic[{RKLinearStability[rk, z], Re[z] < 0}, z, Complexes]
+];
 
 RKStifflyAccurateQ[rk_RK] := VectorQ[Last[RKA[rk]] - RKB[rk], PossibleZeroQ];
 
