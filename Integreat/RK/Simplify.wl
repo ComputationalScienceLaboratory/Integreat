@@ -9,8 +9,8 @@ BeginPackage["Integreat`RK`Simplify`"];
 
 Integreat`RK`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
-RKDJReduce::usage = "Removes unused stages from a Runge-Kutta method";
-RKDJReducibleQ::usage = "Returns True is a Runge-Kutta method is DJ-reducible and False otherwise";
+RKDJReduce::usage = "RKDJReduce[rk] returns a new Runge-Kutta method with the unused stages of rk removed.";
+RKDJReducibleQ::usage = "RKDJReducibleQ[rk] returns True if rk has unused stages and False, otherwise";
 
 
 (* ::Section:: *)
