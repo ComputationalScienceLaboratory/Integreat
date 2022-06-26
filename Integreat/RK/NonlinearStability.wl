@@ -3,12 +3,17 @@
 BeginPackage["Integreat`RK`NonlinearStability`"];
 
 
-Integreat`RK`NonlinearStability::usage = "Package containing functions for analyzing the nonlinear stability of Runge-Kutta methods";
-
-RKAlgebraicStabilityMatrix::usage = "The algebraic stability matrix of a Runge-Kutta method";
-RKAlgebraicallyStableQ::usage = "Returns True if the Runge-Kutta method is algebraically stable and False otherwise";
-RKSymplecticQ::usage = "Returns True if the Runge-Kutta method is symplectic and False otherwise";
-RKAbsoluteMonotonicityRadius::usage = "Radius of absolute monotonicty";
+RKAlgebraicStabilityMatrix::usage =
+	"RKAlgebraicStabilityMatrix[rk] computes the algebraic stability matrix of rk.\n" <>
+	"RKAlgebraicStabilityMatrix[\[Ellipsis], opts] computes the algebraic stability matrix using RKB options opts.";
+RKAlgebraicallyStableQ::usage =
+	"RKAlgebraicallyStableQ[rk] returns True if rk is algebraically stable and False, otherwise.\n" <>
+	"RKAlgebraicallyStableQ[\[Ellipsis], opts] checks algebraic stability using RKB options opts.";
+RKSymplecticQ::usage =
+	"RKSymplecticQ[rk] returns True if rk is symplectic and False, otherwise.\n" <>
+	"RKSymplecticQ[\[Ellipsis], opts] checks symplecticity using RKB options opts.";
+RKAbsoluteMonotonicityRadius::usage = "RKAbsoluteMonotonicityRadius[rk] computes the radius of absolute monotonicty (SSP coefficient) of rk.\n" <>
+	"RKAbsoluteMonotonicityRadius[\[Ellipsis], opts] computres the radius of absolute monotonicty using RKB options opts.";
 
 
 Begin["`Private`"];
