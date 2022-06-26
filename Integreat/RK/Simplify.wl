@@ -23,7 +23,7 @@ Needs["Integreat`RK`Methods`"];
 RKDJIrreducibleStages[rk_] := With[{
 		s = RKStages[rk]
 	},
-	Sort[Select[VertexOutComponent[Graph[rk], v_ /; v > s], LessEqualThan[s]]]
+	Select[VertexOutComponent[Graph[rk], v_ /; v > s], LessEqualThan[s]]
 ];
 
 RKSubset[rk_, {}] := RKSubset[rk, {1}];
@@ -37,7 +37,7 @@ RKSubset[HoldPattern[RK[a_, b___]], p_] := RK[
 (*Package Definitions*)
 
 
-RKDJReduce[rk_RK] := RKSubset[rk, RKDJIrreducibleStages[rk]];
+RKDJReduce[rk_RK] := RKSubset[rk, Sort[RKDJIrreducibleStages[rk]]];
 
 RKDJReducibleQ[rk_RK] := Length[RKDJIrreducibleStages[rk]] =!= RKStages[rk];
 
