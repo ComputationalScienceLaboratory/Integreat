@@ -9,34 +9,21 @@ Integreat`RK`LinearStability::usage = "This package contains functions for analy
 
 RKLinearStability::usage =
 	"RKLinearStability[rk, z] evaluates the linear stability function of rk at z = h \[Lambda]. If z is a DirectedInfinity, then the value in the limit is returned.\n" <>
-	"RKLinearStability[rk, z, Stage \[Rule] All] evaluates the internal stability function of rk at z.\n" <>
-	"RKLinearStability[\[Ellipsis], opts] evaluates using RKB options opts.";
+	"RKLinearStability[rk, z, Stage \[Rule] All] evaluates the internal stability function of rk at z.\n";
 RKLinearStabilityPlot::usage =
 	"RKLinearStabilityPlot[rk] plots the linear stability region of rk.\n" <>
 	"RKLinearStabilityPlot[rk, z] plots in the square region -z-z*I to z+z*I.\n" <>
-	"RKLinearStabilityPlot[rk, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"RKLinearStabilityPlot[\[Ellipsis], opts] plots using ComplexRegionPlot and RKB options opts.";
+	"RKLinearStabilityPlot[rk, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 RKOrderStarPlot::usage =
 	"RKOrderStarPlot[rk] plots the order star of rk.\n" <>
 	"RKOrderStarPlot[rk, z] plots in the square region -z-z*I to z+z*I.\n" <>
-	"RKOrderStarPlot[rk, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"RKOrderStarPlot[\[Ellipsis], opts] plots using ComplexRegionPlot and RKB options opts.";
-RKLinearStabilityP::usage =
-	"RKLinearStabilityP[rk, z] evaluates the numerator of the linear stability function of rk at z.\n" <>
-	"RKLinearStabilityP[\[Ellipsis], opts] evaluates using RKB options opts.";
+	"RKOrderStarPlot[rk, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
+RKLinearStabilityP::usage = "RKLinearStabilityP[rk, z] evaluates the numerator of the linear stability function of rk at z.";
 RKLinearStabilityQ::usage = "RKLinearStabilityQ[rk, z] evaluates the denominator of the linear stability function of rk at z.";
-RKEPolynomial::usage =
-	"RKEPolynomial[rk, y] computes |Q(y * I)|^2 - |P(y * I)|^2 where Q and P are the denominator and numerator, respectively, of the linear stability function of rk.\n" <>
-	"RKEPolynomial[\[Ellipsis], opts] computes the E-polynomial using RKB options opts.";
-RKIStableCondition::usage =
-	"RKIStableCondition[rk] returns an algebraic condition equivalent to rk being stable on the imaginary axis.\n" <>
-	"RKIStableCondition[\[Ellipsis], opts] returns the I-stability condition using RKB options opts.";
-RKAStableCondition::usage =
-	"RKAStableCondition[rk] returns an algebraic condition equivalent to rk being stable in the left half-plane.\n" <>
-	"RKAStableCondition[\[Ellipsis], opts] returns the A-stability condition using RKB options opts.";
-RKStifflyAccurateQ::usage =
-	"RKStifflyAccurateQ[rk] returns True if, for the coefficients of rk, the last row of A equals b. It returns False, otherwise.\n" <>
-	"RKStifflyAccurateQ[\[Ellipsis], opts] uses RKB options opts.";
+RKEPolynomial::usage = "RKEPolynomial[rk, y] computes |Q(y * I)|^2 - |P(y * I)|^2 where Q and P are the denominator and numerator, respectively, of the linear stability function of rk.";
+RKIStableCondition::usage = "RKIStableCondition[rk] returns an algebraic condition equivalent to rk being stable on the imaginary axis.";
+RKAStableCondition::usage = "RKAStableCondition[rk] returns an algebraic condition equivalent to rk being stable in the left half-plane.";
+RKStifflyAccurateQ::usage = "RKStifflyAccurateQ[rk] returns True if, for the coefficients of rk, the last row of A equals b. It returns False, otherwise.";
 
 
 (* ::Section:: *)

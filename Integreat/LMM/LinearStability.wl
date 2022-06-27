@@ -10,13 +10,11 @@ LMMLinearStabilityPolynomial::usage = "LMMLinearStabilityPolynomial[lmm, \[Zeta]
 LMMLinearStabilityPlot::usage =
 	"LMMLinearStabilityPlot[lmm] plots the linear stability region of lmm.\n" <>
 	"LMMLinearStabilityPlot[lmm, z] plots in the square region -z-z*I to z+z*I.\n" <>
-	"LMMLinearStabilityPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"LMMLinearStabilityPlot[\[Ellipsis], opts] plots using ComplexRegionPlot options opts.";
+	"LMMLinearStabilityPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 LMMOrderStarPlot::usage =
 	"LMMOrderStarPlot[lmm] plots the order star of lmm.\n" <>
 	"LMMOrderStarPlot[lmm, z] plots in the square region -z-z*I to z+z*I.\n" <>
-	"LMMOrderStarPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"LMMOrderStarPlot[\[Ellipsis], opts] plots using ComplexRegionPlot options opts.";
+	"LMMOrderStarPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 
 
 (* ::Section:: *)
