@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`LMM`Simplify`"];
-Integreat`LMM`Simplify::usage = "This package contains functions for simplifying and reducing linear multistep methods.";
 
 LMMReducibleQ::usage = "LMMReducibleQ[lmm] yields True if lmm has a simpler equivalent formulation, and yields False otherwise.";
 LMMReduce::usage = "LMMReduce[lmm] returns the simplest equivalent formulation of lmm.";

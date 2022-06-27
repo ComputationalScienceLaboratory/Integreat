@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`Internal`Composition`"];
-Integreat`Internal`Composition::usage = "This is an internal package for generating composite methods.";
 
 AddComposition::usage = "AddComposition[type, op, composer] defines op and overloads the power function for type to provide composision via composer.";
 

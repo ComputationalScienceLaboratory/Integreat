@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`LMM`OrderConditions`"];
-Integreat`LMM`OrderConditions::usage = "This package contains functions for determining the convergence order of linear multistep methods.";
 
 LMMOrderConditions::usage = "LMMOrderConditions[lmm, p] returns a list of order condition residuals for lmm from order 0 to p.  If a residual is zero, the corresponding order condition is satisfied.";
 LMMOrder::usage = "LMMOrder[lmm] determines the order of lmm by evaluating order conditions.";

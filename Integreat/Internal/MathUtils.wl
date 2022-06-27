@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`Internal`MathUtils`"];
-Integreat`Internal`MathUtils::usage = "This internal package contains math utilities.";
 
 BlockDiag::usage = "BlockDiag[m1, m2] creates a matrix with m1 and m2 as diagonal blocks.";
 ZeroQ::usage = "ZeroQ[expr] uses PossibleZeroQ to test if expr is zero";

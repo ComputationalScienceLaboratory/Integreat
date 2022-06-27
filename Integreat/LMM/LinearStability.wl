@@ -5,19 +5,18 @@
 
 
 BeginPackage["Integreat`LMM`LinearStability`"];
-Integreat`LMM`LinearStability::usage = "This package contains functions for analyzing the stability of linear multistep methods applied to the linear test problem y' = \[Lambda] y.";
 
 LMMLinearStabilityPolynomial::usage = "LMMLinearStabilityPolynomial[lmm, \[Zeta], \[Mu]] creates a polynomial in \[Zeta], parameterized by \[Mu] = h \[Lambda], that determines the linear stability of lmm.";
 LMMLinearStabilityPlot::usage =
 	"LMMLinearStabilityPlot[lmm] plots the linear stability region of lmm.\n" <>
 	"LMMLinearStabilityPlot[lmm, z] plots in the square region -z-z*I to z+z*I.\n" <>
 	"LMMLinearStabilityPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"LMMLinearStabilityPlot[\[Ellipsis], opts] plots with ComplexRegionPlot options opts.";
+	"LMMLinearStabilityPlot[\[Ellipsis], opts] plots using ComplexRegionPlot options opts.";
 LMMOrderStarPlot::usage =
 	"LMMOrderStarPlot[lmm] plots the order star of lmm.\n" <>
 	"LMMOrderStarPlot[lmm, z] plots in the square region -z-z*I to z+z*I.\n" <>
 	"LMMOrderStarPlot[lmm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.\n" <>
-	"LMMOrderStarPlot[\[Ellipsis], opts] plots with ComplexRegionPlot options opts.";
+	"LMMOrderStarPlot[\[Ellipsis], opts] plots using ComplexRegionPlot options opts.";
 
 
 (* ::Section:: *)
