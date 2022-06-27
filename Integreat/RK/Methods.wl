@@ -5,22 +5,33 @@
 
 
 BeginPackage["Integreat`RK`Methods`"];
-Integreat`RK`Methods::usage = "Package containing functions for creating Runge-Kutta methods";
 
-RK::usage = "Constructs a Runge-Kutta method";
-RKRescale::usage = "Rescales the timestep";
-RKType::usage = "A string representation of the type of Runge-Kutta method";
-RKPrimary::usage = "Removes the embedded method from a Runge-Kutta method";
-RKEmbedded::usage = "Gets the embedded Runge-Kutta method";
-RKPairQ::usage = "Returns True if m is a Runge-Kutta method with an embedded method";
-RKCollocation::usage = "Constructs a collocated Runge-Kutta method";
-RKCompose::usage = "Builds a single Runge-Kutta method from the composition of sub-methods";
-RKA::usage = "Gets the A coefficients of a Runge-Kutta method";
-RKDenseOutput::usage = "Gets the interpolatory b coeffients as a function of \[FormalTheta] for a Runge-Kutta method";
-RKB::usage = "Gets the b coefficients of a Runge-Kutta method.  Optionally the second argument is a boolean for whether to return to return the embedded b coefficients.";
-RKC::usage = "Gets the c coefficients of a Runge-Kutta method";
-RKBHat::usage = "Gets the embedded coefficients of a Runge-Kutta method";
-RKStages::usage = "Gets the number of stages of a Runge-Kutta method";
+RK::usage =
+	"RK[] returns a Dataset containing a catalog of Runge-Kutta methods.\n" <>
+	"RK[\"name\"] retreives the method named name from the catalog.\n" <>
+	"RK[s] constructs a generic s-stage Runge-Kutta method.\n" <>
+	"RK[A] constructs a Runge-Kutta method with b coefficients taken to be the last row of A and c coefficients that are the row sum of A.\n" <>
+	"RK[A, b] constructs a Runge-Kutta method with c coefficients that are the row sum of A.\n" <>
+	"RK[A, b, c] constructions a Runge-Kutta method with coefficients A, b, and c.\n" <>
+	"RK[A, b, c, bHat] constructs an embedded Runge-Kutta pair.\n" <>
+	"RK[rk, bHat] adds embedded coefficients bHat to rk."
+RKRescale::usage = "RKRescale[rk, x] scales all coefficients of rk by x.";
+RKType::usage = "RKType[rk] returns a string representation of the tableau type of rk.";
+RKPrimary::usage = "RKPrimary[rk] creates a copy of rk without an embedded method.";
+RKEmbedded::usage = "RKEmbedded[rk] creates a copy of rk in which";
+RKPairQ::usage = "RKPairQ[rk] returns True if rk is an embedded Runge-Kutta pair and False, otherwise.";
+RKCollocation::usage = "RKCollocation[c] constructs a collocation method with abscissae c.";
+RKCompose::usage
+	"RKCompose[rk1, \[Ellipsis], rkm] creates a Runge-Kutta method from a step of rk1, \[Ellipsis], rkm in sequence using a step size h/m.\n" <>
+	"RKCompose[{rk1, w1}, \[Ellipsis], {rkm, wm}] composes rk1, \[Ellipsis], rkm using step sizes w1*h, \[Ellipsis], wm*h, respectively.\n" <>
+	"rk1[rk2] composes a half step of rk1 with a half step of rk2.\n" <>
+	"rk^p composes p steps of rk."
+RKA::usage = "RKA[rk] returns the A coefficient matrix of rk.";
+RKDenseOutput::usage = "RKDenseOutput[rk] returns the dense output coefficients of rk paramtereized by \[FormalTheta].";
+RKB::usage = "RKB[rk] returns the b weights of rk.";
+RKC::usage = "RKC[rk] returns the abscissae of rk.";
+RKBHat::usage = "RKBHat[rk] returns the embedded coefficients of an embedded pair rk.";
+RKStages::usage = "RKStages[rk] returns the number of stages of rk.";
 
 
 (* ::Section:: *)
@@ -94,7 +105,7 @@ RKEmbedded[HoldPattern[RK[A_, _, c_, bHat_]]] := RK[A, bHat, c];
 RKPairQ[HoldPattern[RK[_, _, _, _]]] := True;
 RKPairQ[_] := False;
 
-RKCollocation[c_List?VectorQ] := With[{
+RKCollocation[c_List /; VectorQ[c] && DuplicateFreeQ[c]] := With[{
 		V = SeriesVander[Append[c, \[FormalTheta]], 1, Length[c]] . Inverse[SeriesVander[c, 0, Length[c] - 1]]
 	},
 	RK[Most[V], Last[V], c]
