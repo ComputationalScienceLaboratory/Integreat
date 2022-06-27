@@ -5,15 +5,21 @@
 
 
 BeginPackage["Integreat`BTrees`"];
-Integreat`BTrees::usage = "Package containing functions for ";
-BTree::usage = "";
-BTreeN::usage = "";
-BTreeDAE::usage = "";
 
-BTreeOrder::usage = "";
-BTreeAlpha::usage = "";
-BTreeGamma::usage = "";
-BTreeSigma::usage = "";
+BTree::usage =
+	"BTree[p] generates all B-Trees up to order p and groups them by order.\n" <>
+	"BTree[{p}] generates a list of B-Trees of order p.";
+BTreeN::usage =
+	"BTreeN[p] generates all N-Trees up to order p and groups them by order.\n" <>
+	"BTreeN[{p}] generates a list of N-Trees of order p.";
+BTreeDAE::usage =
+	"BTreeDAE[p] generates all DAE-Trees up to order p and groups them by order.\n" <>
+	"BTreeDAE[{p}] generates a list of DAE-Trees of order p.";
+
+BTreeOrder::usage = "BTreeOrder[t] computes the order of the tree t.";
+BTreeAlpha::usage = "BTreeAlpha[t] computes the number of monotonic labelings of the tree t.";
+BTreeGamma::usage = "BTreeGamma[t] computes the density of the tree t.";
+BTreeSigma::usage = "BTreeSigma[t] computes the number of symmetries of the tree t.";
 
 
 (* ::Section:: *)
