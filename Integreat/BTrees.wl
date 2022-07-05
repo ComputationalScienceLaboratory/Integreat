@@ -7,13 +7,13 @@
 BeginPackage["Integreat`BTrees`"];
 
 BTree::usage =
-	"BTree[p] generates all B-Trees up to order p and groups them by order.\n" <>
+	"BTree[p] generates all B-Trees up to order p grouped by order.\n" <>
 	"BTree[{p}] generates a list of B-Trees of order p.";
 BTreeN::usage =
-	"BTreeN[p] generates all N-Trees up to order p and groups them by order.\n" <>
+	"BTreeN[p] generates all N-Trees up to order p grouped by order.\n" <>
 	"BTreeN[{p}] generates a list of N-Trees of order p.";
 BTreeDAE::usage =
-	"BTreeDAE[p] generates all DAE-Trees up to order p and groups them by order.\n" <>
+	"BTreeDAE[p] generates all DAE-Trees up to order p grouped by order.\n" <>
 	"BTreeDAE[{p}] generates a list of DAE-Trees of order p.";
 
 BTreeOrder::usage = "BTreeOrder[t] computes the order of the tree t.";
@@ -28,12 +28,15 @@ BTreeSigma::usage = "BTreeSigma[t] computes the number of symmetries of the tree
 
 Begin["`Private`"];
 
+treeMap[head_, treeFun_, {p_}] := Map[head, treeFun[p]];
+treeMap[head_, treeFun_, p_] := Map[head, Table[treeFun[i], {i, p}], {2}];
+
 (* Allow KroneckerProduct to accept 1 argument. For lists, this works like TensorProduct but has less List nesting and is faster. *)
 kron[x_] := x;
 kron[x__] := KroneckerProduct[x];
 
 (* Generates all sets of subtrees with at least minSubtrees elements and p total vertices *)
-subtrees[head_, p_, minSubtrees_:1] := DeleteDuplicates[Flatten[kron @@@ head[IntegerPartitions[p, {minSubtrees, p}]]]];
+subtrees[head_, p_, minSubtrees_:1] := DeleteDuplicates[Flatten[kron @@@ Map[head, IntegerPartitions[p, {minSubtrees, p}], {2}]]];
 
 
 (* ::Subsection:: *)
@@ -43,55 +46,47 @@ subtrees[head_, p_, minSubtrees_:1] := DeleteDuplicates[Flatten[kron @@@ head[In
 tree[0] := {\[FormalY]};
 tree[1] := {\[FormalF]};
 tree[p_] := tree[p] = Map[\[FormalF], subtrees[tree, p - 1]];
-SetAttributes[tree, Listable];
 
 
 (* ::Subsection:: *)
 (*N-Trees*)
 
 
-treeN[0, n_] := {\[FormalY]};
-treeN[1, n_] := Table[Subscript[\[FormalF], i], {i, n}];
-treeN[p_, n_] := treeN[p, n] = Flatten[Outer[Construct, treeN[1, n], subtrees[treeN[#, n] &, p - 1]]];
-SetAttributes[treeN, Listable];
+treeN[_][0] := {\[FormalY]};
+treeN[n_][1] := Table[Subscript[\[FormalF], i], {i, n}];
+treeN[n_][p_] := treeN[n][p] = Flatten[Outer[Construct, treeN[n][1], subtrees[treeN[n], p - 1]]];
 
 
 (* ::Subsection:: *)
 (*DAE-Trees*)
 
 
-treeDiffAlg[0, _] := {\[FormalY]};
-treeDiffAlg[p_, index_] := Join[treeDiff[p, index], treeAlg[p, index]];
+treeDiffAlg[idx_][p_] := Join[treeDiff[idx][p], treeAlg[idx][p]];
 
-treeDiff[0, _] := {\[FormalY]};
-treeDiff[1, _] := {\[FormalF]};
-treeDiff[p_, 1] := treeDiff[p, 1] = Map[\[FormalF], subtrees[treeDiffAlg[#, 1] &, p - 1]];
-treeDiff[p_, 2] := treeDiff[p, 2] = Join[treeDiff2[p], Map[\[FormalF], treeAlg[p - 1, 2]]]; 
+treeDiff[idx_, start_:1, q_:0][p_] := Catenate[Table[treeDiff[idx, {i}, q][p], {i, start, Max[1, idx - 1]}]];
+treeDiff[_, {part_}, _][0] := {Subscript[\[FormalY], part]};
+treeDiff[_, {part_}, _][1] := {Subscript[\[FormalF], part]};
+treeDiff[idx_, {1}, _][p_] := Map[Subscript[\[FormalF], 1], subtrees[treeDiffAlg[idx], p - 1]];
+treeDiff[idx_, {1}, p_][p_] := Map[Subscript[\[FormalF], 1], Join[subtrees[treeDiffAlg[idx], p - 1, 2], treeDiff[idx][p - 1]]];
+treeDiff[idx_, {part_}, q_][p_] := Map[Subscript[\[FormalF], part], subtrees[treeDiff[idx, part - 1, q], p - 1]];
 
-(* Index-2 differential trees excluding ones with a single algebraic subtree *)
-treeDiff2[p_] := treeDiff2[p] = Map[\[FormalF], Join[subtrees[treeDiffAlg[#, 2] &, p - 1, 2], treeDiff[p - 1, 2]]];
-
-treeAlg[0, _] := {\[FormalY]};
-treeAlg[p_, 1] := treeAlg[p, 1] = Map[\[FormalG], Join[subtrees[treeDiffAlg[#, 1] &, p, 2], treeDiff[p, 1]]];
-treeAlg[p_, 2] := treeAlg[p, 2] = Map[\[FormalH], Join[subtrees[treeDiff[#, 2] &, p + 1, 2], treeDiff2[p + 1]]];
-SetAttributes[{treeDiffAlg, treeDiff, treeDiff2, treeAlg}, Listable];
-
-typeToDAETree[type_] := Switch[type, "Differential", treeDiff, "Algebraic", treeAlg, _, treeDiffAlg];
+treeAlg[idx_][0] := {Subscript[\[FormalY], Max[2, idx]]};
+treeAlg[0][1] := {Subscript[\[FormalG], 0]};
+treeAlg[0][p_] := Map[Subscript[\[FormalG], 0], subtrees[treeDiffAlg[0], p - 1]];
+treeAlg[1][p_] := Map[Subscript[\[FormalG], 1], Join[subtrees[treeDiffAlg[1], p, 2], treeDiff[1][p]]];
+treeAlg[idx_][p_] := Map[Subscript[\[FormalG], idx], subtrees[treeDiff[idx, {idx - 1}, p + 1], p + idx - 1]];
 
 
 (* ::Subsection:: *)
 (*Tree Functions*)
 
 
-treeOrder[\[FormalY], ___] := 0;
-treeOrder[_Symbol] := 1;
-treeOrder[Subscript[\[FormalF], m_], n___] := Boole[m == n];
-treeOrder[Power[t_, p_], n___] := p * treeOrder[t, n];
-treeOrder[t_Times, n___] := Total[Map[treeOrder[#, n] &, List @@ t]];
-treeOrder[r:\[FormalF][t_]] := treeOrder[r] = treeOrder[t] + 1;
-treeOrder[r:\[FormalG][t_]] := treeOrder[r] = treeOrder[t];
-treeOrder[r:\[FormalH][t_]] := treeOrder[r] = treeOrder[t] - 1;
-treeOrder[r:Subscript[\[FormalF], m_][t_], n___] := treeOrder[r, n] = Boole[m == n] + treeOrder[t, n];
+treeOrder[\[FormalY] | Subscript[\[FormalY], _]] := 0;
+treeOrder[_Symbol | _Subscript] := 1;
+treeOrder[Power[t_, p_]] := p * treeOrder[t];
+treeOrder[t_Times] := Map[treeOrder, Plus @@ t];
+treeOrder[r:(\[FormalF] | Subscript[\[FormalF], _])[t_]] := treeOrder[r] = treeOrder[t] + 1;
+treeOrder[r:Subscript[\[FormalG], idx_][t_]] := treeOrder[r] = treeOrder[t] + 1 - idx;
 
 treeAlpha[_Symbol | _Subscript] := 1;
 treeAlpha[Power[t_, p_]] := With[{o = treeOrder[t]},
@@ -104,8 +99,7 @@ treeGamma[_Symbol | _Subscript] := 1;
 treeGamma[Power[t_, p_]] := treeGamma[t]^p;
 treeGamma[t_Times] := Map[treeGamma, t];
 treeGamma[r:(\[FormalF] | _Subscript)[t_]] := treeGamma[r] = treeOrder[r] * treeGamma[t];
-treeGamma[r:\[FormalG][t_]] := treeGamma[r] = treeGamma[t];
-treeGamma[r:\[FormalH][t_]] := treeGamma[r] = treeGamma[t] / (treeOrder[r] + 1);
+treeGamma[r:Subscript[\[FormalG], idx_][t_]] := treeGamma[r] = treeGamma[t] / Pochhammer[treeOrder[r] + 1, idx - 1];
 
 treeSigma[_Symbol | _Subscript] := 1;
 treeSigma[Power[t_, p_]] := Factorial[p] * treeSigma[t]^p;
@@ -122,7 +116,7 @@ toTree[Power[t_, p_]] := Splice[ConstantArray[toTree[t], p]];
 toTree[t_Times] := Splice[Map[toTree, List @@ t]];
 toTree[r:h_[t_]] := toTree[r] = Tree[h, {toTree[t]}];
 
-toGraph[\[FormalY]] := Graph[{}];
+toGraph[\[FormalY] | Subscript[\[FormalY], _]] := Graph[{}];
 toGraph[t_] := With[{
 		tree = toTree[t]
 	},
@@ -136,12 +130,11 @@ toGraph[t_] := With[{
 		EdgeStyle -> Black,
 		VertexSize -> Large,
 		VertexStyle -> {
-			{\[FormalG], _} -> White,
-			{\[FormalH], _} -> LightGray,
-			{Subscript[_, n_], _} :> ColorData[1, n],
+			{Subscript[\[FormalG], _], _} -> White,
+			{Subscript[\[FormalF], n_], _} :> ColorData[3, n],
 			Black
 		},
-		VertexLabels -> {{Subscript[_, n_], _} -> n},
+		VertexLabels -> {{Subscript[\[FormalF], n_], _} -> n},
 		ImageSize -> Tiny
 	]
 ];
@@ -157,46 +150,38 @@ If[
 (*Package Definitions*)
 
 
-BTree[{p_Integer?NonNegative}] := Map[BTree, tree[p]];
-BTree[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative] := Map[BTree, tree[Range[pStart, pEnd]], {2}];
+BTree[p:_Integer?Positive | {_Integer?NonNegative}] := treeMap[BTree, tree, p];
 BTree /: Tree[HoldPattern[BTree[t_]]] := toTree[t];
 BTree /: Graph[HoldPattern[BTree[t_]]] := toGraph[t];
 BTree /: MakeBoxes[HoldPattern[BTree[t_]], format_] := toBoxes[t, format];
 
 Options[BTreeN] = {"Partitions" -> 2};
-BTreeN[{p_Integer?NonNegative}, OptionsPattern[]] := With[{
+BTreeN[p:_Integer?Positive | {_Integer?NonNegative}, OptionsPattern[]] := With[{
 		n = OptionValue[Partitions]
 	},
-	Map[BTreeN[#, n] &, treeN[p, n]] /; IntegerQ[n] && Positive[n]
-];
-BTreeN[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative, OptionsPattern[]] := With[{
-		n = OptionValue[Partitions]
-	},
-	Map[BTreeN[#, n] &, treeN[Range[pStart, pEnd], n], {2}] /; IntegerQ[n] && Positive[n]
+	treeMap[BTreeN[#, n] &, treeN[n], p] /; IntegerQ[n] && Positive[n]
 ];
 BTreeN /: Tree[HoldPattern[BTreeN[t_, _Integer]]] := toTree[t];
 BTreeN /: Graph[HoldPattern[BTreeN[t_, _Integer]]] := toGraph[t];
 BTreeN /: MakeBoxes[HoldPattern[BTreeN[t_, _Integer]], format_] := toBoxes[t, format];
 
-Options[BTreeDAE] = {"Index" -> 1, "Type" -> "All"};
-BTreeDAE[{p_Integer?NonNegative}, OptionsPattern[]] := With[{
-		index = OptionValue[Index],
-		treeFun = typeToDAETree[OptionValue[Type]]
+Options[BTreeDAE] = {"Index" -> 1, "Partition" -> All};
+BTreeDAE[p:_Integer?Positive | {_Integer?NonNegative}, OptionsPattern[]] := With[{
+		idx = OptionValue[Index],
+		treeFun = Switch[OptionValue[Partition],
+			All, treeDiffAlg,
+			"Differential", treeDiff,
+			"Algebraic", treeAlg,
+			_, True
+		]
 	},
-	Map[BTreeDAE[#, index] &, treeFun[p, index]] /; index === 1 || index === 2
-];
-BTreeDAE[pStart:_Integer?NonNegative:1, pEnd_Integer?NonNegative, OptionsPattern[]] := With[{
-		index = OptionValue[Index],
-		treeFun = typeToDAETree[OptionValue[Type]]
-	},
-	Map[BTreeDAE[#, index] &, treeFun[Range[pStart, pEnd], index], {2}] /; index === 1 || index === 2
+	treeMap[BTreeDAE[#, idx] &, treeFun[idx], p] /; IntegerQ[idx] && NonNegative[idx] && !TrueQ[treeFun] 
 ];
 BTreeDAE /: Tree[HoldPattern[BTreeDAE[t_, _Integer]]] := toTree[t];
 BTreeDAE /: Graph[HoldPattern[BTreeDAE[t_, _Integer]]] := toGraph[t];
 BTreeDAE /: MakeBoxes[HoldPattern[BTreeDAE[t_, _Integer]], format_] := toBoxes[t, format];
 
 BTreeOrder[(BTree | BTreeN | BTreeDAE)[t_, ___]] := treeOrder[t];
-BTreeOrder[BTreeN[t_, _], n_Integer?Positive] := treeOrder[t, n];
 SetAttributes[BTreeOrder, Listable];
 
 BTreeAlpha[(BTree | BTreeN | BTreeDAE)[t_, ___]] := treeAlpha[t];
