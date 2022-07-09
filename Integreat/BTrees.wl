@@ -66,15 +66,15 @@ treeDiffAlg[idx_][p_] := Join[treeDiff[idx][p], treeAlg[idx][p]];
 treeDiff[idx_, start_:1, q_:0][p_] := Catenate[Table[treeDiff[idx, {i}, q][p], {i, start, Max[1, idx - 1]}]];
 treeDiff[_, {part_}, _][0] := {Subscript[\[FormalY], part]};
 treeDiff[_, {part_}, _][1] := {Subscript[\[FormalF], part]};
-treeDiff[idx_, {1}, _][p_] := Map[Subscript[\[FormalF], 1], subtrees[treeDiffAlg[idx], p - 1]];
-treeDiff[idx_, {1}, p_][p_] := Map[Subscript[\[FormalF], 1], Join[subtrees[treeDiffAlg[idx], p - 1, 2], treeDiff[idx][p - 1]]];
-treeDiff[idx_, {part_}, q_][p_] := Map[Subscript[\[FormalF], part], subtrees[treeDiff[idx, part - 1, q], p - 1]];
+treeDiff[idx_, {1}, _][p_] := treeDiff[idx, {1}, _][p] = Map[Subscript[\[FormalF], 1], subtrees[treeDiffAlg[idx], p - 1]];
+treeDiff[idx_, {1}, p_][p_] := treeDiff[idx, {1}, p][p] = Map[Subscript[\[FormalF], 1], Join[subtrees[treeDiffAlg[idx], p - 1, 2], treeDiff[idx][p - 1]]];
+treeDiff[idx_, {part_}, q_][p_] := treeDiff[idx, {part}, q][p] = Map[Subscript[\[FormalF], part], subtrees[treeDiff[idx, part - 1, q], p - 1]];
 
 treeAlg[idx_][0] := {Subscript[\[FormalY], Max[2, idx]]};
 treeAlg[0][1] := {Subscript[\[FormalG], 0]};
-treeAlg[0][p_] := Map[Subscript[\[FormalG], 0], subtrees[treeDiffAlg[0], p - 1]];
-treeAlg[1][p_] := Map[Subscript[\[FormalG], 1], Join[subtrees[treeDiffAlg[1], p, 2], treeDiff[1][p]]];
-treeAlg[idx_][p_] := Map[Subscript[\[FormalG], idx], subtrees[treeDiff[idx, {idx - 1}, p + 1], p + idx - 1]];
+treeAlg[0][p_] := treeAlg[0][p] = Map[Subscript[\[FormalG], 0], subtrees[treeDiffAlg[0], p - 1]];
+treeAlg[1][p_] := treeAlg[1][p] = Map[Subscript[\[FormalG], 1], Join[subtrees[treeDiffAlg[1], p, 2], treeDiff[1][p]]];
+treeAlg[idx_][p_] := treeAlg[idx][p] = Map[Subscript[\[FormalG], idx], subtrees[treeDiff[idx, {idx - 1}, p + 1], p + idx - 1]];
 
 
 (* ::Subsection:: *)
