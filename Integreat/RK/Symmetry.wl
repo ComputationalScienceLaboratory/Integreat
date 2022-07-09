@@ -7,8 +7,8 @@
 BeginPackage["Integreat`RK`Symmetry`"];
 Integreat`RK`Symmetry::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
 
-RKReflection::usage = "The Runge-Kutta method from taking a step backward in time then swapping the input and output states";
-RKTranspose::usage = "The discrete adjoint of the Runge-Kutta method";
+RKReflection::usage = "RKReflection[rk] returns a new Runge-Kutta method which is the reflection of rk. ";
+RKTranspose::usage = "RKTranspose[rk] returns a new Runge-Kutta method which is the transpose of rk. ";
 
 
 (* ::Section:: *)
