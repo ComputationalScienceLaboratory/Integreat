@@ -83,7 +83,7 @@ RKSimplifyingAssumptionD[rk_RK, {zeta_Integer?Positive}, opts:OptionsPattern[RKB
 		b = RKB[rk, opts],
 		c = RKC[rk]
 	},
-	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, opts] - SafePow[c, zeta]) / zeta
+	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, rk, opts] - SafePow[c, zeta]) / zeta
 ];
 RKSimplifyingAssumptionD[rk_RK, zeta_Integer, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionD[rk, {k}, opts], {k, zeta}];
 
