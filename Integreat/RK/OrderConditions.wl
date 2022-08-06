@@ -3,23 +3,33 @@
 BeginPackage["Integreat`RK`OrderConditions`"];
 
 
-Integreat`RK`OrderConditions::usage = "Package containing functions for determining the order of Runge-Kutta methods";
-
-RKOrderConditions::usage = "?";
-RKSimplifyingAssumptionB::usage = "The Runge-Kutta simplifying assumption B";
-RKSimplifyingAssumptionC::usage = "The Runge-Kutta simplifying assumption C";
-RKSimplifyingAssumptionD::usage = "The Runge-Kutta simplifying assumption D";
-RKOrder::usage = "?";
-RKExtrapolation::usage = "?";
-RKErrorA::usage = "The 2-norm of the principal error";
-RKErrorB::usage = "The ratio of the embedded second error terms' norm to leading error terms' norm";
-RKErrorC::usage = "The ratio of the norm of the difference in second error terms to the norm of embedded leading error terms";
-RKErrorD::usage = "The maximum entry in the Butcher tableau by absolute value";
-RKErrorE::usage = "The ratio of the second error terms' norm to embedded leading error terms' norm";
-RKDispersionError::usage = "Dispersion error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RKDispersionOrder::usage = "Dispersion order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RKDissipationError::usage = "Dissipation error of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
-RKDissipationOrder::usage = "Dissipation order of Runge-Kutta method applied to y'=\[ImaginaryI]\[Omega]y";
+RKOrderConditions::usage =
+	"RKOrderConditions[rk, p] generates the order condition residuals of rk up to order p grouped by order." <>
+	"RKOrderConditions[rk, {p}] generates a list of p-th order residuals of rk.";
+RKSimplifyingAssumptionB::usage =
+	"RKSimplifyingAssumptionB[rk, p] generates a list of B simplifying assumption residuals up to order p for rk.\n" <>
+	"RKSimplifyingAssumptionB[rk, {p}] generates only the residual of order p."
+RKSimplifyingAssumptionC::usage =
+	"RKSimplifyingAssumptionC[rk, p] generates a list of C simplifying assumption residuals up to order p for rk.\n" <>
+	"RKSimplifyingAssumptionC[rk, {p}] generates only the residual of order p.";
+RKSimplifyingAssumptionD::usage =
+	"RKSimplifyingAssumptionD[rk, p] generates a list of D simplifying assumption residuals up to order p for rk.\n" <>
+	"RKSimplifyingAssumptionD[rk, {p}] generates only the residual of order p.";
+RKOrder::usage = "RKOrder[rk] computes the order of accuracy of rk.";
+RKExtrapolation::usage =
+	"RKExtrapolation[rk, steps] creates a new Runge-Kutta method which is rk extrapolated using the step sequence steps.\n" <>
+	"RKExtrapolation[rk, steps, j] extrapolates assuming rk has an asymptotic error expansion involving only powers of h^j."
+RKErrorA::usage =
+	"RKErrorA[rk] computes the 2-norm of the leading error residuals." <>
+	"RKErrorA[rk, p] computes the 2-norm of the order p residuals."
+RKErrorB::usage = "TODO"
+RKErrorC::usage = "TODO";
+RKErrorD::usage = "RKErrorD[rk] computes the maximum method coefficient by absolute value";
+RKErrorE::usage = "TODO";
+RKDispersionError::usage = "TODO";
+RKDispersionOrder::usage = "TODO";
+RKDissipationError::usage = "TODO";
+RKDissipationOrder::usage = "TODO";
 
 
 Begin["`Private`"];
@@ -79,11 +89,11 @@ RKSimplifyingAssumptionD[rk_RK, zeta_Integer, opts:OptionsPattern[RKB]] := Table
 
 RKOrder[rk_RK, opts:OptionsPattern[RKB]] := CountZeros[RKOrderConditions[rk, {#}, opts] &] - 1;
 
-RKExtrapolation[m_RK, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], jump:(_Integer?Positive):1] := With[{
+RKExtrapolation[m_RK, steps_/;VectorQ[steps, Positive] && DuplicateFreeQ[steps], j:(_Integer?Positive):1] := With[{
 		n = Length[steps],
 		p = RKOrder[m]
 	},
-	Inner[#1 * m^#2 &, LinearSolve[Append[Table[1 / steps^(jump * i + p), {i, 0, n - 2}], ConstantArray[1, n]], UnitVector[n, n]], steps, Plus]
+	Inner[#1 * m^#2 &, LinearSolve[Append[Table[1 / steps^(j * i + p), {i, 0, n - 2}], ConstantArray[1, n]], UnitVector[n, n]], steps, Plus]
 ];
 
 RKErrorA[rk_RK, p_Integer?NonNegative, opts:OptionsPattern[RKB]] := Norm[RKOrderConditions[rk, {p}, opts]];
