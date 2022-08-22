@@ -33,7 +33,7 @@ Manipulate[RKLinearStabilityPlot[rk, DenseOutput -> θ], {θ, 0, 1}] (* View the
 Deriving the second order Adams–Bashforth method:
 
 ```mathematica
-lmm = LMM[{0, a1, 1}, {b0, b1, 0}] (* Create an explicit, 3 step linear multistep method *)
+lmm = LMM[{0, a1, 1}, {b0, b1, 0}] (* Create an explicit, 2 step linear multistep method *)
 oc = LMMOrderConditions[lmm, 2] (* Generate order conditions up to order 2 *)
 sols = Solve[oc == 0] (* Find solution to order conditions *)
 lmm = lmm /. First[sols] (* Substitute solution into method *)
