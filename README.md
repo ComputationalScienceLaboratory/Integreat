@@ -37,7 +37,7 @@ lmm = LMM[{0, a1, 1}, {b0, b1, 0}] (* Create an explicit, 2 step linear multiste
 oc = LMMOrderConditions[lmm, 2] (* Generate order conditions up to order 2 *)
 sols = Solve[oc == 0] (* Find solution to order conditions *)
 lmm = lmm /. First[sols] (* Substitute solution into method *)
-LMMAdamsBashforth[2] (* There's also a constructor for Adams-Bashforth methods *)
+LMMAdamsBashforth[2] (* There's also a constructor for Adams–Bashforth methods *)
 ```
 
 ## Installation
@@ -48,7 +48,7 @@ The easiest way to install or update to the latest release of Integreat is to ev
 PacletInstall["https://github.com/ComputationalScienceLaboratory/Integreat/releases/latest/download/Integreat.paclet"]
 ```
 
-within Mathematica.  For local development, it can be installed by running
+within Mathematica. For local development, it can be installed by running
 
 ```shell
 ./install.wls
@@ -65,3 +65,7 @@ If you would no longer like to use Integreat, it can be uninstalled using
 ```mathematica
 PacletUninstall["Integreat"]
 ```
+
+## Documentation
+
+Basic usage information is provided for all functions.  To see this for all Runge–Kutta functions, evaluate `?RK*`. Similarly, use `?LMM*` and `?GLM*` for linear multistep methods and general linear methods. More detailed documentation which integrates with the built-in documentation center is being planned.
