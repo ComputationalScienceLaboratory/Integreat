@@ -15,6 +15,10 @@ A comprehensive Mathematica package for deriving and analyzing time integration 
   - Functions for 15+ method properties
   - Support for casting RK methods and LMMs as GLMs
   - Order conditions for high stage order methods
+- Trees for Taylor series analysis
+  - B-trees
+  - N-trees for partitioned ODEs
+  - Arbitrary index DAE-trees
 
 # Examples
 
