@@ -6,7 +6,7 @@
 
 BeginPackage["Integreat`LMM`LinearStability`"];
 
-LMMLinearStabilityPolynomial::usage = "LMMLinearStabilityPolynomial[lmm, \[Zeta], \[Mu]] creates a polynomial in \[Zeta], parameterized by \[Mu] = h \[Lambda], that determines the linear stability of lmm.";
+LMMLinearStabilityPolynomial::usage = "LMMLinearStabilityPolynomial[lmm, \[Zeta], \[Mu]] creates a polynomial in \[Zeta], parameterized by \[Mu]=h*\[Lambda], that determines the linear stability of lmm.";
 LMMLinearStabilityPlot::usage =
 	"LMMLinearStabilityPlot[lmm] plots the linear stability region of lmm.\n" <>
 	"LMMLinearStabilityPlot[lmm, z] plots in the square region -z-z*I to z+z*I.\n" <>

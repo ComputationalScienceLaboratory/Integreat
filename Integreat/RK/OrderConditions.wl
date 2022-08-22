@@ -4,7 +4,7 @@ BeginPackage["Integreat`RK`OrderConditions`"];
 
 
 RKOrderConditions::usage =
-	"RKOrderConditions[rk, p] generates the order condition residuals of rk up to order p grouped by order." <>
+	"RKOrderConditions[rk, p] generates the order condition residuals of rk up to order p grouped by order.\n" <>
 	"RKOrderConditions[rk, {p}] generates a list of p-th order residuals of rk.";
 RKSimplifyingAssumptionB::usage =
 	"RKSimplifyingAssumptionB[rk, p] generates a list of B simplifying assumption residuals up to order p for rk.\n" <>
@@ -20,16 +20,22 @@ RKExtrapolation::usage =
 	"RKExtrapolation[rk, steps] creates a new Runge-Kutta method which is rk extrapolated using the step sequence steps.\n" <>
 	"RKExtrapolation[rk, steps, j] extrapolates assuming rk has an asymptotic error expansion involving only powers of h^j."
 RKErrorA::usage =
-	"RKErrorA[rk] computes the 2-norm of the leading error residuals." <>
+	"RKErrorA[rk] computes the 2-norm of the leading error residuals.\n" <>
 	"RKErrorA[rk, p] computes the 2-norm of the order p residuals."
-RKErrorB::usage = "TODO"
-RKErrorC::usage = "TODO";
-RKErrorD::usage = "RKErrorD[rk] computes the maximum method coefficient by absolute value";
-RKErrorE::usage = "TODO";
-RKDispersionError::usage = "TODO";
-RKDispersionOrder::usage = "TODO";
-RKDissipationError::usage = "TODO";
-RKDissipationOrder::usage = "TODO";
+RKErrorB::usage =
+	"RKErrorB[rk] computes the B metric for the quality of the embedded pair rk.\n" <>
+	"RKErrorB[rk, p] assumes the order of rk is p."
+RKErrorC::usage =
+	"RKErrorC[rk] computes the C metric for the quality of the embedded pair rk.\n" <>
+	"RKErrorC[rk, p] assumes the order of rk is p."
+RKErrorD::usage = "RKErrorD[rk] computes the maximum method coefficient of rk by absolute value";
+RKErrorE::usage =
+	"RKErrorE[rk] computes the E metric for the quality of the embedded pair rk.\n" <>
+	"RKErrorE[rk, p] assumes the order of rk is p."
+RKDispersionError::usage = "RKDispersionError[rk, y] returns the phases error of rk applied to y'=I*\[Omega]*y.";
+RKDispersionOrder::usage = "RKDispersionOrder[rk] returns the phase error order of rk applied to y'=I*\[Omega]*y.";
+RKDissipationError::usage = "RKDissipationError[rk, y] returns the amplification error of rk applied to y'=I*\[Omega]*y.";
+RKDissipationOrder::usage = "RKDissipationOrder[rk] returns the amplification error order of rk applied to y'=I*\[Omega]*y.";
 
 
 Begin["`Private`"];
@@ -85,7 +91,7 @@ RKSimplifyingAssumptionD[rk_RK, {zeta_Integer?Positive}, opts:OptionsPattern[RKB
 	},
 	(b * SafePow[c, zeta - 1]) . RKA[rk] - b * (one[zeta, rk, opts] - SafePow[c, zeta]) / zeta
 ];
-RKSimplifyingAssumptionD[rk_RK, zeta_Integer, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionD[rk, {k}, opts], {k, zeta}];
+RKSimplifyingAssumptionD[rk_RK, zeta_Integer?Positive, opts:OptionsPattern[RKB]] := Table[RKSimplifyingAssumptionD[rk, {k}, opts], {k, zeta}];
 
 RKOrder[rk_RK, opts:OptionsPattern[RKB]] := CountZeros[RKOrderConditions[rk, {#}, opts] &] - 1;
 
@@ -112,13 +118,13 @@ RKErrorD[rk_RK] := Max[Abs[List @@ rk]];
 RKErrorE[rk_?RKPairQ, pHat_Integer?Positive] := RKErrorA[rk, pHat] / RKErrorA[rk, pHat - 1, Embedded -> True];
 RKErrorE[rk_?RKPairQ] := RKErrorE[rk, RKOrder[rk] + 1];
 
-RKDispersionOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDispersionError[rk, y, opts], y];
-
 RKDispersionError[rk_RK, y_, opts:OptionsPattern[RKB]] := one[1, rk, opts] * y - ComplexExpand[Arg[RKLinearStability[rk, y * I, opts]], TargetFunctions -> {Re, Im}];
 
-RKDissipationOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDissipationError[rk, y, opts], y];
+RKDispersionOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDispersionError[rk, y, opts], y];
 
 RKDissipationError[rk_RK, y_, opts:OptionsPattern[RKB]] := 1 - ComplexExpand[Abs[RKLinearStability[rk, y * I, opts]]];
+
+RKDissipationOrder[rk_RK, opts:OptionsPattern[RKB]] := errOrder[RKDissipationError[rk, y, opts], y];
 
 
 End[];

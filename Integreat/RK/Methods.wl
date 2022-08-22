@@ -18,10 +18,10 @@ RK::usage =
 RKRescale::usage = "RKRescale[rk, x] scales all coefficients of rk by x.";
 RKType::usage = "RKType[rk] returns a string representation of the tableau type of rk.";
 RKPrimary::usage = "RKPrimary[rk] creates a copy of rk without an embedded method.";
-RKEmbedded::usage = "RKEmbedded[rk] creates a copy of rk in which";
+RKEmbedded::usage = "RKEmbedded[rk] returns the embedded method for the embedded pair rk.";
 RKPairQ::usage = "RKPairQ[rk] returns True if rk is an embedded Runge-Kutta pair and False, otherwise.";
 RKCollocation::usage = "RKCollocation[c] constructs a collocation method with abscissae c.";
-RKCompose::usage
+RKCompose::usage =
 	"RKCompose[rk1, \[Ellipsis], rkm] creates a Runge-Kutta method from a step of rk1, \[Ellipsis], rkm in sequence using a step size h/m.\n" <>
 	"RKCompose[{rk1, w1}, \[Ellipsis], {rkm, wm}] composes rk1, \[Ellipsis], rkm using step sizes w1*h, \[Ellipsis], wm*h, respectively.\n" <>
 	"rk1[rk2] composes a half step of rk1 with a half step of rk2.\n" <>

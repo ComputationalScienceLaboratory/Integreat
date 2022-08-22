@@ -8,14 +8,14 @@ BeginPackage["Integreat`LMM`Methods`"];
 
 LMM::usage =
 	"LMM[k] creates a generic, k-step linear multistep method\n" <>
-	"LMM[{\[Alpha]0, \[Alpha]1, \[Ellipsis], \[Alpha]k}, {\[Beta]0, \[Beta]1, \[Ellipsis], \[Beta]k}] create a k-step linear multistep method where the \[Alpha] coefficients multiply y's and the \[Beta] coefficients multiply f(y)'s.  Coefficients should be ordered from oldest to newest.";
+	"LMM[{\[Alpha]0, \[Alpha]1, \[Ellipsis], \[Alpha]k}, {\[Beta]0, \[Beta]1, \[Ellipsis], \[Beta]k}] creates a k-step linear multistep method where the \[Alpha] coefficients multiply y's and the \[Beta] coefficients multiply f(y)'s. Coefficients should be ordered from oldest to newest.";
 LMMAdamsBashforth::usage = "LMMAdamsBashforth[k] creates a k-step Adams-Bashforth method.";
 LMMAdamsMoulton::usage = "LMMAdamsMoulton[k] creates a k-step Adams-Moulton method.";
 LMMNystrom::usage = "LMMNystrom[k] creates a k-step Nystr\[ODoubleDot]m method.";
 LMMMilneSimpson::usage = "LMMMilneSimpson[k] creates a k-step Milne-Simpson method.";
 LMMBDF::usage = "LMMBDF[k] creates a k-step backward differentiation formula method.";
-LMMAlpha::usage = "LMMAlpha[lmm] gets the list of coefficients multiplying y's from lmm.  They are ordered from oldest to newest.";
-LMMBeta::usage = "LMMBeta[lmm] gets the list of coefficients multiplying f(y)'s from lmm.  They are ordered from oldest to newest.";
+LMMAlpha::usage = "LMMAlpha[lmm] gets the list of coefficients multiplying y's from lmm. They are ordered from oldest to newest.";
+LMMBeta::usage = "LMMBeta[lmm] gets the list of coefficients multiplying f(y)'s from lmm. They are ordered from oldest to newest.";
 LMMAlphaGeneratingPolynomial::usage = "LMMAlphaGeneratingPolynomial[lmm, \[Zeta]] creates a polynomial in \[Zeta] using the \[Alpha] coefficients of lmm.";
 LMMBetaGeneratingPolynomial::usage = "LMMBetaGeneratingPolynomial[lmm, \[Zeta]] creates a polynomial in \[Zeta] using the \[Beta] coefficients of lmm.";
 LMMSteps::usage = "LMMSteps[lmm] returns the number of previous steps required to compute the next step for lmm.";

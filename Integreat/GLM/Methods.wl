@@ -5,25 +5,36 @@
 
 
 BeginPackage["Integreat`GLM`Methods`"];
-Integreat`GLM`Methods::usage = "This package contains functions for creating and accessing basic properties general linear methods.";
 
-GLM::usage = "Constructs an association containing general linear method coefficients";
-GLMCompose::usage = "";
-GLMDimsim::usage = "Constructs an association containing diagonally implicit multistage integration method coefficients";
-GLMPeer::usage = "Constructs a peer type general linear method";
-GLMOneLeg::usage = "Constructs a one leg method";
-GLMParallelEnsemble::usage = "Constructs a parallel emsemble general linear method";
-GLMA::usage = "Gets the A coefficients of a general linear method";
-GLMB::usage = "Gets the B coefficients of a general linear method";
-GLMU::usage = "Gets the U coefficients of a general linear method";
-GLMV::usage = "Gets the V coefficients of a general linear method";
-GLMQ::usage = "Gets the Q coefficients of a general linear method";
-GLMC::usage = "Gets the c coefficients of a general linear method";
-GLMInternalStages::usage = "Returns the number of internal stages in a general linear method";
-GLMExternalStages::usage = "Returns the number of external stages in a general linear method";
-GLMP::usage = "Returns the order to which external stages are expanded for a general linear method";
-GLMType::usage = "Returns the type number of the general linear method";
-GLMTransform::usage = "Transforms a general linear method into an equivalent formulation";
+GLM::usage =
+	"GLM[s, r, p] constructs a generic general linear method with s internal stages, r external stages, and order p.\n" <>
+	"GLM[rk, p] converts a Runge-Kutta method rk into a general linear method of order p.\n" <>
+	"GLM[rk] converts a Runge-Kutta method rk into a general linear method.\n" <>
+	"GLM[lmm] converts a linear multistep method lmm into a general linear method.";
+GLMCompose::usage =
+	"GLMCompose[glm1, \[Ellipsis], glmm] creates a general linear method from a step of glm1, \[Ellipsis], glmm in sequence using a step size h/m.\n" <>
+	"GLMCompose[{glm1, w1}, \[Ellipsis], {glmm, wm}] composes glm1, \[Ellipsis], glmm using step sizes w1*h, \[Ellipsis], wm*h, respectively.\n" <>
+	"glm1[glm2] composes a half step of glm1 with a half step of glm2.\n" <>
+	"glm^p composes p steps of glm."
+GLMDIMSIM::usage =
+	"GLMDIMSIM[A, B, v, Q, c] constructs a diagonally implicit multistage integration method from coefficients A, B, v (repeated row of V), Q, and abscissae c.\n" <>
+	"GLMDIMSIM[A, v, c] uses A, v, and c then deduces other coefficients from the assumption p=q=r=s.";
+GLMPeer::usage = "GLMPeer[B, A, R, c, p] constructs an order p peer method from coefficients B, A, R, and abscissae c.";
+GLMOneLeg::usage = "GLMOneLeg[{\[Alpha]0, \[Alpha]1, \[Ellipsis], \[Alpha]k}, {\[Beta]0, \[Beta]1, \[Ellipsis], \[Beta]k}, p] creates a k-step one-leg method.";
+GLMParallelEnsemble::usage =
+	"GLMParallelEnsemble[c, \[Lambda]] constructs a parallel ensemble method with abscissae c and A=\[Lambda]*I.\n" <>
+	"GLMParallelEnsemble[c] constructs an explicit parallel ensemble method.";
+GLMA::usage = "GLMA[glm] returns the A coefficient matrix of glm.";
+GLMB::usage = "GLMB[glm] returns the B coefficient matrix of glm.";
+GLMU::usage = "GLMU[glm] returns the U coefficient matrix of glm.";
+GLMV::usage = "GLMV[glm] returns the V coefficient matrix of glm.";
+GLMQ::usage = "GLMQ[glm] returns the Q coefficient matrix of glm.";
+GLMC::usage = "GLMC[glm] returns the abscissae of glm.";
+GLMInternalStages::usage = "GLMInternalStages[glm] returns the number of internal stages in glm.";
+GLMExternalStages::usage = "GLMExternalStages[glm] returns the number of external stages in glm.";
+GLMP::usage = "GLMP[glm] returns the order to which external stages are expanded for glm.";
+GLMType::usage = "GLMType[glm] returns the type number of glm.";
+GLMTransform::usage = "GLMTransform[glm, T] Transforms glm into an equivalent form with the matrix T.";
 
 
 (* ::Section:: *)
@@ -66,8 +77,8 @@ GLMComp[m_] := With[{
 (*Package Definitions*)
 
 
-GLM[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 0}]] := GLM[TypeToTableau[OptionValue[Type]][s], TableauFIRK[{r, s}, \[FormalB]], TableauFIRK[{s, r}, \[FormalU]], TableauFIRK[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
-GLM[rk_RK, p_Integer] := GLM[RKA[rk], {RKB[rk]}, ConstantArray[1, {RKStages[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RKC[rk]];
+GLM[s_Integer?Positive, r_Integer?Positive, p_Integer?NonNegative, OptionsPattern[{Type -> 0}]] := GLM[TypeToTableau[OptionValue[Type]][s], TableauFIRK[{r, s}, \[FormalB]], TableauFIRK[{s, r}, \[FormalU]], TableauFIRK[r, \[FormalV]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]];
+GLM[rk_RK, p_Integer?NonNegative] := GLM[RKA[rk], {RKB[rk]}, ConstantArray[1, {RKStages[rk], 1}], {{1}}, {UnitVector[p + 1, 1]}, RKC[rk]];
 GLM[rk_RK] := GLM[rk, RKOrder[rk]];
 GLM[lmm_LMM] := With[{
 		k = LMMSteps[lmm],
@@ -95,12 +106,7 @@ GLM /: HoldPattern[GLM[A1_, B1_, U1_, V1_, Q1_, c1_] + GLM[A2_, B2_, U2_, V2_, Q
 	GLM[BlockDiag[A1, A2], BlockDiag[B1, B2], BlockDiag[U1, U2], BlockDiag[V1, V2], ArrayFlatten[{{Q1[[All, ;;pMin]]}, {Q2[[All, ;;pMin]]}}], Join[c1, c2]]
 ];
 
-GLMDimsim[s_Integer, r_Integer, p_Integer, OptionsPattern[{Type -> 2}]] := With[{
-		v1 = Table[Subscript[\[FormalV], i], {i, r - 1}]
-	},
-	GLMDimsim[TypeToTableau[OptionValue[Type]][s], TableauFIRK[{r, s}, \[FormalB]], Append[v1, 1 - Total[v1]], Table[Subscript[\[FormalQ], i, j], {i, r}, {j, 0, p}], Table[Subscript[\[FormalC], i], {i, s}]]
-];
-GLMDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ] /; Length[A] === Length[v] === Length[c] := With[{
+GLMDIMSIM[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ] /; Length[A] === Length[v] === Length[c] := With[{
 		C = SeriesVander[c, -1, Length[c]],
 		s = Length[c]
 	},
@@ -108,23 +114,23 @@ GLMDimsim[A_?SquareMatrixQ, v_?VectorQ, c_?VectorQ] /; Length[A] === Length[v] =
 			Q = C[[All, 2;;]] - A . C[[All, ;;-2]],
 			mu = ToeplitzMatrix[Join[{1, 1}, ConstantArray[0, s - 1]], 1 / Range[s]!]
 		},
-		GLMDimsim[A, (Q . mu - ConstantArray[v . Q[[All, 2;;]], s]) . Inverse[C[[All, 2;;-2]]], v, Q, c]
+		GLMDIMSIM[A, (Q . mu - ConstantArray[v . Q[[All, 2;;]], s]) . Inverse[C[[All, 2;;-2]]], v, Q, c]
 	]
 ];
-GLMDimsim[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := GLM[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
+GLMDIMSIM[A_?SquareMatrixQ, B_?MatrixQ, v_?VectorQ, Q_?MatrixQ, c_?VectorQ] := GLM[A, B, IdentityMatrix[{Length[c], Length[v]}], ConstantArray[v, Length[v]], Q, c];
 
-GLMPeer[B_?MatrixQ, A_?SquareMatrixQ, R_?SquareMatrixQ, c_?VectorQ, p_Integer] := With[{
+GLMPeer[B_?SquareMatrixQ, A_?SquareMatrixQ, R_?SquareMatrixQ, c_?VectorQ, p_Integer?NonNegative] := With[{
 		BA = ArrayFlatten[{{B, A}}]
 	},
 	GLM[R, ArrayFlatten[{{R}, {IdentityMatrix[Length[R]]}}], BA, KroneckerProduct[{{1}, {0}}, BA], ArrayFlatten[{{SeriesVander[c - 1, 0, p]}, {SeriesVander[c - 1, -1, p - 1]}}], c]
 ];
 
-GLMOneLeg[a_List, b_List, p_Integer] := With[{
+GLMOneLeg[a_?VectorQ, b_?VectorQ, p_Integer?NonNegative] := With[{
 		q = Length[a] - 1,
 		aq = Last[a],
 		bq = Last[b]
 	},
-	GLM[{{bq / aq}}, Append[ConstantArray[{0}, q - 1], {1 / aq}], {Most[b] - bq / aq * Most[a]}, CompanionMatrix[-Most[a] / aq], SeriesVander[Range[1 - q, 0], 0, p], {b . Range[1-q,1]}]
+	GLM[{{bq / aq}}, Append[ConstantArray[{0}, q - 1], {1 / aq}], {Most[b] - bq / aq * Most[a]}, CompanionMatrix[-Most[a] / aq], SeriesVander[Range[1 - q, 0], 0, p], {b . Range[1 - q, 1]}]
 ];
 
 GLMParallelEnsemble[c_?VectorQ, \[Lambda]_:0] := With[{

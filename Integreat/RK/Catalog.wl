@@ -1,7 +1,6 @@
 (* ::Package:: *)
 
 BeginPackage["Integreat`RK`Catalog`"];
-Integreat`RK`Catalog::usage = "Package containing Runge-Kutta methods from the literature";
 
 
 Begin["`Private`"];

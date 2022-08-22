@@ -5,12 +5,17 @@
 
 
 BeginPackage["Integreat`GLM`LinearStability`"];
-Integreat`GLM`LinearStability::usage = "Package containing functions for analyzing the linear stability of general linear methods";
 
-GLMLinearStability::usage = "The linear stability matrix for a general linear method";
-GLMLinearStabilityPolynomial::usage = "The linear stability function for a general linear method";
-GLMLinearStabilityPlot::usage = "Plots the region of linear stability";
-GLMOrderStarPlot::usage = "";
+GLMLinearStability::usage = "GLMLinearStability[rk, z] evaluates the linear stability matrix of glm at z=h*\[Lambda]. If z is a DirectedInfinity, then the value in the limit is returned.";
+GLMLinearStabilityPolynomial::usage = "GLMLinearStabilityPolynomial[glm, w, z] creates a polynomial in w, parameterized by z=h*\[Lambda], that determines the linear stability of glm.";
+GLMLinearStabilityPlot::usage =
+	"GLMLinearStabilityPlot[glm] plots the linear stability region of glm.\n" <>
+	"GLMLinearStabilityPlot[glm, z] plots in the square region -z-z*I to z+z*I.\n" <>
+	"GLMLinearStabilityPlot[glm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
+GLMOrderStarPlot::usage =
+	"GLMOrderStarPlot[glm] plots the order star of glm.\n" <>
+	"GLMOrderStarPlot[glm, z] plots in the square region -z-z*I to z+z*I.\n" <>
+	"GLMOrderStarPlot[glm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 
 
 (* ::Section:: *)

@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`GLM`Validation`"];
-Integreat`GLM`Validation::usage = "Package containing functions for validating general linear methods";
 
 
 (* ::Section:: *)

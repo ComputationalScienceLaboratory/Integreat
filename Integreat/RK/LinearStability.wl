@@ -5,10 +5,10 @@
 
 
 BeginPackage["Integreat`RK`LinearStability`"];
-Integreat`RK`LinearStability::usage = "This package contains functions for analyzing the stability of Runge-Kutta methods applied to the linear test problem y' = \[Lambda] y.";
+Integreat`RK`LinearStability::usage = "This package contains functions for analyzing the stability of Runge-Kutta methods applied to the linear test problem y'=\[Lambda]*y.";
 
 RKLinearStability::usage =
-	"RKLinearStability[rk, z] evaluates the linear stability function of rk at z = h \[Lambda]. If z is a DirectedInfinity, then the value in the limit is returned.\n" <>
+	"RKLinearStability[rk, z] evaluates the linear stability function of rk at z=h*\[Lambda]. If z is a DirectedInfinity, then the value in the limit is returned.\n" <>
 	"RKLinearStability[rk, z, Stage \[Rule] All] evaluates the internal stability function of rk at z.\n";
 RKLinearStabilityPlot::usage =
 	"RKLinearStabilityPlot[rk] plots the linear stability region of rk.\n" <>
@@ -20,7 +20,7 @@ RKOrderStarPlot::usage =
 	"RKOrderStarPlot[rk, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 RKLinearStabilityP::usage = "RKLinearStabilityP[rk, z] evaluates the numerator of the linear stability function of rk at z.";
 RKLinearStabilityQ::usage = "RKLinearStabilityQ[rk, z] evaluates the denominator of the linear stability function of rk at z.";
-RKEPolynomial::usage = "RKEPolynomial[rk, y] computes |Q(y * I)|^2 - |P(y * I)|^2 where Q and P are the denominator and numerator, respectively, of the linear stability function of rk.";
+RKEPolynomial::usage = "RKEPolynomial[rk, y] computes |Q(y*I)|^2-|P(y*I)|^2 where Q and P are the denominator and numerator, respectively, of the linear stability function of rk.";
 RKIStableCondition::usage = "RKIStableCondition[rk] returns an algebraic condition equivalent to rk being stable on the imaginary axis.";
 RKAStableCondition::usage = "RKAStableCondition[rk] returns an algebraic condition equivalent to rk being stable in the left half-plane.";
 RKStifflyAccurateQ::usage = "RKStifflyAccurateQ[rk] returns True if, for the coefficients of rk, the last row of A equals b. It returns False, otherwise.";

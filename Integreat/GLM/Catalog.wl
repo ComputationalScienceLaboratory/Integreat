@@ -5,7 +5,6 @@
 
 
 BeginPackage["Integreat`GLM`Catalog`"];
-Integreat`GLM`Catalog::usage = "Package containing Runge-Kutta methods from the literature";
 
 
 (* ::Section:: *)
