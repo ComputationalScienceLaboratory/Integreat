@@ -31,7 +31,7 @@ RKStifflyAccurateQ::usage = "RKStifflyAccurateQ[rk] returns True if, for the coe
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
+Scan[Needs, {"Integreat`RK`Core`", "Integreat`Internal`MathUtils`"}];
 
 rkLinearStability[rk_, lim_DirectedInfinity, stages_, opts___] := Limit[rkLinearStability[rk, z, stages, opts], z -> lim];
 rkLinearStability[rk_, z_, None, opts___] := 1 + z * RKB[rk, opts] . rkLinearStability[rk, z, All];

@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RK`Simplify`"];
+BeginPackage["Integreat`RK`Simplfy`"];
 
 
 Integreat`RK`Simplify::usage = "Package containing functions for simplifying and reducing Runge-Kutta methods";
@@ -18,7 +18,7 @@ RKDJReducibleQ::usage = "RKDJReducibleQ[rk] returns True if rk has unused stages
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"];
+Needs["Integreat`RK`Core`"];
 
 RKDJIrreducibleStages[rk_] := With[{
 		s = RKStages[rk]

@@ -23,7 +23,7 @@ GLMOrderStarPlot::usage =
 
 
 Begin["`Private`"];
-Needs["Integreat`GLM`Methods`"];
+Needs["Integreat`GLM`Core`"];
 
 stabilityPlot[glm_, ref_, opts___] := With[{
 		stab = Norm[Eigenvalues[GLMLinearStability[glm, z]], Infinity] <= ref

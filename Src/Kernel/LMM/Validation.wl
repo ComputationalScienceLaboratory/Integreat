@@ -13,7 +13,7 @@ Integreat`LMM`Validation::usage = "Package containing functions for validating l
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`LMM`Methods`", "Integreat`Internal`MathUtils`"}];
+Scan[Needs, {"Integreat`LMM`Core`", "Integreat`Internal`MathUtils`"}];
 
 
 (* ::Section:: *)

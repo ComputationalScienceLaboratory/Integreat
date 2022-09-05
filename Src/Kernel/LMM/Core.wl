@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`LMM`Methods`"];
+BeginPackage["Integreat`LMM`Core`"];
 
 LMM::usage =
 	"LMM[k] creates a generic, k-step linear multistep method\n" <>

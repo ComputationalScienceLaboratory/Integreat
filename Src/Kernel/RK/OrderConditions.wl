@@ -40,7 +40,7 @@ RKDissipationOrder::usage = "RKDissipationOrder[rk] returns the amplification er
 
 Begin["`Private`"];
 Scan[Needs, {
-	"Integreat`RK`Methods`",
+	"Integreat`RK`Core`",
 	"Integreat`RK`LinearStability`",
 	"Integreat`Internal`MathUtils`",
 	"Integreat`BTrees`"

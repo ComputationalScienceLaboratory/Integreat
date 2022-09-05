@@ -4,7 +4,7 @@ BeginPackage["Integreat`RK`Catalog`"];
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"]; (* Might be able to remove this once all constructors use 3 or 4 arg form *)
+Needs["Integreat`RK`Core`"]; (* Might be able to remove this once all constructors use 3 or 4 arg form *)
 Needs["Integreat`Internal`Catalog`"];
 
 Erk2Fam[c2_, d1_] := RK[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];

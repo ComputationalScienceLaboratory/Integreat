@@ -18,7 +18,7 @@ LMMErrorConstant::usage =
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`LMM`Methods`"}];
+Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`LMM`Core`"}];
 
 
 (* ::Section:: *)

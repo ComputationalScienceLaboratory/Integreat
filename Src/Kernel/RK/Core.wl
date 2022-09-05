@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`RK`Methods`"];
+BeginPackage["Integreat`RK`Core`"];
 
 RK::usage =
 	"RK[] returns a Dataset containing a catalog of Runge-Kutta methods.\n" <>

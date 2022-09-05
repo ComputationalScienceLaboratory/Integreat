@@ -5,7 +5,7 @@ Integreat`RK`Validation::usage = "Package containing functions for validating Ru
 
 
 Begin["`Private`"];
-Needs["Integreat`RK`Methods`"];
+Needs["Integreat`RK`Core`"];
 
 
 RK::squarea = "RK A coefficients must be a square matrix.";

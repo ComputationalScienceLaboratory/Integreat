@@ -23,8 +23,8 @@ LMMOrderStarPlot::usage =
 
 Begin["`Private`"];
 Scan[Needs, {
-	"Integreat`LMM`Methods`",
-	"Integreat`GLM`Methods`",
+	"Integreat`LMM`Core`",
+	"Integreat`GLM`Core`",
 	"Integreat`GLM`LinearStability`"
 }];
 

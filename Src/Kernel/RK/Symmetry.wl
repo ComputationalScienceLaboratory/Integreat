@@ -16,7 +16,7 @@ RKTranspose::usage = "RKTranspose[rk] returns a new Runge-Kutta method which is 
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
+Scan[Needs, {"Integreat`RK`Core`", "Integreat`Internal`MathUtils`"}];
 
 
 (* ::Section:: *)

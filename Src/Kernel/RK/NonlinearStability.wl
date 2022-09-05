@@ -10,7 +10,7 @@ RKAbsoluteMonotonicityRadius::usage = "RKAbsoluteMonotonicityRadius[rk] computes
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`RK`Methods`", "Integreat`Internal`MathUtils`"}];
+Scan[Needs, {"Integreat`RK`Core`", "Integreat`Internal`MathUtils`"}];
 
 AlgMat[A_, b_, s_] := Table[b[[i]] * A[[i,j]] + b[[j]] * A[[j,i]] - b[[i]] * b[[j]], {i, s}, {j, s}];
 

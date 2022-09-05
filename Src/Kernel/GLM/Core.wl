@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`GLM`Methods`"];
+BeginPackage["Integreat`GLM`Core`"];
 
 GLM::usage =
 	"GLM[s, r, p] constructs a generic general linear method with s internal stages, r external stages, and order p.\n" <>
@@ -44,9 +44,9 @@ GLMTransform::usage = "GLMTransform[glm, T] Transforms glm into an equivalent fo
 Begin["`Private`"];
 Scan[Needs, {
 	"Integreat`Tableaus`",
-	"Integreat`RK`Methods`",
+	"Integreat`RK`Core`",
 	"Integreat`RK`OrderConditions`",
-	"Integreat`LMM`Methods`",
+	"Integreat`LMM`Core`",
 	"Integreat`Internal`MathUtils`",
 	"Integreat`Internal`Composition`"
 }];

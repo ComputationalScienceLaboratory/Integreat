@@ -12,7 +12,7 @@ BeginPackage["Integreat`GLM`Validation`"];
 
 
 Begin["`Private`"];
-Needs["Integreat`GLM`Methods`"];
+Needs["Integreat`GLM`Core`"];
 
 
 (* ::Section:: *)

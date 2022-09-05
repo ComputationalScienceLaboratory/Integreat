@@ -1,16 +1,16 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
-name = "Integreat";
 Which[
 	Length[$ScriptCommandLine] == 1, (
-		srcDir = FileNameJoin[{DirectoryName[ExpandFileName[First[$ScriptCommandLine]]], name}];
-		PacletInstall[CreatePacletArchive[srcDir], ForceVersionInstall -> True];
-		Print[name <> " installed to " <> $UserBasePacletsDirectory];
+		paclet = PacletInstall[
+			CreatePacletArchive[FileNameJoin[{Directory[], "Src"}]],
+			ForceVersionInstall -> True
+		];
+		Print["Installed to " <> paclet["Location"]];
 	),
 	$ScriptCommandLine[[2]] == "uninstall", (
-		PacletUninstall[name];
-		Print[name <> " has been uninstalled"];
+		PacletUninstall["Integreat"];
 	),
     True, Print["Unrecognized argument"]
 ];

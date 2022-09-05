@@ -4,7 +4,7 @@
 (*Usage*)
 
 
-BeginPackage["Integreat`GLM`Catalog`"];
+BeginPackage["Integreat`GLM`Core`"];
 
 
 (* ::Section:: *)
@@ -12,7 +12,7 @@ BeginPackage["Integreat`GLM`Catalog`"];
 
 
 Begin["`Private`"];
-Needs["Integreat`GLM`Methods`"];
+Needs["Integreat`GLM`Core`"];
 Needs["Integreat`Internal`Catalog`"];
 
 

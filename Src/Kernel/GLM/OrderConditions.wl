@@ -20,7 +20,7 @@ GLMStageOrder::usage = "GLMStageOrder[glm] computes the order of accuracy of the
 
 
 Begin["`Private`"];
-Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`GLM`Methods`"}];
+Scan[Needs, {"Integreat`Internal`MathUtils`", "Integreat`GLM`Core`"}];
 
 glmLteOrder[glm_GLM] := With[{
 		p = GLMP[glm],

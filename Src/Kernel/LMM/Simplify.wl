@@ -15,7 +15,7 @@ LMMReduce::usage = "LMMReduce[lmm] returns the simplest equivalent formulation o
 
 
 Begin["`Private`"];
-Needs["Integreat`LMM`Methods`"];
+Needs["Integreat`LMM`Core`"];
 
 
 (* ::Section:: *)
