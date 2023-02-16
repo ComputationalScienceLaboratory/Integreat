@@ -22,7 +22,7 @@ Integreat is a comprehensive Mathematica package for deriving and analyzing time
 
 ## Documentation
 
-[View the online documentation](https://computationalsciencelaboratory.github.io/Integreat/html/tutorial/Integreat.html)
+[View the online documentation](https://computationalsciencelaboratory.github.io/Integreat/html/tutorial/IntegreatPackage.html)
 
 Documentation is also added to Mathematica's documentation center when Integrate is installed.
 
