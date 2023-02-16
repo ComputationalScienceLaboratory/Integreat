@@ -9,8 +9,8 @@ rkLinearStability[rk_, z_, None, opts___] := 1 + z * RKB[rk, opts] . rkLinearSta
 rkLinearStability[rk_, z_, stages_, ___] := Total[Inverse[IdentityMatrix[RKStages[rk]] - z * RKA[rk]], {2}][[stages]];
 
 
-rkStabilityPlot[rk_, ref_, bounds_, opts___] := With[{
-		stab = Abs[RKLinearStability[rk, z, FilterRules[{opts}, Options[RKB]]]] <= ref,
+rkStabilityPlot[rk_, comp_, bounds_, opts___] := With[{
+		stab = comp[Abs[RKLinearStability[rk, z, FilterRules[{opts}, Options[RKB]]]]],
 		plotOpts = FilterRules[{opts}, Except[Options[RKB]]]
 	},
 	ComplexRegionPlot[stab, bounds, plotOpts, FrameLabel -> {"Re", "Im"}]
@@ -28,14 +28,14 @@ RKLinearStabilityPlot[
 	rk_RK,
 	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, {-6 - 4I, 2 + 4I}],
 	opts:OptionsPattern[{RKB, ComplexRegionPlot}]
-] := rkStabilityPlot[rk, 1, {z, zMin, zMax}, opts];
+] := rkStabilityPlot[rk, LessEqualThan[1], {z, zMin, zMax}, opts];
 
 
 RKOrderStarPlot[
 	rk_RK,
 	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, 4],
 	opts:OptionsPattern[{RKB, ComplexRegionPlot}]
-] := rkStabilityPlot[rk, Exp[Re[z]], {z, zMin, zMax}, opts];
+] := rkStabilityPlot[rk, GreaterThan[Exp[Re[one[rk, opts] * z]]], {z, zMin, zMax}, opts];
 
 
 RKLinearStabilityP[rk_RK, z_, opts:OptionsPattern[RKB]] := Det[
@@ -51,13 +51,10 @@ RKEPolynomial[rk_RK, y_, opts:OptionsPattern[RKB]] := ComplexExpand[
 ];
 
 
-RKIStableCondition[rk_RK, opts:OptionsPattern[RKB]] := Resolve[ForAll[y, RKEPolynomial[rk, y, opts] >= 0], Reals];
+RKIStable[rk_RK, opts:OptionsPattern[RKB]] := Resolve[ForAll[y, RKEPolynomial[rk, y, opts] >= 0], Reals];
 
 
-RKAStableCondition[rk_RK, opts:OptionsPattern[RKB]] := And[
-	RKIStableCondition[rk, opts],
+RKAStable[rk_RK, opts:OptionsPattern[RKB]] := And[
+	RKIStable[rk, opts],
 	FunctionAnalytic[{RKLinearStability[rk, z], Re[z] < 0}, z, Complexes]
 ];
-
-
-RKStifflyAccurateQ[rk_RK] := VectorQ[Last[RKA[rk]] - RKB[rk], ZeroQ];

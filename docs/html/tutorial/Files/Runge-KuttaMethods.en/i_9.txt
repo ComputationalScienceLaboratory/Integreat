@@ -1,0 +1,2 @@
+min = Minimize[RKErrorA[rk], Variables[rk]]
+rk = rk /. Rationalize[Last[N[min]], 0.01]

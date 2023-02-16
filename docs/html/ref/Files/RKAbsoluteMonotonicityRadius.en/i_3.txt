@@ -1,0 +1,2 @@
+rk = RK["backward Euler"]
+RKAbsoluteMonotonicityRadius[rk]

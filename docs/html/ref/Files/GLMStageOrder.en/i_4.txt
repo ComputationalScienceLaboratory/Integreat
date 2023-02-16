@@ -1,0 +1,4 @@
+glm = GLMParallelEnsemble[{0, Sqrt[2], 1}] // Simplify
+GLMStageOrder[glm]
+GLMStageOrder[N[glm]]
+GLMStageOrder[Rationalize[N[glm], $MachineEpsilon]]

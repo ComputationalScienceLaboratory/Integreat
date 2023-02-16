@@ -1,0 +1,246 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RK&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RK" />
+
+<meta name="description" content="RK[] returns a Dataset containing a catalog of Runge\[Dash]Kutta methods. RK[&quot;name&quot;] retrieves the method named name from the catalog. RK[s] constructs a generic s-stage Runge\[Dash]Kutta method. RK[A, b, c] constructs a Runge\[Dash]Kutta method with coefficients A, b, and c. RK[A, b] constructs a Runge\[Dash]Kutta method with c coefficients that are the row sum of A. RK[A] constructs a stiffly accurate Runge\[Dash]Kutta method. RK[A, b, c, bHat] constructs an embedded Runge\[Dash]Kutta pair. RK[rk, bHat] adds embedded coefficients bHat to rk." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RK.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RKA.html"><span class="dropdownPad">RKA</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKB.html"><span class="dropdownPad">RKB</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKC.html"><span class="dropdownPad">RKC</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKStages.html"><span class="dropdownPad">RKStages</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/IntegreatPackage.html"><span class="dropdownPad">Integreat Package</span></a>
+     </li>
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RK</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">returns a <span class="IF"><a href="http://reference.wolfram.com/language/ref/Dataset.html">Dataset</a></span> containing a catalog of Runge<span class="special-character Dash">&#8211;</span>Kutta methods.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span>&quot;<span class="TI">name</span>&quot;<span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">retrieves the method named <span class="IF"><span class="TI">name</span></span> from the catalog.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">s</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a generic <span class="IF"><span class="TI">s</span></span>-stage Runge<span class="special-character Dash">&#8211;</span>Kutta method.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">A</span><span class="comma">,</span><span class="TI">b</span><span class="comma">,</span><span class="TI">c</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a Runge<span class="special-character Dash">&#8211;</span>Kutta method with coefficients <span class="IF"><span class="TI">A</span></span>, <span class="IF"><span class="TI">b</span></span>, and <span class="IF"><span class="TI">c</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">A</span><span class="comma">,</span><span class="TI">b</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a Runge<span class="special-character Dash">&#8211;</span>Kutta method with <span class="IF"><span class="TI">c</span></span> coefficients that are the row sum of <span class="IF"><span class="TI">A</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">A</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a stiffly accurate Runge<span class="special-character Dash">&#8211;</span>Kutta method.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">A</span><span class="comma">,</span><span class="TI">b</span><span class="comma">,</span><span class="TI">c</span><span class="comma">,</span><span class="TI">bHat</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs an embedded Runge<span class="special-character Dash">&#8211;</span>Kutta pair.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RK.html">RK</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">bHat</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">adds embedded coefficients <span class="IF"><span class="TI">bHat</span></span> to <span class="IF"><span class="TI">rk</span></span>.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="1700721375"></a>An <span class="IM"><img src="Files/RK.en/1.png" height="18" width="7" alt="" /></span> stage Runge<span class="special-character Dash">&#8211;</span>Kutta method is given by <span class="IM"><img src="Files/RK.en/2.png" height="22" width="231" alt="" /></span>, with stages <span class="IM"><img src="Files/RK.en/3.png" height="22" width="225" alt="" /></span>, for <span class="IM"><img src="Files/RK.en/4.png" height="18" width="72" alt="" /></span>.</li>
+     <li><a name="583519598"></a>An <span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span> object represent a Runge<span class="special-character Dash">&#8211;</span>Kutta method optionally including an embedded method.</li>
+     <li><a name="479495570"></a><span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a><span class="openbracket">[</span><span class="special-character Ellipsis">&#8230;</span><span class="closebracket">]</span></span> displays in a notebook as a Butcher tableau.</li>
+     <li><a name="971675852"></a>Dense output is supported by specifying <span class="IF"><span class="TI">b</span></span> coefficients which depend on<a href="http://reference.wolfram.com/language/guide/&#63579;.html"> </a><span class="special-character formalcharacter FormalTheta">&#952;</span>.</li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><div class="hideable">
+   <div id="78361955"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RK.en/I_1.png"
+       data-in-width="138"
+       data-in-height="18"
+       data-link="https://wolfram.com/xid/0yt0jfj58njqn4ua-bkxuq9"
+       data-code="Files/RK.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(4)</span></h2>
+    <div class="hideable">
+     <p><a name="1211311235"></a>Create a generic three stage Runge<span class="special-character Dash">&#8211;</span>Kutta methods:</p>
+     <div id="1179527932"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/I_2.png"
+         data-in-width="31"
+         data-in-height="18"
+         data-link="https://wolfram.com/xid/0yt0jfj58njqn4ua-tsjnu2"
+         data-code="Files/RK.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/O_1.png"
+         data-out-width="80"
+         data-out-height="69"
+         ></div>
+     <div class="ExLine"><a name="402731414"></a><!-- --></div>
+     <p><a name="1666010091"></a>Create the backward Euler method:</p>
+     <div id="1153036856"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/I_3.png"
+         data-in-width="49"
+         data-in-height="18"
+         data-link="https://wolfram.com/xid/0yt0jfj58njqn4ua-tcru7u"
+         data-code="Files/RK.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/O_2.png"
+         data-out-width="19"
+         data-out-height="31"
+         ></div>
+     <div class="ExLine"><a name="1372730726"></a><!-- --></div>
+     <p><a name="743296749"></a>Load the classical fourth order Runge<span class="special-character Dash">&#8211;</span>Kutta method from the catalog:</p>
+     <div id="30479897"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/I_4.png"
+         data-in-width="59"
+         data-in-height="18"
+         data-link="https://wolfram.com/xid/0yt0jfj58njqn4ua-sfkp3"
+         data-code="Files/RK.en/i_4.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/O_3.png"
+         data-out-width="59"
+         data-out-height="104"
+         ></div>
+     <div class="ExLine"><a name="41618192"></a><!-- --></div>
+     <p><a name="200928428"></a>Create an embedded pair with dense output:</p>
+     <div id="305432175"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/I_5.png"
+         data-in-width="216"
+         data-in-height="36"
+         data-link="https://wolfram.com/xid/0yt0jfj58njqn4ua-fb4q9d"
+         data-code="Files/RK.en/i_5.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RK.en/O_4.png"
+         data-out-width="33"
+         data-out-height="73"
+         ></div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList"><span class="IF"><a class="package-symbol" href="../ref/RKA.html">RKA</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKB.html">RKB</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKC.html">RKC</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKStages.html">RKStages</a></span></p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/IntegreatPackage.html">Integreat Package</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

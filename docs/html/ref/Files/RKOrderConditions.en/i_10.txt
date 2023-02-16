@@ -1,0 +1,8 @@
+rkDO = RK[RKA[rk], 
+   Table[Sum[Subscript[b, i, j] \[FormalTheta]^j, {j, 3}], {i, 
+     RKStages[rk]}]];
+sols = SolveAlways[
+   RKOrderConditions[rkDO, 3, DenseOutput -> True] == 
+    0, \[FormalTheta]];
+rkDO = rkDO /. First[sols] // Simplify
+RKDenseOutput[rkDO]

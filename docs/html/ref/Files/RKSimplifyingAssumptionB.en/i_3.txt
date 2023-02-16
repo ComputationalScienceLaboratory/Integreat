@@ -1,0 +1,2 @@
+rk = RK["ode23"]
+RKSimplifyingAssumptionB[rk, 3, Embedded -> True]

@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKSimplifyingAssumptionC[rk, {2}, Stage -> 3]

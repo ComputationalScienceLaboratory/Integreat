@@ -1,0 +1,2 @@
+rk = RK["ode23"]
+RKLinearStability[rk, z, Embedded -> True] // Simplify

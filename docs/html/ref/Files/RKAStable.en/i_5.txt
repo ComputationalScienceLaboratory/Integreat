@@ -1,0 +1,2 @@
+rk = RK["implicit midpoint"]
+RKIStable[rk, Stage -> 1]

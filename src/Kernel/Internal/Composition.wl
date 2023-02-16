@@ -21,14 +21,10 @@ Begin["`Private`"];
 
 
 AddComposition[type_Symbol, op_Symbol, composer_] := (
-	op[args__:{_type, _}] := composer[List[args]];
-	op[args__type] := With[{
-			m = List[args]
-		},
-		composer[Map[{#, 1 / Length[m]} &, m]]
-	];
-	m1_type[m2_type] := composer[{{m1, 1/2}, {m2, 1/2}}];
-	type /: Power[a_type, d_Integer?Positive] := composer[ConstantArray[{a, 1 / d}, d]];
+	op[args:{{_type, _}..}] := composer[args];
+	op[{args__type}] := composer[Map[{#, 1 / Length[m]} &, args]];
+	m1_type[m2_type] := composer[{{m1, 1}, {m2, 1}}];
+	type /: Power[a_type, p_Integer?Positive] := composer[ConstantArray[{a, 1 / p}, p]];
 );
 
 

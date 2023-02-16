@@ -1,0 +1,4 @@
+rk = RKCollocation[{Subscript[c, 1], Subscript[c, 2]}]
+FullSimplify[
+ RKLinearStability[rk, z] == RKLinearStabilityP[rk, z]/
+  RKLinearStabilityQ[rk, z]]

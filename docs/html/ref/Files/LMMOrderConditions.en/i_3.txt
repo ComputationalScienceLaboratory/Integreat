@@ -1,0 +1,2 @@
+lmm = LMM[3]
+LMMOrderConditions[lmm, {3}]

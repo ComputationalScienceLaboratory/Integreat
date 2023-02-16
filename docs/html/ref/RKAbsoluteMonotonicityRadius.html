@@ -1,0 +1,278 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RKAbsoluteMonotonicityRadius&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RKAbsoluteMonotonicityRadius" />
+
+<meta name="description" content="RKAbsoluteMonotonicityRadius[rk] computes the radius of absolute monotonicity, also known as the strong stability preserving (SSP) coefficient, of rk." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RKAbsoluteMonotonicityRadius.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RK.html"><span class="dropdownPad">RK</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RKAbsoluteMonotonicityRadius</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKAbsoluteMonotonicityRadius[<span class="TI">rk</span>]</span>
+   </p>
+   <p class="code-description">computes the radius of absolute monotonicity, also known as the strong stability preserving (SSP) coefficient, of <span class="IF"><span class="TI">rk</span></span>.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="632767792"></a>Consider an ODE where a forward Euler discretization satisfies the monotonicity condition <span class="IM"><img src="Files/RKAbsoluteMonotonicityRadius.en/1.png" height="18" width="88" alt="" /></span> for a convex functional <span class="IM"><img src="Files/RKAbsoluteMonotonicityRadius.en/2.png" height="18" width="24" alt="" /></span> with a step size restriction <span class="IM"><img src="Files/RKAbsoluteMonotonicityRadius.en/3.png" height="18" width="51" alt="" /></span>.  The radius of absolute monotonicity of a Runge<span class="special-character Dash">&#8211;</span>Kutta method is the largest positive constant <span class="IM"><img src="Files/RKAbsoluteMonotonicityRadius.en/4.png" height="18" width="12" alt="" /></span> such that the monotonicity condition holds for <span class="IM"><img src="Files/RKAbsoluteMonotonicityRadius.en/5.png" height="18" width="66" alt="" /></span>.</li>
+     <li><a name="808795887"></a>The following options can be given:</li>
+     <li class="NotesTable">
+      <a name="802178622"></a>
+      <table>
+       <col width="1%" />
+       <col width="28%" />
+       <col width="28%" />
+       <col width="43%" />
+       <tr class="lineAbove" style=""><td /><td>Embedded</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">whether to use the embedded coefficients</span></td></tr>
+       <tr class="" style=""><td /><td>Stage</td><td><a href="http://reference.wolfram.com/language/ref/None.html">None</a></td><td><span class="TT">treat a stage as the solution</span></td></tr>
+       <tr class="" style=""><td /><td>DenseOutput</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">how to evaluate dense output</span></td></tr>
+      </table>
+     </li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><span class="open-all on">open all</span><span class="close-all">close all</span><div class="hideable">
+   <div id="1187219757"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RKAbsoluteMonotonicityRadius.en/I_1.png"
+       data-in-width="148"
+       data-in-height="21"
+       data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-tw4iwv"
+       data-code="Files/RKAbsoluteMonotonicityRadius.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(2)</span></h2>
+    <div class="hideable">
+     <p><a name="1658666899"></a>Get the radius of absolute monotonicity of the family of second order explicit Runge<span class="special-character Dash">&#8211;</span>Kutta methods:</p>
+     <div id="1511950790"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/I_2.png"
+         data-in-width="213"
+         data-in-height="64"
+         data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-zagmzc"
+         data-code="Files/RKAbsoluteMonotonicityRadius.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/O_1.png"
+         data-out-width="77"
+         data-out-height="59"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/O_2.png"
+         data-out-width="105"
+         data-out-height="72"
+         ></div>
+     <div class="ExLine"><a name="307520871"></a><!-- --></div>
+     <p><a name="1043860502"></a>Backward Euler is unconditionally strong stability preserving:</p>
+     <div id="1726310023"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/I_3.png"
+         data-in-width="213"
+         data-in-height="40"
+         data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-2t23mh"
+         data-code="Files/RKAbsoluteMonotonicityRadius.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/O_3.png"
+         data-out-width="20"
+         data-out-height="32"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKAbsoluteMonotonicityRadius.en/O_4.png"
+         data-out-width="10"
+         data-out-height="18"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Options<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(3)</span></h2>
+    <div class="hideable">
+     <div>
+      <h3 class="toggle">Embedded<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="851552266"></a>Get the radius of absolute monotonicity of an embedded method:</p>
+       <div id="994178773"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/I_4.png"
+           data-in-width="330"
+           data-in-height="39"
+           data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-qp6zjb"
+           data-code="Files/RKAbsoluteMonotonicityRadius.en/i_4.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_5.png"
+           data-out-width="66"
+           data-out-height="137"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_6.png"
+           data-out-width="7"
+           data-out-height="18"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">Stage<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="612171472"></a>Get the radius of absolute monotonicity of a particular stage: </p>
+       <div id="673125710"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/I_5.png"
+           data-in-width="279"
+           data-in-height="40"
+           data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-le1peo"
+           data-code="Files/RKAbsoluteMonotonicityRadius.en/i_5.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_7.png"
+           data-out-width="20"
+           data-out-height="32"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_8.png"
+           data-out-width="10"
+           data-out-height="18"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">DenseOutput<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="858526623"></a>Get the radius of absolute monotonicity for the dense output solution: </p>
+       <div id="2030789657"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src-swap="Files/RKAbsoluteMonotonicityRadius.en/I_6.png"
+           data-big="408 39"
+           data-small="408 39"
+           data-link="https://wolfram.com/xid/0cl28949q1o6oyhismn70vqyqp3n7qon13ts-7vc5l3"
+           data-code="Files/RKAbsoluteMonotonicityRadius.en/i_6.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_9.png"
+           data-out-width="34"
+           data-out-height="63"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKAbsoluteMonotonicityRadius.en/O_10.png"
+           data-out-width="90"
+           data-out-height="67"
+           ></div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList">
+    <span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span>
+   </p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

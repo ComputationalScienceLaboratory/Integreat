@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKEPolynomial[rk, 5, Stage -> 2]

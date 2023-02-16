@@ -1,0 +1,4 @@
+glm = GLMParallelEnsemble[{0, 1}, 1]
+GLMLinearStabilityPlot[glm, PlotLabel -> "Parallel Ensemble", 
+ PlotLabels -> "Stability Region", BoundaryStyle -> None, 
+ ColorFunction -> Hue]

@@ -1,0 +1,2 @@
+lmm = LMM[2]
+LMMOrder[lmm]

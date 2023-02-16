@@ -1,0 +1,2 @@
+lmm = LMM[3]
+LMMOrderConditions[lmm, {5}] == LMMErrorConstant[lmm, 5]

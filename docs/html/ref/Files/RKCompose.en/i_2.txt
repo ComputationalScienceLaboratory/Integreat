@@ -1,0 +1,5 @@
+Subscript[rk, 1] = RK["Heun's method"];
+Subscript[rk, 2] = RK["backward Euler"];
+Subscript[rk, 3] = RK["RK4"];
+RKCompose[{{Subscript[rk, 1], 3/4}, {Subscript[rk, 
+   2], -(1/4)}, {Subscript[rk, 3], 1/2}}]

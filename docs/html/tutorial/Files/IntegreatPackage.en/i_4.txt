@@ -1,0 +1,2 @@
+PacletInstall["https://github.com/ComputationalScienceLaboratory/\
+Integreat/releases/latest/download/Integreat.paclet"]

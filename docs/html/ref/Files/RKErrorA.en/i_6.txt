@@ -1,0 +1,2 @@
+rk = RKCollocation[{Subscript[c, 1], Subscript[c, 2]}]
+RKErrorA[rk, DenseOutput -> True] // Simplify

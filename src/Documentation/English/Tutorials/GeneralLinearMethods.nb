@@ -1,0 +1,213 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7807,        205]
+NotebookOptionsPosition[      4901,        140]
+NotebookOutlinePosition[      5411,        158]
+CellTagsIndexPosition[      5368,        155]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["General Linear Methods", "Title",
+ CellID->1907689386,ExpressionUUID->"86a0da3c-946b-4f7e-918d-3bea0985faa3"],
+
+Cell[CellGroupData[{
+
+Cell["Related Guides", "TutorialMoreAboutSection",
+ CellChangeTimes->{{3.843042384656711*^9, 3.843042386024461*^9}},
+ CellID->1896167018,ExpressionUUID->"8e6f3633-d7b6-4c11-9103-5c8ceb214a9b"],
+
+Cell[TextData[ButtonBox["Integreat Package",
+ BaseStyle->"Link",
+ ButtonData->"paclet:Integreat/guide/IntegreatPackage"]], "TutorialMoreAbout",\
+
+ CellChangeTimes->{{3.8798868571575117`*^9, 3.879886866733192*^9}},
+ CellID->1007059563,ExpressionUUID->"ae149deb-0735-4d62-8804-17823a0d7d40"],
+
+Cell[TextData[ButtonBox["Runge\[Dash]Kutta Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/guide/Runge-KuttaMethods"]], "TutorialMoreAbout",
+ CellChangeTimes->{{3.879886782360312*^9, 3.879886792257091*^9}},
+ CellID->2022187058,ExpressionUUID->"081598e8-f5cb-4f26-a103-a0ba35ed3fa7"],
+
+Cell[TextData[ButtonBox["Linear Multistep Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/guide/LinearMultistepMethods"]], "TutorialMoreAbout",
+ CellChangeTimes->{{3.87988677333797*^9, 3.879886780975258*^9}},
+ CellID->628903223,ExpressionUUID->"a9c53c43-d6ad-414d-91c8-a43cc614fb0c"],
+
+Cell[TextData[ButtonBox["General Linear Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/guide/GeneralLinearMethods"]], "TutorialMoreAbout",
+ CellChangeTimes->{{3.879886759779882*^9, 3.879886771239482*^9}},
+ CellID->1847645100,ExpressionUUID->"f5d6dcb7-422a-4708-a438-b16931c99b7f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Tech Notes", "RelatedTutorialsSection",
+ CellID->1670025614,ExpressionUUID->"7b8ff756-722c-44ee-b7d9-583f554ecf20"],
+
+Cell[TextData[ButtonBox["Integreat Package",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/tutorial/IntegreatPackage"]], "RelatedTutorials",
+ CellChangeTimes->{{3.881786003550408*^9, 3.881786010761731*^9}},
+ CellID->2143053639,ExpressionUUID->"14a029ef-5550-4f10-89c2-8f08ec98ad05"],
+
+Cell[TextData[ButtonBox["Runge\[Dash]Kutta Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/tutorial/Runge-KuttaMethods"]], "RelatedTutorials",
+ CellChangeTimes->{{3.879886893461635*^9, 3.8798869098684387`*^9}},
+ CellID->1844369666,ExpressionUUID->"7526de55-ec13-475b-bbf5-9b3fc42245e4"],
+
+Cell[TextData[ButtonBox["Linear Multistep Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/tutorial/LinearMultistepMethods"]], "RelatedTutorials",
+ CellChangeTimes->{{3.879886881410199*^9, 3.8798868889217243`*^9}},
+ CellID->888716194,ExpressionUUID->"99486fec-09c0-43fe-b16c-c279d35d2051"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "MetadataSection",
+ CellID->764724532,ExpressionUUID->"fa4c667a-5240-4e96-8c7c-be9a085c7d49"],
+
+Cell[TextData[{
+ "New in: ",
+ Cell["1.0.0", "HistoryData",
+  CellTags->"New",ExpressionUUID->"3ee4f9e7-db76-40be-b877-ca5787db7b29"],
+ " | Modified in: ",
+ Cell["1.0.0", "HistoryData",
+  CellTags->"Modified",ExpressionUUID->"24b5e5cb-52d6-47d2-b335-6ee4d1fd794c"],
+ " | Obsolete in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Obsolete",ExpressionUUID->
+  "f372dc3f-41bd-43f7-aa6a-929a3853b690"]
+}], "History",
+ CellChangeTimes->{{3.8798866777562313`*^9, 3.879886683215724*^9}},
+ CellID->1182597673,ExpressionUUID->"11092539-844d-41f7-960a-779303893b5a"],
+
+Cell[CellGroupData[{
+
+Cell["Categorization", "CategorizationSection",
+ CellID->213507156,ExpressionUUID->"3fbd3308-7266-4730-96c7-b6256e9d8ef5"],
+
+Cell["Tech Note", "Categorization",
+ CellLabel->"Entity Type",
+ CellID->543470989,ExpressionUUID->"8ced28c9-36c0-4c48-91dd-4dc997ab19af"],
+
+Cell["Integreat", "Categorization",
+ CellLabel->"Paclet Name",
+ CellID->2039975800,ExpressionUUID->"df3aed2d-438d-4f0d-89f9-75e25cc68211"],
+
+Cell["Integreat`GLM`", "Categorization",
+ CellLabel->"Context",
+ CellID->1542120229,ExpressionUUID->"be199415-6775-4331-974c-468cbbf8dc43"],
+
+Cell["Integreat/tutorial/GeneralLinearMethods", "Categorization",
+ CellLabel->"URI",
+ CellID->983821834,ExpressionUUID->"21820845-09c1-4bbb-abf9-6d4e3311db84"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "KeywordsSection",
+ CellID->588034184,ExpressionUUID->"7bf6250d-19bd-46f2-82bf-29b3af6bcd69"],
+
+Cell["XXXX", "Keywords",
+ CellID->293476908,ExpressionUUID->"8c519448-43fc-48aa-bcd4-8fa794c78507"]
+}, Closed]]
+}, Open  ]]
+},
+WindowSize->{720, 762},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+TaggingRules-><|"Paclet" -> "Integreat"|>,
+FrontEndVersion->"13.1 for Linux x86 (64-bit) (June 16, 2022)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "TechNotePageStylesExt.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"1e40577e-c7e4-42bb-80cb-a8c3ff899e94"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 115, 1, 114, "Title",ExpressionUUID->"86a0da3c-946b-4f7e-918d-3bea0985faa3",
+ CellID->1907689386],
+Cell[CellGroupData[{
+Cell[720, 27, 192, 2, 75, "TutorialMoreAboutSection",ExpressionUUID->"8e6f3633-d7b6-4c11-9103-5c8ceb214a9b",
+ CellID->1896167018],
+Cell[915, 31, 289, 5, 24, "TutorialMoreAbout",ExpressionUUID->"ae149deb-0735-4d62-8804-17823a0d7d40",
+ CellID->1007059563],
+Cell[1207, 38, 298, 5, 24, "TutorialMoreAbout",ExpressionUUID->"081598e8-f5cb-4f26-a103-a0ba35ed3fa7",
+ CellID->2022187058],
+Cell[1508, 45, 299, 5, 24, "TutorialMoreAbout",ExpressionUUID->"a9c53c43-d6ad-414d-91c8-a43cc614fb0c",
+ CellID->628903223],
+Cell[1810, 52, 297, 5, 24, "TutorialMoreAbout",ExpressionUUID->"f5d6dcb7-422a-4708-a438-b16931c99b7f",
+ CellID->1847645100]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2144, 62, 129, 1, 75, "RelatedTutorialsSection",ExpressionUUID->"7b8ff756-722c-44ee-b7d9-583f554ecf20",
+ CellID->1670025614],
+Cell[2276, 65, 290, 5, 24, "RelatedTutorials",ExpressionUUID->"14a029ef-5550-4f10-89c2-8f08ec98ad05",
+ CellID->2143053639],
+Cell[2569, 72, 302, 5, 24, "RelatedTutorials",ExpressionUUID->"7526de55-ec13-475b-bbf5-9b3fc42245e4",
+ CellID->1844369666],
+Cell[2874, 79, 304, 5, 24, "RelatedTutorials",ExpressionUUID->"99486fec-09c0-43fe-b16c-c279d35d2051",
+ CellID->888716194]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3227, 90, 110, 1, 72, "MetadataSection",ExpressionUUID->"fa4c667a-5240-4e96-8c7c-be9a085c7d49",
+ CellID->764724532],
+Cell[3340, 93, 552, 13, 27, "History",ExpressionUUID->"11092539-844d-41f7-960a-779303893b5a",
+ CellID->1182597673],
+Cell[CellGroupData[{
+Cell[3917, 110, 122, 1, 21, "CategorizationSection",ExpressionUUID->"3fbd3308-7266-4730-96c7-b6256e9d8ef5",
+ CellID->213507156],
+Cell[4042, 113, 137, 2, 34, "Categorization",ExpressionUUID->"8ced28c9-36c0-4c48-91dd-4dc997ab19af",
+ CellID->543470989],
+Cell[4182, 117, 138, 2, 34, "Categorization",ExpressionUUID->"df3aed2d-438d-4f0d-89f9-75e25cc68211",
+ CellID->2039975800],
+Cell[4323, 121, 139, 2, 34, "Categorization",ExpressionUUID->"be199415-6775-4331-974c-468cbbf8dc43",
+ CellID->1542120229],
+Cell[4465, 125, 159, 2, 34, "Categorization",ExpressionUUID->"21820845-09c1-4bbb-abf9-6d4e3311db84",
+ CellID->983821834]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4661, 132, 110, 1, 31, "KeywordsSection",ExpressionUUID->"7bf6250d-19bd-46f2-82bf-29b3af6bcd69",
+ CellID->588034184],
+Cell[4774, 135, 99, 1, 70, "Keywords",ExpressionUUID->"8c519448-43fc-48aa-bcd4-8fa794c78507",
+ CellID->293476908]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+

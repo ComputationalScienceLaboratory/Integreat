@@ -1,0 +1,7 @@
+rk = RK[rk, {Subscript[
+\!\(\*OverscriptBox[\(b\), \(^\)]\), 1], Subscript[
+\!\(\*OverscriptBox[\(b\), \(^\)]\), 2], Subscript[
+\!\(\*OverscriptBox[\(b\), \(^\)]\), 3]}];
+sols = Solve[RKOrderConditions[rk, 2, Embedded -> True] == 0, 
+  RKBHat[rk]]
+rk = rk /. First[sols] // Simplify

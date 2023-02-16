@@ -1,0 +1,4 @@
+lmm = LMMMilneSimpson[12];
+LMMOrder[lmm]
+LMMOrder[N[lmm]]
+LMMOrder[Rationalize[N[lmm], $MachineEpsilon]]

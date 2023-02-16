@@ -1,0 +1,2 @@
+rk = RK[3]
+RKSimplifyingAssumptionC[rk, 2]

@@ -1,0 +1,4 @@
+rk = RKCollocation[{1/3, 1}]
+RKLinearStabilityPlot[rk, PlotLabel -> "Radau IIA", 
+ PlotLabels -> "|R(z)|\[LessEqual]1", BoundaryStyle -> None, 
+ ColorFunction -> Hue]

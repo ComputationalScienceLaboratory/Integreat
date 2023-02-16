@@ -1,0 +1,2 @@
+glm = GLMParallelEnsemble[{0, 1}, 1]
+GLMLinearStability[glm, -\[Infinity]] // MatrixForm

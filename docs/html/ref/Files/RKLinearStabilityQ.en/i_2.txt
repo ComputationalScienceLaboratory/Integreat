@@ -1,0 +1,2 @@
+rk = RKCollocation[{0, 1/2, 1}]
+RKLinearStabilityQ[rk, z]

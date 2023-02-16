@@ -1,0 +1,198 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RKCompose&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RKCompose" />
+
+<meta name="description" content="RKCompose[{{rk1, w1}, {rk2, w2}, ...}] composes rk1, rk2, ... with steps sizes scaled by w1, w2, ..., respectively. RKCompose[{rk1, rk2, ...}] creates a Runge\[Dash]Kutta method from a step of rk1, rk2, ... in sequence. rk1[rk2] composes a step of rk1 with a step of rk2. rk^p composes p steps of rk with step size h/p." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RKCompose.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RK.html"><span class="dropdownPad">RK</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RKCompose</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RKCompose.html">RKCompose</a><span class="openbracket">[</span><span class="openbrace">{</span><span class="openbrace">{</span><span class="TI">rk</span><sub><span class="TR">1</span></sub><span class="comma">,</span><span class="TI">w</span><sub><span class="TR">1</span></sub><span class="closebrace">}</span><span class="comma">,</span><span class="openbrace">{</span><span class="TI">rk</span><sub>2</sub><span class="comma">,</span><span class="TI">w</span><sub>2</sub><span class="closebrace">}</span><span class="comma">,</span><span class="special-character Ellipsis">&#8230;</span><span class="closebrace">}</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">composes <span class="IF"><span class="TI">rk</span><sub>1</sub></span>, <span class="IF"><span class="TI">rk</span><sub>2</sub></span>, <span class="special-character Ellipsis">&#8230;</span> with steps sizes scaled by <span class="IF"><span class="TI">w</span><sub><span class="TR">1</span></sub></span>, <span class="IF"><span class="TI">w</span><sub>2</sub></span>, <span class="special-character Ellipsis">&#8230;</span>, respectively.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKCompose<span class="openbracket">[</span><span class="openbrace">{</span><span class="TI">rk</span><sub>1</sub><span class="comma">,</span><span class="TI">rk</span><sub>2</sub><span class="comma">,</span><span class="special-character Ellipsis">&#8230;</span><span class="closebrace">}</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">creates a Runge<span class="special-character Dash">&#8211;</span>Kutta method from a step of <span class="IF"><span class="TI">rk</span><sub>1</sub></span>, <span class="IF"><span class="TI">rk</span><sub>2</sub></span>, <span class="special-character Ellipsis">&#8230;</span> in sequence.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><span class="TI">rk</span><sub>1</sub><span class="openbracket">[</span><span class="TI">rk</span><sub>2</sub><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">composes a step of <span class="IF"><span class="TI">rk</span><sub>1</sub></span> with a step of <span class="IF"><span class="TI">rk</span><sub>2</sub></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><span class="TI">rk</span>^<span class="TI">p</span></span>
+   </p>
+   <p class="code-description">composes <span class="IF"><span class="TI">p</span></span> steps of <span class="IF"><span class="TI">rk</span></span> with step size <span class="IF"><span class="TI">h</span>/<span class="TI">p</span></span>.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="1004439111"></a>Runge<span class="special-character Dash">&#8211;</span>Kutta methods are closed under composition, i.e., applying a Runge<span class="special-character Dash">&#8211;</span>Kutta method to the solution produced by another.</li>
+     <li><a name="1815296393"></a><span class="IF"><a class="package-symbol" href="../ref/RKCompose.html">RKCompose</a><span class="openbracket">[</span><span class="openbrace">{</span><span class="TI">rk</span><sub>1</sub><span class="comma">,</span><span class="TI">rk</span><sub>2</sub><span class="comma">,</span><span class="special-character Ellipsis">&#8230;</span><span class="closebrace">}</span><span class="closebracket">]</span></span> is equivalent to <span class="IF"><a class="package-symbol" href="../ref/RKCompose.html">RKCompose</a><span class="openbracket">[</span><span class="openbrace">{</span><span class="openbrace">{</span><span class="TI">rk</span><sub><span class="TR">1</span></sub><span class="comma">,</span>1<span class="closebrace">}</span><span class="comma">,</span><span class="openbrace">{</span><span class="TI">rk</span><sub><span class="TR">2</span></sub><span class="comma">,</span>1<span class="closebrace">}</span><span class="comma">,</span><span class="special-character Ellipsis">&#8230;</span><span class="closebrace">}</span><span class="closebracket">]</span></span>.</li>
+     <li><a name="1529069375"></a><span class="IF"><span class="TI">rk</span>^<span class="TI">p</span></span> is equivalent to <span class="IF"><a class="package-symbol" href="../ref/RKCompose.html">RKCompose</a><span class="openbracket">[</span><span class="openbrace">{</span><span class="openbrace">{</span><span class="TI">rk</span><span class="comma">,</span>1/<span class="TI">p</span><span class="closebrace">}</span><span class="comma">,</span><span class="special-character Ellipsis">&#8230;</span><span class="comma">,</span><span class="openbrace">{</span><span class="TI">rk</span><span class="comma">,</span>1/<span class="TI">p</span><span class="closebrace">}</span><span class="closebrace">}</span><span class="closebracket">]</span></span>.</li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><span class="open-all on">open all</span><span class="close-all">close all</span><div class="hideable">
+   <div id="97819648"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RKCompose.en/I_1.png"
+       data-in-width="138"
+       data-in-height="18"
+       data-link="https://wolfram.com/xid/04xo8z4plag627jkf902-bwiweq"
+       data-code="Files/RKCompose.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(2)</span></h2>
+    <div class="hideable">
+     <p><a name="1297588935"></a>Compose three methods with different step sizes:</p>
+     <div id="1325822686"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/I_2.png"
+         data-in-width="259"
+         data-in-height="92"
+         data-link="https://wolfram.com/xid/04xo8z4plag627jkf902-v7m9l8"
+         data-code="Files/RKCompose.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/O_1.png"
+         data-out-width="113"
+         data-out-height="186"
+         ></div>
+     <div class="ExLine"><a name="578313348"></a><!-- --></div>
+     <p><a name="1989085836"></a>Two half steps of an embedded pair:</p>
+     <div id="277073389"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/I_3.png"
+         data-in-width="78"
+         data-in-height="18"
+         data-link="https://wolfram.com/xid/04xo8z4plag627jkf902-eu8xhb"
+         data-code="Files/RKCompose.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/O_2.png"
+         data-out-width="127"
+         data-out-height="236"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Properties &amp; Relations<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="578996495"></a>Composition removes dense output:</p>
+     <div id="41504042"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/I_4.png"
+         data-in-width="144"
+         data-in-height="56"
+         data-link="https://wolfram.com/xid/04xo8z4plag627jkf902-yzu0c"
+         data-code="Files/RKCompose.en/i_4.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/O_3.png"
+         data-out-width="65"
+         data-out-height="32"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKCompose.en/O_4.png"
+         data-out-width="67"
+         data-out-height="29"
+         ></div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList">
+    <span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span>
+   </p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

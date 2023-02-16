@@ -1,0 +1,2 @@
+rk = RK["forward Euler"]
+RKAbsoluteMonotonicityRadius[rk, Stage -> 1]

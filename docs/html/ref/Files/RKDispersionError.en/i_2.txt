@@ -1,0 +1,3 @@
+rk = RK["RK4"]
+RKDispersionError[rk, \[Nu]]
+Series[%, {\[Nu], 0, 8}]

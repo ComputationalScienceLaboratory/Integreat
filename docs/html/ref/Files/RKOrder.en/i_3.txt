@@ -1,0 +1,2 @@
+RKOrder[rk /. {Subscript[c, 1] -> 1/2 - Sqrt[3]/6, 
+   Subscript[c, 2] -> 1/2 + Sqrt[3]/6}]

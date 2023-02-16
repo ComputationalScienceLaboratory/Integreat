@@ -1,0 +1,4 @@
+lmm = LMMBackwardDifferentiationFormula[3]
+LMMLinearStabilityPlot[lmm, PlotLabel -> "BDF 3", 
+ PlotLabels -> "Stability Region", BoundaryStyle -> None, 
+ ColorFunction -> Hue]

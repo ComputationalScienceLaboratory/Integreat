@@ -1,0 +1,4 @@
+glm = GLMParallelEnsemble[{0, Sqrt[2], 1}] // Simplify
+GLMOrder[glm]
+GLMOrder[N[glm]]
+GLMOrder[Rationalize[N[glm], $MachineEpsilon]]

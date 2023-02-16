@@ -22,7 +22,7 @@ docsDir = FileNameJoin[{integreatDir, "docs"}];
 build[] := If[
 	MemberQ[$ScriptCommandLine, "--skip-docs"],
 	CreatePacletArchive,
-	PacletTools`PacletBuild[##]["PacletArchive"] &
+	PacletBuild[##]["PacletArchive"] &
 ][srcDir, buildDir];
 
 Switch[$ScriptCommandLine[[2]],
@@ -30,6 +30,6 @@ Switch[$ScriptCommandLine[[2]],
 	"install", PacletInstall[build[], ForceVersionInstall -> True],
 	"docs", PacletDocumentationBuild[srcDir, docsDir, "HTML"],
 	"uninstall", PacletUninstall["Integreat"],
-	"clean", DeleteDirectory[buildDir, DeleteContents -> True],
+	"clean", Scan[DeleteDirectory[#, DeleteContents -> True] &, {buildDir, docsDir}],
 	_, Print["Unrecognized command\n\n" <> help];
 ];

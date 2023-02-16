@@ -1,0 +1,163 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>Linear Multistep Methods&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="LinearMultistepMethods" />
+
+<meta name="description" content="Integreat provide a wide selection of function to initialize, derive, and analyze linear multistep methods." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'LinearMultistepMethods.en';</script>
+</head>
+
+<body id="guide">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT GUIDE</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">Functions</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/LMM.html"><span class="dropdownPad">LMM</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMAdamsBashforth.html"><span class="dropdownPad">LMMAdamsBashforth</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMAdamsMoulton.html"><span class="dropdownPad">LMMAdamsMoulton</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMAlpha.html"><span class="dropdownPad">LMMAlpha</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMAlphaGeneratingPolynomial.html"><span class="dropdownPad">LMMAlphaGeneratingPolynomial</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMBackwardDifferentiationFormula.html"><span class="dropdownPad">LMMBackwardDifferentiationFormula</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMBeta.html"><span class="dropdownPad">LMMBeta</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMBetaGeneratingPolynomial.html"><span class="dropdownPad">LMMBetaGeneratingPolynomial</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMErrorConstant.html"><span class="dropdownPad">LMMErrorConstant</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMLinearStabilityPlot.html"><span class="dropdownPad">LMMLinearStabilityPlot</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMLinearStabilityPolynomial.html"><span class="dropdownPad">LMMLinearStabilityPolynomial</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMMilneSimpson.html"><span class="dropdownPad">LMMMilneSimpson</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMNystrom.html"><span class="dropdownPad">LMMNystrom</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMOrder.html"><span class="dropdownPad">LMMOrder</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMOrderConditions.html"><span class="dropdownPad">LMMOrderConditions</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMOrderStarPlot.html"><span class="dropdownPad">LMMOrderStarPlot</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMReduce.html"><span class="dropdownPad">LMMReduce</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMReducibleQ.html"><span class="dropdownPad">LMMReducibleQ</span></a>
+     </li>
+     <li>
+      <a href="../ref/LMMSteps.html"><span class="dropdownPad">LMMSteps</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/IntegreatPackage.html"><span class="dropdownPad">Integreat Package</span></a>
+     </li>
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+     <li>
+      <a href="../guide/GeneralLinearMethods.html"><span class="dropdownPad">General Linear Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/IntegreatPackage.html"><span class="dropdownPad">Integreat Package</span></a>
+     </li>
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+     <li>
+      <a href="../tutorial/LinearMultistepMethods.html"><span class="dropdownPad">Linear Multistep Methods</span></a>
+     </li>
+     <li>
+      <a href="../tutorial/GeneralLinearMethods.html"><span class="dropdownPad">General Linear Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="main-heading"><h1 class="main-title">Linear Multistep Methods</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><p class="intro"><a name="832562181"></a>Integreat provide a wide selection of function to initialize, derive, and analyze linear multistep methods.</p><div class="GuideDelimiterSubsection"><!-- --></div><h3><a name="875693320"></a>Core</h3><p class="inlineFunctionList"><a name="1529355614"></a><span class="IFSans"><a class="package-symbol" href="../ref/LMM.html">LMM</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMAdamsBashforth.html">LMMAdamsBashforth</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMAdamsMoulton.html">LMMAdamsMoulton</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMNystrom.html">LMMNystrom</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMMilneSimpson.html">LMMMilneSimpson</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMBackwardDifferentiationFormula.html">LMMBackwardDifferentiationFormula</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMAlpha.html">LMMAlpha</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMBeta.html">LMMBeta</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMSteps.html">LMMSteps</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMAlphaGeneratingPolynomial.html">LMMAlphaGeneratingPolynomial</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMBetaGeneratingPolynomial.html">LMMBetaGeneratingPolynomial</a></span></p><div class="GuideDelimiterSubsection"><!-- --></div><h3><a name="334608440"></a>Order Conditions</h3><p class="inlineFunctionList"><a name="2093700120"></a><span class="IFSans"><a class="package-symbol" href="../ref/LMMOrderConditions.html">LMMOrderConditions</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMOrder.html">LMMOrder</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMErrorConstant.html">LMMErrorConstant</a></span></p><div class="GuideDelimiterSubsection"><!-- --></div><h3><a name="1791380526"></a>Linear Stability</h3><p class="inlineFunctionList"><a name="677333255"></a><span class="IFSans"><a class="package-symbol" href="../ref/LMMLinearStabilityPolynomial.html">LMMLinearStabilityPolynomial</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMLinearStabilityPlot.html">LMMLinearStabilityPlot</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMOrderStarPlot.html">LMMOrderStarPlot</a></span></p><div class="GuideDelimiterSubsection"><!-- --></div><h3><a name="1133303564"></a>Simplify</h3><p class="inlineFunctionList"><a name="416176340"></a><span class="IFSans"><a class="package-symbol" href="../ref/LMMReduce.html">LMMReduce</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineBullet">&nbsp;&#9642;&nbsp;</span> <span class="IFSans"><a class="package-symbol" href="../ref/LMMReducibleQ.html">LMMReducibleQ</a></span></p><section id="RelatedTutorials" class="related-links"><div class="inner">
+   <h1>Related Tech Notes</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../tutorial/IntegreatPackage.html">Integreat Package</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../tutorial/LinearMultistepMethods.html">Linear Multistep Methods</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../tutorial/GeneralLinearMethods.html">General Linear Methods</a>
+    </li>
+   </ul>
+  </div></section><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/IntegreatPackage.html">Integreat Package</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/GeneralLinearMethods.html">General Linear Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+
+</html>

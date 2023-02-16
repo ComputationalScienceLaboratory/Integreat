@@ -1,0 +1,2 @@
+GLMParallelEnsemble[{Subscript[c, 1], Subscript[c, 
+   2]}, \[Lambda]] // Simplify

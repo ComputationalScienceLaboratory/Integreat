@@ -1,0 +1,5 @@
+rk = RK[{
+   {0, 0},
+   {Subscript[c, 2], 0}
+  } , {1 - 1/(2 Subscript[c, 2]), 1/(2 Subscript[c, 2])}]
+RKAbsoluteMonotonicityRadius[rk]

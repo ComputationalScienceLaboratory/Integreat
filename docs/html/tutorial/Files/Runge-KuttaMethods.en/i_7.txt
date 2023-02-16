@@ -1,0 +1,6 @@
+rk = RK[{
+   {0, 0, 0},
+   {Subscript[a, 2, 1], 0, 0},
+   {Subscript[a, 3, 1], Subscript[a, 3, 2], 0}
+  } , {Subscript[b, 1], Subscript[b, 2], Subscript[b, 3]}]
+Solve[RKOrderConditions[rk, 3] == 0] // Simplify

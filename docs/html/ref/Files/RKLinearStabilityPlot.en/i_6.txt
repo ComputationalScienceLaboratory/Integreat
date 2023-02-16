@@ -1,0 +1,4 @@
+Show[{
+  RKLinearStabilityPlot[rk, PlotStyle -> Green],
+  RKLinearStabilityPlot[rk, Embedded -> True]
+  }]

@@ -1,0 +1,2 @@
+glm = GLM[2, 2, 2];
+GLMOrderConditions[glm, 2, 4]

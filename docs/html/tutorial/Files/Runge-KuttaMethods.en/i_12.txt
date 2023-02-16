@@ -1,0 +1,3 @@
+RKLinearOrderCondition[rk_RK, p_Integer, opts : OptionsPattern[RKB]] :=
+  Total[NestList[# . RKA[rk] &, RKB[rk, opts], p - 1], {2}] - 
+  1/Range[p]!

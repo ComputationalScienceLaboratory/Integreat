@@ -1,0 +1,2 @@
+rk = RK[2]
+RKOrderConditions[rk, {3}]

@@ -1,0 +1,3 @@
+rk = RK["RK4"]
+RKDissipationError[rk, \[Nu]] // Simplify
+Series[%, {\[Nu], 0, 8}]

@@ -1,0 +1,2 @@
+rk = RKPrimary[RK["ode23"]]
+RKDJReduce[rkP]

@@ -1,0 +1,6 @@
+rk = RK[{
+   {Subscript[a, 1, 1], 0},
+   {Subscript[a, 1, 2], Subscript[a, 2, 2]}
+  } , {Subscript[b, 1], 0}]
+RKDJReduce[rk]
+RKDJReduce[%]

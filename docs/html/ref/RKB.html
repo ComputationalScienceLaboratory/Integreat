@@ -1,0 +1,284 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RKB&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RKB" />
+
+<meta name="description" content="RKB[rk] gives the b coefficients of the Runge\[Dash]Kutta method rk." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RKB.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RK.html"><span class="dropdownPad">RK</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKA.html"><span class="dropdownPad">RKA</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKBHat.html"><span class="dropdownPad">RKBHat</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKC.html"><span class="dropdownPad">RKC</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RKB</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF"><a class="package-symbol" href="../IntegreatRKCore/ref/RKB.html">RKB</a><span class="openbracket">[</span><span class="TI">rk</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">gives the <span class="IM"><img src="Files/RKB.en/1.png" height="20" width="10" alt="" /></span> coefficients of the Runge<span class="special-character Dash">&#8211;</span>Kutta method <span class="IF"><span class="TI">rk</span></span>.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="808795887"></a>The following options can be given:</li>
+     <li class="NotesTable">
+      <a name="802178622"></a>
+      <table>
+       <col width="1%" />
+       <col width="28%" />
+       <col width="28%" />
+       <col width="43%" />
+       <tr class="lineAbove" style=""><td /><td>Embedded</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">whether to return the embedded coefficients</span></td></tr>
+       <tr class="" style=""><td /><td>Stage</td><td><a href="http://reference.wolfram.com/language/ref/None.html">None</a></td><td><span class="TT">treat a stage as the solution</span></td></tr>
+       <tr class="" style=""><td /><td>DenseOutput</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">how to evaluate dense output</span></td></tr>
+      </table>
+     </li>
+     <li><a name="154244521"></a>The <span class="IF">Stage</span> option is useful for analyzing a method property for a particular stage instead of the final solution.</li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><span class="open-all on">open all</span><span class="close-all">close all</span><div class="hideable">
+   <div id="2073454639"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RKB.en/I_1.png"
+       data-in-width="138"
+       data-in-height="18"
+       data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-8krl4h"
+       data-code="Files/RKB.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="1280756839"></a><span class="IM"><img src="Files/RKB.en/2.png" height="17" width="9" alt="" /></span> coefficients for the classical fourth order Runge<span class="special-character Dash">&#8211;</span>Kutta method:</p>
+     <div id="1222832307"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKB.en/I_2.png"
+         data-in-width="83"
+         data-in-height="37"
+         data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-uibtqd"
+         data-code="Files/RKB.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKB.en/O_1.png"
+         data-out-width="59"
+         data-out-height="104"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKB.en/O_2.png"
+         data-out-width="67"
+         data-out-height="30"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Options<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(3)</span></h2>
+    <div class="hideable">
+     <div>
+      <h3 class="toggle">Embedded<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="1203378722"></a>Get the embedded coefficients of an embedded Runge<span class="special-character Dash">&#8211;</span>Kutta pair:</p>
+       <div id="449970011"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/I_3.png"
+           data-in-width="155"
+           data-in-height="37"
+           data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-hp6pc9"
+           data-code="Files/RKB.en/i_3.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_3.png"
+           data-out-width="64"
+           data-out-height="137"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_4.png"
+           data-out-width="73"
+           data-out-height="30"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">Stage<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="1857839232"></a>The <span class="IM"><img src="Files/RKB.en/3.png" height="17" width="9" alt="" /></span> coefficients when the third stage is used as the solution:</p>
+       <div id="2134114937"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/I_4.png"
+           data-in-width="103"
+           data-in-height="37"
+           data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-9kvrwr"
+           data-code="Files/RKB.en/i_4.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_5.png"
+           data-out-width="59"
+           data-out-height="104"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_6.png"
+           data-out-width="58"
+           data-out-height="29"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">DenseOutput<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="2127475778"></a>Get the dense output coefficients for a collocation method:</p>
+       <div id="1307136716"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/I_5.png"
+           data-in-width="165"
+           data-in-height="55"
+           data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-vwirfi"
+           data-code="Files/RKB.en/i_5.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_7.png"
+           data-out-width="33"
+           data-out-height="63"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_8.png"
+           data-out-width="37"
+           data-out-height="29"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_9.png"
+           data-out-width="65"
+           data-out-height="32"
+           ></div>
+       <p><a name="1658506836"></a>Evaluate the dense output at the midpoint of the step:</p>
+       <div id="539751082"
+           class="clipboard-input"
+           data-in="In[2]:="
+           data-in-num="2"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/I_6.png"
+           data-in-width="158"
+           data-in-height="18"
+           data-link="https://wolfram.com/xid/0jzevodawq2wra8u29-i7m0vw"
+           data-code="Files/RKB.en/i_6.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[2]="
+           data-out-num="2"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKB.en/O_10.png"
+           data-out-width="37"
+           data-out-height="30"
+           ></div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList"><span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKA.html">RKA</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKBHat.html">RKBHat</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKC.html">RKC</a></span></p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

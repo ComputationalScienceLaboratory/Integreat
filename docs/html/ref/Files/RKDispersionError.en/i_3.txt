@@ -1,0 +1,2 @@
+rk = RK["ode23"]
+RKDispersionError[rk, 0.1, Embedded -> True]

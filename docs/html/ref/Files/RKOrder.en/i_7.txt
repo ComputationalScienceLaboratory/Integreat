@@ -1,0 +1,4 @@
+rk = RKCollocation[{1/2 - Sqrt[3]/6, 1/2 + Sqrt[3]/6}] // Simplify
+RKOrder[rk]
+RKOrder[N[rk]]
+RKOrder[Rationalize[N[rk], $MachineEpsilon]]

@@ -1,0 +1,1 @@
+RKLinearStability[rk, -2 + I, Stage -> 2]

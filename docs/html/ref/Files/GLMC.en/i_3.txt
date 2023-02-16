@@ -1,0 +1,2 @@
+glm = GLMParallelEnsemble[{0, 1}, \[Lambda]]
+GLMC[glm] == GLMA[glm] . {1, 1} + GLMU[glm] . GLMQ[glm][[All, 2]]

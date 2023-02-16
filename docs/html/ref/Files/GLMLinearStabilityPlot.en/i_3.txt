@@ -1,0 +1,1 @@
+GLMLinearStabilityPlot[glm, {-2.5, 0.5 + 3 I}]

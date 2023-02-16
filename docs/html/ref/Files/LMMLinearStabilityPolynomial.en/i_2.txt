@@ -1,0 +1,2 @@
+lmm = LMMNystrom[3]
+LMMLinearStabilityPolynomial[lmm, \[Zeta], \[Mu]]

@@ -1,0 +1,174 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RKExtrapolate&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RKExtrapolate" />
+
+<meta name="description" content="RKExtrapolate[rk, steps] creates a new Runge\[Dash]Kutta method which is rk extrapolated using the step sequence steps. RKExtrapolate[rk, steps, j] extrapolates assuming rk has an asymptotic error expansion involving only powers of h^j." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RKExtrapolate.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RK.html"><span class="dropdownPad">RK</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKOrder.html"><span class="dropdownPad">RKOrder</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RKExtrapolate</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKExtrapolate<span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">steps</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">creates a new Runge<span class="special-character Dash">&#8211;</span>Kutta method which is <span class="IF"><span class="TI">rk</span></span> extrapolated using the step sequence <span class="IF"><span class="TI">steps</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKExtrapolate<span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">steps</span><span class="comma">,</span><span class="TI">j</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">extrapolates assuming <span class="IF"><span class="TI">rk</span></span> has an asymptotic error expansion involving only powers of <span class="IM"><img src="Files/RKExtrapolate.en/1.png" height="20" width="15" alt="" /></span>.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="145590730"></a><span class="IF"><a class="package-symbol" href="../ref/RKExtrapolate.html">RKExtrapolate</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">steps</span><span class="closebracket">]</span></span> is equivalent to <span class="IF"><a class="package-symbol" href="../ref/RKExtrapolate.html">RKExtrapolate</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">steps</span><span class="comma">,</span>1<span class="closebracket">]</span></span>.</li>
+     <li><a name="1758025297"></a>Symmetric Runge<span class="special-character Dash">&#8211;</span>Kutta methods can be extrapolated with <span class="IF"><span class="TI">j</span>=2</span>.</li>
+     <li><a name="1567740461"></a>The order of the Runge<span class="special-character Dash">&#8211;</span>Kutta method produced by <span class="IF"><a class="package-symbol" href="../ref/RKExtrapolate.html">RKExtrapolate</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">steps</span><span class="comma">,</span><span class="TI">j</span><span class="closebracket">]</span></span> is <span class="IF"><span class="TI">j</span>*<a href="http://reference.wolfram.com/language/ref/Length.html">Length</a><span class="openbracket">[</span><span class="TI">steps</span><span class="closebracket">]</span></span>.</li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><span class="open-all on">open all</span><span class="close-all">close all</span><div class="hideable">
+   <div id="1234964700"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RKExtrapolate.en/I_1.png"
+       data-in-width="148"
+       data-in-height="21"
+       data-link="https://wolfram.com/xid/08aw4q8ow5cdxe49z0bzru3lw-upju5a"
+       data-code="Files/RKExtrapolate.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="587459025"></a>Extrapolating a symmetric second order method to order six:</p>
+     <div id="99723131"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/I_2.png"
+         data-in-width="177"
+         data-in-height="60"
+         data-link="https://wolfram.com/xid/08aw4q8ow5cdxe49z0bzru3lw-bxno49"
+         data-code="Files/RKExtrapolate.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/O_1.png"
+         data-out-width="23"
+         data-out-height="39"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/O_2.png"
+         data-out-width="130"
+         data-out-height="168"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/O_3.png"
+         data-out-width="7"
+         data-out-height="18"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Possible Issues<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="1877696701"></a>Step numbers must be distinct:</p>
+     <div id="1285784687"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/I_3.png"
+         data-in-width="213"
+         data-in-height="19"
+         data-link="https://wolfram.com/xid/08aw4q8ow5cdxe49z0bzru3lw-vjs33l"
+         data-code="Files/RKExtrapolate.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKExtrapolate.en/O_4.png"
+         data-out-width="197"
+         data-out-height="104"
+         ></div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList"><span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKOrder.html">RKOrder</a></span></p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><div class="TechNotes">
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </div><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

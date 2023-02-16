@@ -1,0 +1,1 @@
+RKSimplifyingAssumptionC[rk, {2}, Stage -> 2 ;;]

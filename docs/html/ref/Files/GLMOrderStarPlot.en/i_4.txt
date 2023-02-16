@@ -1,0 +1,4 @@
+glm = GLMParallelEnsemble[{0, 1}, 1]
+GLMOrderStarPlot[glm, PlotLabel -> "Parallel Ensemble", 
+ PlotLabels -> "Order Star", BoundaryStyle -> None, 
+ ColorFunction -> Hue]

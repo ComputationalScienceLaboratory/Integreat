@@ -1,0 +1,385 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>RKErrorA&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="RKErrorA" />
+
+<meta name="description" content="RKErrorA[rk] computes the 2-norm of the principal error residuals of rk. RKErrorA[rk, p] computes the 2-norm of the order p residuals." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'RKErrorA.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/RK.html"><span class="dropdownPad">RK</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKOrderConditions.html"><span class="dropdownPad">RKOrderConditions</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKErrorB.html"><span class="dropdownPad">RKErrorB</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKErrorC.html"><span class="dropdownPad">RKErrorC</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKErrorD.html"><span class="dropdownPad">RKErrorD</span></a>
+     </li>
+     <li>
+      <a href="../ref/RKErrorE.html"><span class="dropdownPad">RKErrorE</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/Runge-KuttaMethods.html"><span class="dropdownPad">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`RK`</div><div class="main-heading"><span class="main-title-top">Integreat`RK`</span><h1 class="main-title">RKErrorA</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKErrorA[<span class="TI">rk</span>]</span>
+   </p>
+   <p class="code-description">computes the 2-norm of the principal error residuals of <span class="IF"><span class="TI">rk</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">RKErrorA<span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">p</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">computes the 2-norm of the order <span class="IF"><span class="TI">p</span></span> residuals.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="88211838"></a><span class="IF"><a class="package-symbol" href="../ref/RKErrorA.html">RKErrorA</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">p</span><span class="closebracket">]</span></span> computes <span class="IM"><img src="Files/RKErrorA.en/1.png" height="23" width="85" alt="" /></span>, where <span class="IM"><img src="Files/RKErrorA.en/2.png" height="18" width="22" alt="" /></span> is a vector of the order condition residuals of order <span class="IM"><img src="Files/RKErrorA.en/3.png" height="18" width="10" alt="" /></span>.</li>
+     <li><a name="1545038815"></a>The accuracy of Runge<span class="special-character Dash">&#8211;</span>Kutta methods of the same order can be compared with <span class="IF"><a class="package-symbol" href="../ref/RKErrorA.html">RKErrorA</a></span>.</li>
+     <li><a name="916099712"></a><span class="IF"><a class="package-symbol" href="../ref/RKErrorA.html">RKErrorA</a><span class="openbracket">[</span><span class="TI">rk</span><span class="closebracket">]</span></span> is equivalent to <span class="IF"><a class="package-symbol" href="../ref/RKErrorA.html">RKErrorA</a><span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><a class="package-symbol" href="../ref/RKOrder.html">RKOrder</a><span class="openbracket">[</span><span class="TI">rk</span><span class="closebracket">]</span>+1<span class="closebracket">]</span></span>.</li>
+     <li><a name="808795887"></a>The following options can be given:</li>
+     <li class="NotesTable">
+      <a name="802178622"></a>
+      <table>
+       <col width="1%" />
+       <col width="28%" />
+       <col width="28%" />
+       <col width="43%" />
+       <tr class="lineAbove" style=""><td /><td>Embedded</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">whether to use the embedded coefficients</span></td></tr>
+       <tr class="" style=""><td /><td>Stage</td><td><a href="http://reference.wolfram.com/language/ref/None.html">None</a></td><td><span class="TT">treat a stage as the solution</span></td></tr>
+       <tr class="" style=""><td /><td>DenseOutput</td><td><a href="http://reference.wolfram.com/language/ref/False.html">False</a></td><td><span class="TT">how to evaluate dense output</span></td></tr>
+      </table>
+     </li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><span class="open-all on">open all</span><span class="close-all">close all</span><div class="hideable">
+   <div id="101190603"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/RKErrorA.en/I_1.png"
+       data-in-width="148"
+       data-in-height="21"
+       data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-byi5gd"
+       data-code="Files/RKErrorA.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="1921149736"></a>Compute <span class="IM"><img src="Files/RKErrorA.en/4.png" height="17" width="21" alt="" /></span> of the classical fourth order Runge<span class="special-character Dash">&#8211;</span>Kutta method:</p>
+     <div id="263104304"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/I_2.png"
+         data-in-width="89"
+         data-in-height="39"
+         data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-emxiu6"
+         data-code="Files/RKErrorA.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_1.png"
+         data-out-width="62"
+         data-out-height="104"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_2.png"
+         data-out-width="35"
+         data-out-height="48"
+         ></div>
+     <p><a name="2008961285"></a>Compute <span class="IM"><img src="Files/RKErrorA.en/5.png" height="17" width="21" alt="" /></span> through <span class="IM"><img src="Files/RKErrorA.en/6.png" height="17" width="21" alt="" /></span> as well:</p>
+     <div id="436470413"
+         class="clipboard-input"
+         data-in="In[2]:="
+         data-in-num="2"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/I_3.png"
+         data-in-width="181"
+         data-in-height="19"
+         data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-hh5c0f"
+         data-code="Files/RKErrorA.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[2]="
+         data-out-num="2"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_3.png"
+         data-out-width="159"
+         data-out-height="48"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Options<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(3)</span></h2>
+    <div class="hideable">
+     <div>
+      <h3 class="toggle">Embedded<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="1673513854"></a>Compute <span class="IM"><img src="Files/RKErrorA.en/7.png" height="17" width="21" alt="" /></span> for an embedded method:</p>
+       <div id="1280894414"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/I_4.png"
+           data-in-width="195"
+           data-in-height="39"
+           data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-vgwaqo"
+           data-code="Files/RKErrorA.en/i_4.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_4.png"
+           data-out-width="66"
+           data-out-height="137"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_5.png"
+           data-out-width="39"
+           data-out-height="38"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">Stage<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="554432745"></a>Compute <span class="IM"><img src="Files/RKErrorA.en/8.png" height="17" width="21" alt="" /></span> for a particular stage:</p>
+       <div id="1192136911"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/I_5.png"
+           data-in-width="144"
+           data-in-height="39"
+           data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-tz1w0h"
+           data-code="Files/RKErrorA.en/i_5.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_6.png"
+           data-out-width="62"
+           data-out-height="104"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_7.png"
+           data-out-width="11"
+           data-out-height="31"
+           ></div>
+      </div>
+     </div>
+     <div>
+      <h3 class="toggle">DenseOutput<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h3>
+      <div class="hideable">
+       <p><a name="2119956984"></a>Compute <span class="IM"><img src="Files/RKErrorA.en/9.png" height="17" width="21" alt="" /></span> for the dense output solution:</p>
+       <div id="693346110"
+           class="clipboard-input"
+           data-in="In[1]:="
+           data-in-num="1"
+           data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/I_6.png"
+           data-in-width="273"
+           data-in-height="39"
+           data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-lq23kg"
+           data-code="Files/RKErrorA.en/i_6.txt"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_8.png"
+           data-out-width="204"
+           data-out-height="92"
+           ></div>
+       <div class="clipboard-output"
+           data-out="Out[1]="
+           data-out-num="1"
+           data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+           data-src="Files/RKErrorA.en/O_9.png"
+           data-out-width="197"
+           data-out-height="47"
+           ></div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Applications<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(2)</span></h2>
+    <div class="hideable">
+     <p><a name="1222059170"></a>Derive an optimal, two stage, explicit Runge<span class="special-character Dash">&#8211;</span>Kutta method:</p>
+     <div id="1389219658"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src-swap="Files/RKErrorA.en/I_7.png"
+         data-big="476 73"
+         data-small="404 93"
+         data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-w9d208"
+         data-code="Files/RKErrorA.en/i_7.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_10.png"
+         data-out-width="165"
+         data-out-height="31"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_11.png"
+         data-out-width="36"
+         data-out-height="63"
+         ></div>
+     <div class="ExLine"><a name="117545248"></a><!-- --></div>
+     <p><a name="742975236"></a>Compare the accuracy of extrapolation methods with different step sequences:</p>
+     <div id="454049003"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/I_8.png"
+         data-in-width="268"
+         data-in-height="60"
+         data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-hsl4ql"
+         data-code="Files/RKErrorA.en/i_8.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_12.png"
+         data-out-width="56"
+         data-out-height="18"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_13.png"
+         data-out-width="62"
+         data-out-height="18"
+         ></div>
+    </div>
+   </div>
+   <div>
+    <h2 class="toggle">Properties &amp; Relations<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(1)</span></h2>
+    <div class="hideable">
+     <p><a name="114402856"></a><span class="IF"><a class="package-symbol" href="../ref/RKErrorA.html">RKErrorA</a></span> is the 2-norm of the residuals from <span class="IF"><a class="package-symbol" href="../ref/RKOrderConditions.html">RKOrderConditions</a></span>:</p>
+     <div id="2082652597"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/I_9.png"
+         data-in-width="305"
+         data-in-height="39"
+         data-link="https://wolfram.com/xid/0nwoxprs26dcu42es5zmo-8p8rbb"
+         data-code="Files/RKErrorA.en/i_9.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_14.png"
+         data-out-width="204"
+         data-out-height="92"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/RKErrorA.en/O_15.png"
+         data-out-width="26"
+         data-out-height="18"
+         ></div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList"><span class="IF"><a class="package-symbol" href="../ref/RK.html">RK</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKOrderConditions.html">RKOrderConditions</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKErrorB.html">RKErrorB</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKErrorC.html">RKErrorC</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKErrorD.html">RKErrorD</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/RKErrorE.html">RKErrorE</a></span></p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/Runge-KuttaMethods.html">Runge<span class="special-character Dash">&#8211;</span>Kutta Methods</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

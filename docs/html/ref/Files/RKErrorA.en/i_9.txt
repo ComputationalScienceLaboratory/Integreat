@@ -1,0 +1,2 @@
+rk = RKCollocation[{Subscript[c, 1], Subscript[c, 2]}]
+Norm[RKOrderConditions[rk, {3}]] == RKErrorA[rk]

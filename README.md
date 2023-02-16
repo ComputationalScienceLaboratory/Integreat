@@ -1,11 +1,11 @@
 # Integreat
 
-![Integreat](Logo/logo.svg)
+![Integreat](img/logo.svg)
 
-A comprehensive Mathematica package for deriving and analyzing time integration methods including
+Integreat is a comprehensive Mathematica package for deriving and analyzing time integration methods including
 
 - Runge–Kutta (RK) methods
-  - Functions for 35+ method properties
+  - Functions for 30+ method properties
   - Support for embedded pairs and dense output
   - Order conditions generated via B-trees
 - Linear multistep methods (LMMs)
@@ -18,25 +18,34 @@ A comprehensive Mathematica package for deriving and analyzing time integration 
 - Trees for Taylor series analysis
   - B-trees
   - N-trees for partitioned ODEs
-  - Arbitrary index DAE-trees
+  - Arbitrary-index DAE-trees
 
-# Examples
+## Documentation
 
-Computing properties of a Runge–Kutta method:
+[View the online documentation](https://computationalsciencelaboratory.github.io/Integreat/html/tutorial/Integreat.html)
+
+Documentation is also added to Mathematica's documentation center when Integrate is installed.
+
+## Examples
+
+Compute properties of a Runge–Kutta method:
 
 ```mathematica
+<<Integreat`RK`
 rk = RKCollocation[{0, 1/2, 1}] (* Create a 3 stage Lobatto IIIA method *)
 RKA[rk] (* Access the A coefficient matrix *)
 RKDenseOutput[rk] (* Collocation methods are equipped with dense output *)
 RKOrder[rk] (* Returns 4. Behind the scenes, this uses B-trees. *)
-RKAStableCondition[rk] (* Returns True *)
+RKAStable[rk] (* Returns True *)
 RKAbsoluteMonotonicityRadius[rk] (* Returns 0 *)
+RKOrderStarPlot[rk] (* Visualize the order star *)
 Manipulate[RKLinearStabilityPlot[rk, DenseOutput -> θ], {θ, 0, 1}] (* View the stability region of the dense output solution for different values of θ *)
 ```
 
-Deriving the second order Adams–Bashforth method:
+Derive the second order Adams–Bashforth method:
 
 ```mathematica
+<<Integreat`LMM`
 lmm = LMM[{0, a1, 1}, {b0, b1, 0}] (* Create an explicit, 2 step linear multistep method *)
 oc = LMMOrderConditions[lmm, 2] (* Generate order conditions up to order 2 *)
 sols = Solve[oc == 0] (* Find solution to order conditions *)
@@ -46,30 +55,22 @@ LMMAdamsBashforth[2] (* There's also a constructor for Adams–Bashforth methods
 
 ## Installation
 
-The easiest way to install or update to the latest release of Integreat is to evaluate
+Installing or upgrading Integreat is as simple as running
 
 ```mathematica
 PacletInstall["https://github.com/ComputationalScienceLaboratory/Integreat/releases/latest/download/Integreat.paclet"]
 ```
 
-within Mathematica. For local development, it can be installed by running
-
-```shell
-./install.wls
-```
-
-within the root directory of the project. Once installed, Integreat can be loaded in Mathematica with
+Once installed, Integreat subpackages can be loaded with
 
 ```mathematica
-<<Integreat`;
+<<Integreat`RK`;
+<<Integreat`LMM`;
+<<Integreat`GLM`;
 ```
 
-If you would no longer like to use Integreat, it can be uninstalled using
+Integreat can be uninstalled using
 
 ```mathematica
 PacletUninstall["Integreat"]
 ```
-
-## Documentation
-
-Basic usage information is provided for all functions.  To see this for all Runge–Kutta functions, evaluate `?RK*`. Similarly, use `?LMM*` and `?GLM*` for linear multistep methods and general linear methods. More detailed documentation which integrates with the built-in documentation center is being planned.

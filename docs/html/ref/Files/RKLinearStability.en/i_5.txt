@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKLinearStability[rk, -2 + I, Stage -> All]

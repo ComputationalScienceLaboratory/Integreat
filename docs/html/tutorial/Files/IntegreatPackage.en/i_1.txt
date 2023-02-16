@@ -1,0 +1,17 @@
+\!\(\*
+GraphicsBox[
+StyleBox[InsetBox[
+TagBox[GridBox[{
+{"\<\"I\"\>", "", "", ""},
+{"\<\"n\"\>", "\<\"t\"\>", "", ""},
+{"\<\"e\"\>", "\<\"g\"\>", "\<\"r\"\>", ""},
+{"", "\<\"e\"\>", "\<\"a\"\>", "\<\"t\"\>"}
+},
+GridBoxDividers->{"Columns" -> {False, True, {False}, False}, 
+         "Rows" -> {False, False, False, {True}, False}}],
+Grid], {0, 0}],
+StripOnInput->False,
+FontSize->24,
+FontColor->RGBColor[
+     0.11764705882352941`, 0.4745098039215686, 0.7647058823529411]],
+ImageSize->{128, 128}]\)

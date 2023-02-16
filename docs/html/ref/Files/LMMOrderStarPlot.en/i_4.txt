@@ -1,0 +1,4 @@
+lmm = LMMBackwardDifferentiationFormula[3]
+LMMOrderStarPlot[lmm, PlotLabel -> "BDF 3", 
+ PlotLabels -> "Order Star", BoundaryStyle -> None, 
+ ColorFunction -> Hue]

@@ -1,0 +1,6 @@
+<< Integreat`LMM`
+lmm = LMM[{0, Subscript[a, 1], 1}, {Subscript[b, 0], Subscript[b, 1], 
+   0}] 
+oc = LMMOrderConditions[lmm, 2] 
+sols = Solve[oc == 0] 
+lmm = lmm /. First[sols] 

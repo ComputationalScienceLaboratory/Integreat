@@ -1,0 +1,8 @@
+rk = RK[{
+   {1/4, 0},
+   {1/2, 1/4}
+  } , {\[FormalTheta]/2, \[FormalTheta]/2}, {0, 3/4}, {0, 1}]
+RKB[rk, Embedded -> True]
+RKB[rk, Stage -> 1]
+RKB[rk, DenseOutput -> True]
+RKB[rk, DenseOutput -> 0.2]

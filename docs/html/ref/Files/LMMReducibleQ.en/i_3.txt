@@ -1,0 +1,2 @@
+lmm = LMMAdamsBashforth[3]
+LMMReducibleQ[lmm]

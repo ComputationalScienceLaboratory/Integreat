@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKDispersionOrder[rk, Stage -> 2]

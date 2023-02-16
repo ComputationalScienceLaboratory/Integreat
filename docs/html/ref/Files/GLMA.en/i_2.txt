@@ -1,0 +1,2 @@
+glm = GLM[2, 3, 4]
+GLMA[glm] // MatrixForm

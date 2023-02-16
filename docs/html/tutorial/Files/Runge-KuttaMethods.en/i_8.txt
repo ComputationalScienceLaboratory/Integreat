@@ -1,0 +1,8 @@
+rk = RK[{
+   {0, 0, 0},
+   {Subscript[c, 2], 0, 0},
+   {Subscript[c, 3] - Subscript[a, 3, 2], Subscript[a, 3, 2], 0}
+  } , {Subscript[b, 1], Subscript[b, 2], Subscript[b, 3]}]
+freeVars = Complement[Variables[rk], Variables[RKC[rk]]];
+sols = Solve[RKOrderConditions[rk, 3] == 0, freeVars]
+rk = rk /. First[sols];

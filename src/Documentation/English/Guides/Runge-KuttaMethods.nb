@@ -1,0 +1,640 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     23075,        632]
+NotebookOptionsPosition[     17029,        507]
+NotebookOutlinePosition[     17536,        525]
+CellTagsIndexPosition[     17493,        522]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Runge\[Dash]Kutta Methods", "GuideTitle",
+ CellChangeTimes->{{3.8796845257162457`*^9, 3.879684526745829*^9}},
+ CellID->1327108128],
+
+Cell["\<\
+Integreat provide a wide selection of function to initialize, derive, and \
+analyze Runge\[Dash]Kutta.\
+\>", "GuideAbstract",
+ CellChangeTimes->{{3.879684695882639*^9, 3.879684751586734*^9}, 
+   3.879684815151011*^9},
+ CellID->446886672]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "GuideFunctionsSection",
+ CellID->1288370831],
+
+Cell[CellGroupData[{
+
+Cell["Core", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.879684912775284*^9, 3.879684916284794*^9}, {
+  3.879773293953573*^9, 3.879773294169606*^9}},
+ CellID->580633740],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RK",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RK"]], "InlineFormula",ExpressionUUID->
+  "108cac73-21bb-4d59-a809-03b533b4720f"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKCompose",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKCompose"]], "InlineFormula",
+  ExpressionUUID->"27503f1d-6fec-479d-b68d-2c6924683e17"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKA",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKA"]], "InlineFormula",ExpressionUUID->
+  "8a45f402-2ec2-4a29-af3b-35452f4624d5"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKB",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKB"]], "InlineFormula",ExpressionUUID->
+  "6f702dc5-cef6-4a83-9441-f7d678c24a32"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKDenseOutput",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDenseOutput"]], "InlineFormula",
+  ExpressionUUID->"50973271-16b7-44ac-986c-3643027fa570"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKC",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKC"]], "InlineFormula",ExpressionUUID->
+  "3484a9d3-5120-4194-8902-69854f1d7ca5"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKBHat",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKBHat"]], "InlineFormula",
+  ExpressionUUID->"70be8876-b586-4ba2-8c6f-5eb960615643"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKStages",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKStages"]], "InlineFormula",
+  ExpressionUUID->"979f1c49-bc1d-4bc1-a163-9e32a312ebcd"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKPrimary",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKPrimary"]], "InlineFormula",
+  ExpressionUUID->"c3e4c99d-fab4-4553-8d7f-17508dd275b6"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKEmbedded",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKEmbedded"]], "InlineFormula",
+  ExpressionUUID->"7aeb7d6e-52b1-427e-b885-009aed25794c"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKPairQ",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKPairQ"]], "InlineFormula",
+  ExpressionUUID->"81b8d0d2-ac42-42ff-9b5d-953979c3da37"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKCollocation",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKCollocation"]], "InlineFormula",
+  ExpressionUUID->"07ea7be9-c4fc-480c-9876-a6b5224704a9"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKExtrapolate",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKExtrapolate"]], "InlineFormula",
+  ExpressionUUID->"a30c5025-efc3-4637-a740-6ba666637dd0"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.879685254096159*^9, 3.879685322778398*^9}, {
+   3.879685371579797*^9, 3.87968539809603*^9}, 3.879686243091846*^9, {
+   3.881783573046153*^9, 3.881783585759647*^9}},
+ CellID->451772904,ExpressionUUID->"a0aab94c-a970-48e4-9a59-8a1d5d2cc4f4"]
+}, Open  ]],
+
+Cell["\t", "GuideDelimiter",
+ CellID->1452025012,ExpressionUUID->"1dc33fdd-f6c3-4339-8229-4aaecf45a2d6"],
+
+Cell[CellGroupData[{
+
+Cell["Order Conditions", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.8796851020845613`*^9, 3.879685106903562*^9}},
+ CellID->941652471,ExpressionUUID->"69288e15-0475-4cdf-81ea-6e9035d28c62"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKOrderConditions",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKOrderConditions"]], "InlineFormula",
+  ExpressionUUID->"52758046-42a5-47c0-9ae1-9157d48eaa47"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKSimplifyingAssumptionB",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKSimplifyingAssumptionB"]], 
+  "InlineFormula",ExpressionUUID->"c9e75029-7329-4897-b5ac-e6e193937512"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKSimplifyingAssumptionC",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKSimplifyingAssumptionC"]], 
+  "InlineFormula",ExpressionUUID->"5d3ddc0f-5742-48dc-8faf-ec8d1e949dc4"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKSimplifyingAssumptionD",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKSimplifyingAssumptionD"]], 
+  "InlineFormula",ExpressionUUID->"1e15eaf1-d0a9-4c34-8938-e9cd4aa55b5f"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKOrder",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKOrder"]], "InlineFormula",
+  ExpressionUUID->"df0fdf84-6f16-4135-a42e-3294a053143b"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKErrorA",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKErrorA"]], "InlineFormula",
+  ExpressionUUID->"1a11e17f-5f4a-4253-809f-ee0bdcc91f50"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKErrorB",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKErrorB"]], "InlineFormula",
+  ExpressionUUID->"c23d0232-4efd-4ebf-894b-f1e282a1d9e5"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKErrorC",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKErrorC"]], "InlineFormula",
+  ExpressionUUID->"fe0fefde-b83a-4f65-aaa4-ba7bb9312b4b"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKErrorD",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKErrorD"]], "InlineFormula",
+  ExpressionUUID->"1fae85ff-bc5a-4750-aeb4-6bacf55f840b"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKErrorE",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKErrorE"]], "InlineFormula",
+  ExpressionUUID->"1bbc78f8-525e-4076-afb1-75641ae82f71"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.87968557936836*^9, 3.8796856065618057`*^9}, 
+   3.879686240883278*^9, {3.879686794349862*^9, 3.879686840932433*^9}, {
+   3.881694798461657*^9, 3.8816947991797533`*^9}},
+ CellID->322852034,ExpressionUUID->"6aa3cfc3-af56-4915-acc6-38493b013f31"]
+}, Open  ]],
+
+Cell["\t", "GuideDelimiter",
+ CellID->1278888775],
+
+Cell[CellGroupData[{
+
+Cell["Linear Stability", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.879684951698495*^9, 3.87968495459061*^9}},
+ CellID->1105854668],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKLinearStability",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKLinearStability"]], "InlineFormula",
+  ExpressionUUID->"f3afa0be-7514-499e-866b-dd473086399d"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKLinearStabilityPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKLinearStabilityPlot"]], 
+  "InlineFormula",ExpressionUUID->"4f9a44f8-c03c-4686-b619-910d3f573ce6"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKOrderStarPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKOrderStarPlot"]], "InlineFormula",
+  ExpressionUUID->"dc89aa21-4acd-4a2f-95d2-1732f72cb16e"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKLinearStabilityP",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKLinearStabilityP"]], "InlineFormula",
+  ExpressionUUID->"b49aaa3e-4aae-4984-8a6f-226288acfcf2"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKLinearStabilityQ",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKLinearStabilityQ"]], "InlineFormula",
+  ExpressionUUID->"0cc4e563-2462-4769-8899-593c5da04f76"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKEPolynomial",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKEPolynomial"]], "InlineFormula",
+  ExpressionUUID->"3bf4c5be-8e45-4517-8e13-655fc7307e6e"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKIStable",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKIStable"]], "InlineFormula",
+  ExpressionUUID->"8f805ba6-f2df-4818-93af-3d527fb7b113"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKAStable",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKAStable"]], "InlineFormula",
+  ExpressionUUID->"3fafaf70-5139-428d-a580-d8cd5f15724c"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.879685421866365*^9, 3.879685466467955*^9}, {
+  3.880138783222117*^9, 3.880138784314014*^9}, {3.8806711870383453`*^9, 
+  3.880671187924505*^9}},
+ CellID->461437505,ExpressionUUID->"20461197-10e5-4f43-9050-bdf51e3682b9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Nonlinear Stability", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.87968500760135*^9, 3.879685012502596*^9}},
+ CellID->580340267],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKAlgebraicStabilityMatrix",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKAlgebraicStabilityMatrix"]], 
+  "InlineFormula",ExpressionUUID->"fb314621-87c5-40e4-a928-d9ef097f814a"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKAlgebraicallyStableQ",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKAlgebraicallyStableQ"]], 
+  "InlineFormula",ExpressionUUID->"aa54bc24-a8c5-418a-9c0b-fb8264eb6d4a"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKAbsoluteMonotonicityRadius",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKAbsoluteMonotonicityRadius"]], 
+  "InlineFormula",ExpressionUUID->"6aae718b-0164-447b-b5a1-1aa979968f76"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.879685485862186*^9, 3.879685498559463*^9}, {
+  3.880661248954352*^9, 3.8806612525384398`*^9}},
+ CellID->1845945401,ExpressionUUID->"18645e9b-3bc3-46af-84a4-2b16291e2943"]
+}, Open  ]],
+
+Cell["\t", "GuideDelimiter",
+ CellID->2130591681],
+
+Cell[CellGroupData[{
+
+Cell["Dissipation and Dispersion", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.881694780589012*^9, 3.881694802282937*^9}, {
+  3.881696677278919*^9, 3.881696680684506*^9}},
+ CellID->1698076335,ExpressionUUID->"f77e06de-5e95-4eb5-a813-46dafca17e01"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKDispersionError",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDispersionError"]], "InlineFormula",
+  ExpressionUUID->"7558ca2c-fce5-4ab6-b29a-4161a23e3baa"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKDispersionOrder",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDispersionOrder"]], "InlineFormula",
+  ExpressionUUID->"0e91aee4-a33d-45f5-bf7b-35b0aceeadd9"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKDissipationError",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDissipationError"]], "InlineFormula",
+  ExpressionUUID->"973167a0-c63a-48c8-8298-d0ec96b50f30"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKDissipationOrder",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDissipationOrder"]], "InlineFormula",
+  ExpressionUUID->"543976ce-8b02-4917-989d-fcf7a0b5fcd2"]
+}], "InlineGuideFunctionListing",
+ CellID->1226846468,ExpressionUUID->"ecfeae25-8fe6-4f28-aab4-947a8b26eabd"]
+}, Open  ]],
+
+Cell["\t", "GuideDelimiter",
+ CellID->1166259809,ExpressionUUID->"0570316e-0cf3-4dd4-94bb-318ddffb56cd"],
+
+Cell[CellGroupData[{
+
+Cell["Symmetry", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.879686772299934*^9, 3.879686774071772*^9}},
+ CellID->363813853],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKReflection",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKReflection"]], "InlineFormula",
+  ExpressionUUID->"64c23fe3-e441-4bd2-a691-f377dead421f"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKTranspose",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKTranspose"]], "InlineFormula",
+  ExpressionUUID->"d6550501-d01d-4229-9056-a491059cad30"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.879686872182906*^9, 3.879686876914949*^9}, {
+  3.880661235198648*^9, 3.880661254094512*^9}, {3.881101759079813*^9, 
+  3.881101759753737*^9}},
+ CellID->1429935457,ExpressionUUID->"05a7cd9b-68f8-401c-93fe-f04aa23d0229"]
+}, Open  ]],
+
+Cell["\t", "GuideDelimiter",
+ CellID->1603475867],
+
+Cell[CellGroupData[{
+
+Cell["Simplify", "GuideFunctionsSubsection",
+ CellChangeTimes->{{3.8796851657629423`*^9, 3.879685167388336*^9}},
+ CellID->345971238],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["RKDJReduce",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDJReduce"]], "InlineFormula"],
+ " \[EmptyVerySmallSquare] ",
+ Cell[BoxData[
+  ButtonBox["RKDJReducibleQ",
+   BaseStyle->"Link",
+   ButtonData->"paclet:Integreat/ref/RKDJReducibleQ"]], "InlineFormula"]
+}], "InlineGuideFunctionListing",
+ CellChangeTimes->{{3.8796868836880074`*^9, 3.879686887780497*^9}},
+ CellID->1611053946]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Tech Notes", "GuideTutorialsSection",
+ CellID->2073639674],
+
+Cell[TextData[ButtonBox["Integreat Package",
+ BaseStyle->"Link",
+ ButtonData->"paclet:Integreat/tutorial/IntegreatPackage"]], "GuideTutorial",
+ CellChangeTimes->{{3.881786209165718*^9, 3.8817862224624023`*^9}},
+ CellID->846034109,ExpressionUUID->"26dc3106-f9ca-40d8-974a-7d94cb868dde"],
+
+Cell[TextData[ButtonBox["Runge\[Dash]Kutta Methods",
+ BaseStyle->"Link",
+ ButtonData->"paclet:Integreat/tutorial/Runge-KuttaMethods"]], "GuideTutorial",\
+
+ CellChangeTimes->{{3.8801380380484657`*^9, 3.8801380465358553`*^9}},
+ CellID->2078042286],
+
+Cell[TextData[ButtonBox["Linear Multistep Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/tutorial/LinearMultistepMethods"]], "GuideTutorial",
+ CellChangeTimes->{{3.880138094992971*^9, 3.8801381017679358`*^9}},
+ CellID->1435580598],
+
+Cell[TextData[ButtonBox["General Linear Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/tutorial/GeneralLinearMethods"]], "GuideTutorial",
+ CellChangeTimes->{{3.880138085502304*^9, 3.8801380939067698`*^9}},
+ CellID->1174754190,ExpressionUUID->"a2f420e1-900a-4b07-9a25-83d6ac7f30cb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Guides", "GuideMoreAboutSection",
+ CellChangeTimes->{{3.8430423939366693`*^9, 3.843042395176153*^9}},
+ CellID->302910146],
+
+Cell[TextData[ButtonBox["Integreat Package",
+ BaseStyle->"Link",
+ ButtonData->"paclet:Integreat/guide/IntegreatPackage"]], "GuideMoreAbout",
+ CellChangeTimes->{{3.879883780675268*^9, 3.8798838060836353`*^9}},
+ CellID->798695123],
+
+Cell[TextData[ButtonBox["Linear Multistep Methods",
+ BaseStyle->"Link",
+ ButtonData->
+  "paclet:Integreat/guide/LinearMultistepMethods"]], "GuideMoreAbout",
+ CellChangeTimes->{{3.879884778074276*^9, 3.879884789087195*^9}},
+ CellID->1438458859],
+
+Cell[TextData[ButtonBox["General Linear Methods",
+ BaseStyle->"Link",
+ ButtonData->"paclet:Integreat/guide/GeneralLinearMethods"]], "GuideMoreAbout",\
+
+ CellChangeTimes->{{3.879887226729195*^9, 3.879887233529879*^9}},
+ CellID->1407999758,ExpressionUUID->"3b02cd6b-b8a8-4c17-994a-b6dfe0d167ac"]
+}, Open  ]],
+
+Cell["Related Links", "GuideRelatedLinksSection",
+ CellID->717376434],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "MetadataSection",
+ CellID->129664605],
+
+Cell[TextData[{
+ "New in: ",
+ Cell["1.0.0", "HistoryData",
+  CellTags->"New"],
+ " | Modified in: ",
+ Cell["1.0.0 ", "HistoryData",
+  CellTags->"Modified"],
+ " | Obsolete in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Obsolete"]
+}], "History",
+ CellChangeTimes->{{3.879883664059565*^9, 3.879883672965315*^9}},
+ CellID->1141419938],
+
+Cell[CellGroupData[{
+
+Cell["Categorization", "CategorizationSection",
+ CellID->549512374],
+
+Cell["Guide", "Categorization",
+ CellLabel->"Entity Type",
+ CellID->2018126018],
+
+Cell["Integreat", "Categorization",
+ CellLabel->"Paclet Name",
+ CellID->1855848750],
+
+Cell["Integreat`RK`", "Categorization",
+ CellLabel->"Context",
+ CellID->1984220095],
+
+Cell["Integreat/guide/Runge-KuttaMethods", "Categorization",
+ CellLabel->"URI",
+ CellID->1874386741]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "KeywordsSection",
+ CellID->392393872],
+
+Cell["XXXX", "Keywords",
+ CellID->614706358]
+}, Closed]]
+}, Open  ]]
+},
+WindowSize->{720, 762},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+TaggingRules-><|"Paclet" -> "Integreat"|>,
+FrontEndVersion->"13.1 for Linux x86 (64-bit) (June 16, 2022)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "GuidePageStylesExt.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"560adc58-aa1b-4b57-8d00-928612cfd6ff"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 136, 2, 88, "GuideTitle",ExpressionUUID->"1f4eb2e6-1287-4f02-8423-775b0c6a9418",
+ CellID->1327108128],
+Cell[719, 26, 247, 6, 29, "GuideAbstract",ExpressionUUID->"50b3c774-4489-4220-98ed-ea92718822a1",
+ CellID->446886672]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1003, 37, 54, 1, 73, "GuideFunctionsSection",ExpressionUUID->"0c6141a7-255d-46e3-9b75-d6205a1bd0b3",
+ CellID->1288370831],
+Cell[CellGroupData[{
+Cell[1082, 42, 175, 3, 37, "GuideFunctionsSubsection",ExpressionUUID->"e4b84736-a74d-48f5-8017-4ce56a3b6851",
+ CellID->580633740],
+Cell[1260, 47, 3091, 82, 42, "InlineGuideFunctionListing",ExpressionUUID->"a0aab94c-a970-48e4-9a59-8a1d5d2cc4f4",
+ CellID->451772904]
+}, Open  ]],
+Cell[4366, 132, 104, 1, 27, "GuideDelimiter",ExpressionUUID->"1dc33fdd-f6c3-4339-8229-4aaecf45a2d6",
+ CellID->1452025012],
+Cell[CellGroupData[{
+Cell[4495, 137, 195, 2, 37, "GuideFunctionsSubsection",ExpressionUUID->"69288e15-0475-4cdf-81ea-6e9035d28c62",
+ CellID->941652471],
+Cell[4693, 141, 2566, 64, 60, "InlineGuideFunctionListing",ExpressionUUID->"6aa3cfc3-af56-4915-acc6-38493b013f31",
+ CellID->322852034]
+}, Open  ]],
+Cell[7274, 208, 49, 1, 27, "GuideDelimiter",ExpressionUUID->"6ac94d65-b453-4355-9ab9-68b97932b498",
+ CellID->1278888775],
+Cell[CellGroupData[{
+Cell[7348, 213, 138, 2, 37, "GuideFunctionsSubsection",ExpressionUUID->"d3b1e9af-63bd-43cf-a244-d85aecd4d178",
+ CellID->1105854668],
+Cell[7489, 217, 2107, 52, 59, "InlineGuideFunctionListing",ExpressionUUID->"20461197-10e5-4f43-9050-bdf51e3682b9",
+ CellID->461437505]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9633, 274, 140, 2, 37, "GuideFunctionsSubsection",ExpressionUUID->"5f8fdfd5-21c4-4ca2-a053-c976bcf58ee9",
+ CellID->580340267],
+Cell[9776, 278, 966, 21, 41, "InlineGuideFunctionListing",ExpressionUUID->"18645e9b-3bc3-46af-84a4-2b16291e2943",
+ CellID->1845945401]
+}, Open  ]],
+Cell[10757, 302, 49, 1, 27, "GuideDelimiter",ExpressionUUID->"3827c96a-34d1-40d1-93bc-3f5f890096c9",
+ CellID->2130591681],
+Cell[CellGroupData[{
+Cell[10831, 307, 253, 3, 37, "GuideFunctionsSubsection",ExpressionUUID->"f77e06de-5e95-4eb5-a813-46dafca17e01",
+ CellID->1698076335],
+Cell[11087, 312, 1038, 25, 41, "InlineGuideFunctionListing",ExpressionUUID->"ecfeae25-8fe6-4f28-aab4-947a8b26eabd",
+ CellID->1226846468]
+}, Open  ]],
+Cell[12140, 340, 104, 1, 27, "GuideDelimiter",ExpressionUUID->"0570316e-0cf3-4dd4-94bb-318ddffb56cd",
+ CellID->1166259809],
+Cell[CellGroupData[{
+Cell[12269, 345, 130, 2, 37, "GuideFunctionsSubsection",ExpressionUUID->"f74ee004-00f7-429a-a1ae-a8141b64d4f1",
+ CellID->363813853],
+Cell[12402, 349, 706, 16, 24, "InlineGuideFunctionListing",ExpressionUUID->"05a7cd9b-68f8-401c-93fe-f04aa23d0229",
+ CellID->1429935457]
+}, Open  ]],
+Cell[13123, 368, 49, 1, 27, "GuideDelimiter",ExpressionUUID->"642acecc-8a23-4e63-97fe-f489abdc37ff",
+ CellID->1603475867],
+Cell[CellGroupData[{
+Cell[13197, 373, 132, 2, 37, "GuideFunctionsSubsection",ExpressionUUID->"5228931f-f357-4725-8e3d-93980831c4f6",
+ CellID->345971238],
+Cell[13332, 377, 441, 12, 24, "InlineGuideFunctionListing",ExpressionUUID->"68dd8221-c97f-4ac1-957a-bd9e961a9c13",
+ CellID->1611053946]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13822, 395, 64, 1, 75, "GuideTutorialsSection",ExpressionUUID->"6a5069d5-04a5-465d-a736-ef335104e010",
+ CellID->2073639674],
+Cell[13889, 398, 285, 4, 24, "GuideTutorial",ExpressionUUID->"26dc3106-f9ca-40d8-974a-7d94cb868dde",
+ CellID->846034109],
+Cell[14177, 404, 245, 5, 24, "GuideTutorial",ExpressionUUID->"08e54508-6a63-4b5e-b0b8-491b5193d782",
+ CellID->2078042286],
+Cell[14425, 411, 247, 5, 24, "GuideTutorial",ExpressionUUID->"d1b7f51c-dd1f-45db-a4cb-d8363b6e3fd4",
+ CellID->1435580598],
+Cell[14675, 418, 298, 5, 24, "GuideTutorial",ExpressionUUID->"a2f420e1-900a-4b07-9a25-83d6ac7f30cb",
+ CellID->1174754190]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15010, 428, 135, 2, 75, "GuideMoreAboutSection",ExpressionUUID->"a55c1416-9cea-411c-b1de-42748574936d",
+ CellID->302910146],
+Cell[15148, 432, 228, 4, 24, "GuideMoreAbout",ExpressionUUID->"03563842-4f2c-419f-8092-045394c0995a",
+ CellID->798695123],
+Cell[15379, 438, 243, 5, 24, "GuideMoreAbout",ExpressionUUID->"510e3fcd-d6f7-4112-9d4f-30e1f39025fc",
+ CellID->1438458859],
+Cell[15625, 445, 293, 5, 24, "GuideMoreAbout",ExpressionUUID->"3b02cd6b-b8a8-4c17-994a-b6dfe0d167ac",
+ CellID->1407999758]
+}, Open  ]],
+Cell[15933, 453, 69, 1, 75, "GuideRelatedLinksSection",ExpressionUUID->"e6871b11-bff8-4150-ba02-69e45a1171c3",
+ CellID->717376434],
+Cell[CellGroupData[{
+Cell[16027, 458, 55, 1, 72, "MetadataSection",ExpressionUUID->"765f4240-d379-4a5b-9bf8-a3c1c3e2ffee",
+ CellID->129664605],
+Cell[16085, 461, 328, 12, 27, "History",ExpressionUUID->"a9a474b5-2760-429e-94d4-1d60b0fa7cb1",
+ CellID->1141419938],
+Cell[CellGroupData[{
+Cell[16438, 477, 67, 1, 21, "CategorizationSection",ExpressionUUID->"5ccbd90b-9aec-45b2-9a77-de394300263e",
+ CellID->549512374],
+Cell[16508, 480, 79, 2, 70, "Categorization",ExpressionUUID->"3a97944e-41ae-44de-8ec5-8259565c42c6",
+ CellID->2018126018],
+Cell[16590, 484, 83, 2, 70, "Categorization",ExpressionUUID->"ad0435e1-428e-4acc-98b7-07497acb7716",
+ CellID->1855848750],
+Cell[16676, 488, 83, 2, 70, "Categorization",ExpressionUUID->"7edd9f8a-65b8-42a0-b5e7-f73fbf07ecdf",
+ CellID->1984220095],
+Cell[16762, 492, 100, 2, 70, "Categorization",ExpressionUUID->"f5aade21-f5cb-476e-bab1-09143de6bd9f",
+ CellID->1874386741]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[16899, 499, 55, 1, 21, "KeywordsSection",ExpressionUUID->"1ca44724-111d-493d-92d5-b78344f961de",
+ CellID->392393872],
+Cell[16957, 502, 44, 1, 70, "Keywords",ExpressionUUID->"37ac62b0-1307-432b-ae34-a1b4a0b1baeb",
+ CellID->614706358]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,2 @@
+rk = RK["implicit midpoint"]
+RKAlgebraicallyStableQ[rk, Stage -> 1]

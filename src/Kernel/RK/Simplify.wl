@@ -11,7 +11,8 @@ rkDJIrreducibleStages[rk_] := With[{
 ];
 
 
-rkSubset[rk_, {}] := RKSubset[rk, {1}];
+rkSubset[rk_?RKPairQ, {}] := RK[{{0}}, {0}, {0}, {0}];
+rkSubset[rk_, {}] := RK[{{0}}, {0}, {0}];
 rkSubset[HoldPattern[RK[a_, b___]], p_] := RK[
 	a[[p, p]],
 	Sequence @@ {b}[[All, p]]

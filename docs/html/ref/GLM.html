@@ -1,0 +1,240 @@
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	
+
+<title>GLM&mdash;Wolfram Language Documentation</title>
+<meta name="buildnumber" content="0000000">
+<meta name="historydata" content="{1.0.0, 1.0.0, , }" />
+<meta name="keywords" content="GLM" />
+
+<meta name="description" content="GLM[s, r, p] constructs a generic general linear method with s internal stages and r external stages which are expanded to order p. GLM[A, B, U, V, Q, c] constructs a general linear method with coefficients A, B, U, V, Q, and c. GLM[rk] converts a Runge\[Dash]Kutta method rk into a general linear method. GLM[rk, p] converts a Runge-Kutta method rk into a general linear method with external stages expanded to order p. GLM[lmm] converts a linear multistep method lmm into a general linear method." />
+<link rel="stylesheet" href="../../common/framework/css/framework.en.css"><link rel="stylesheet" href="../../common/framework/css/gui.en.css"><link rel="stylesheet" href="../../common/js/clipboard/2.0/clipboard.css"><link rel="stylesheet" href="../../fonts/source-code-pro/1.0/all.css"><link rel="stylesheet" href="../../fonts/source-sans-pro/1.0/global.css"><link rel="stylesheet" href="../../language-assets/css/entities.css"><link rel="stylesheet" href="../../language-assets/css/footer.css"><link rel="stylesheet" href="../../language-assets/css/global.css"><link rel="stylesheet" href="../../language-assets/css/guide.css"><link rel="stylesheet" href="../../language-assets/css/header-language.css"><link rel="stylesheet" href="../../language-assets/css/iconography.css"><link rel="stylesheet" href="../../language-assets/css/icons.css"><link rel="stylesheet" href="../../language-assets/css/in-out.css"><link rel="stylesheet" href="../../language-assets/css/language-specific.css"><link rel="stylesheet" href="../../language-assets/css/language.css"><link rel="stylesheet" href="../../language-assets/css/man-page.css"><link rel="stylesheet" href="../../language-assets/css/related-links.css"><link rel="stylesheet" href="../../language-assets/css/root-guide-language.css"><link rel="stylesheet" href="../../language-assets/css/special-styles.css"><link rel="stylesheet" href="../../language-assets/css/tables.css"><link rel="stylesheet" href="../../language-assets/css/technotes.css"><link rel="stylesheet" href="../../language-assets/css/tooltips.css"><link rel="stylesheet" href="../../language-assets/css/workflows.css">
+<script>var baselang = 'GLM.en';</script>
+</head>
+
+<body id="ref" class="package">
+  <main class="main">
+  <nav class="topContentWrap"><span class="badge">INTEGREAT SYMBOL</span><ul class="dropdown">
+   <li>
+    <a href="#" class="menu see-also">See Also</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../ref/GLMA.html"><span class="dropdownPad">GLMA</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMB.html"><span class="dropdownPad">GLMB</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMU.html"><span class="dropdownPad">GLMU</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMV.html"><span class="dropdownPad">GLMV</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMQ.html"><span class="dropdownPad">GLMQ</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMC.html"><span class="dropdownPad">GLMC</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMInternalStages.html"><span class="dropdownPad">GLMInternalStages</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMExternalStages.html"><span class="dropdownPad">GLMExternalStages</span></a>
+     </li>
+     <li>
+      <a href="../ref/GLMP.html"><span class="dropdownPad">GLMP</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu related-guides">Related Guides</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../guide/GeneralLinearMethods.html"><span class="dropdownPad">General Linear Methods</span></a>
+     </li>
+     <li>
+      <a href="../guide/IntegreatPackage.html"><span class="dropdownPad">Integreat Package</span></a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <a href="#" class="menu see-also">Tech Notes</a>
+    <ul class="sub_menu">
+     <li>
+      <a href="../tutorial/GeneralLinearMethods.html"><span class="dropdownPad">General Linear Methods</span></a>
+     </li>
+    </ul>
+   </li>
+  </ul></nav><div class="ContextNameCell">Integreat`GLM`</div><div class="main-heading"><span class="main-title-top">Integreat`GLM`</span><h1 class="main-title">GLM</h1><div class="iconography" data-src="s= d= m= c= u= l= n= e="></div></div><div class="functionIntroWrap">
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">GLM<span class="openbracket">[</span><span class="TI">s</span><span class="comma">,</span><span class="TI">r</span><span class="comma">,</span><span class="TI">p</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a generic general linear method with <span class="IF"><span class="TI">s</span></span> internal stages and <span class="IF"><span class="TI">r</span></span> external stages which are expanded to order <span class="IF"><span class="TI">p</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">GLM<span class="openbracket">[</span><span class="TI">A</span><span class="comma">,</span><span class="TI">B</span><span class="comma">,</span><span class="TI">U</span><span class="comma">,</span><span class="TI">V</span><span class="comma">,</span><span class="TI">Q</span><span class="comma">,</span><span class="TI">c</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">constructs a general linear method with coefficients <span class="IM"><img src="Files/GLM.en/1.png" height="20" width="11" alt="" /></span>, <span class="IM"><img src="Files/GLM.en/2.png" height="20" width="11" alt="" /></span>, <span class="IM"><img src="Files/GLM.en/3.png" height="20" width="15" alt="" /></span>, <span class="IM"><img src="Files/GLM.en/4.png" height="20" width="14" alt="" /></span>, <span class="IM"><img src="Files/GLM.en/5.png" height="20" width="13" alt="" /></span>, and <span class="IM"><img src="Files/GLM.en/6.png" height="20" width="9" alt="" /></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">GLM[<span class="TI">rk</span>]</span>
+   </p>
+   <p class="code-description">converts a Runge<span class="special-character Dash">&#8211;</span>Kutta method <span class="IF"><span class="TI">rk</span></span> into a general linear method.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">GLM<span class="openbracket">[</span><span class="TI">rk</span><span class="comma">,</span><span class="TI">p</span><span class="closebracket">]</span></span>
+   </p>
+   <p class="code-description">converts a Runge-Kutta method <span class="IF"><span class="TI">rk</span></span> into a general linear method with external stages expanded to order <span class="IF"><span class="TI">p</span></span>.</p>
+  </div>
+  <div class="functionIntro">
+   <p class="code">
+    <span class="IF">GLM[<span class="TI">lmm</span>]</span>
+   </p>
+   <p class="code-description">converts a linear multistep method <span class="IF"><span class="TI">lmm</span></span> into a general linear method.</p>
+  </div>
+ </div><section id="DetailsAndOptions"><div class="inner">
+   <h1 class="toggle">Details and Options</h1>
+   <div class="hideable">
+    <ul class="functionList">
+     <li><a name="629755873"></a>A <span class="IF"><a class="package-symbol" href="../ref/GLM.html">GLM</a></span> object represents a general linear method.</li>
+     <li><a name="718092503"></a><span class="IF"><a class="package-symbol" href="../ref/GLM.html">GLM</a><span class="openbracket">[</span><span class="special-character Ellipsis">&#8230;</span><span class="closebracket">]</span></span> displays in a notebook as a Butcher tableau.</li>
+    </ul>
+   </div>
+  </div></section><section id="Examples"><h1 class="toggle open">Examples</h1><div class="hideable">
+   <div id="379024195"
+       class="clipboard-input"
+       data-in="In[1]:="
+       data-in-num="1"
+       data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+       data-src="Files/GLM.en/I_1.png"
+       data-in-width="158"
+       data-in-height="21"
+       data-link="https://wolfram.com/xid/0e4ukzbsliolitc9v4-gjx275"
+       data-code="Files/GLM.en/i_1.txt"
+       ></div>
+   <div>
+    <h2 class="toggle open">Basic Examples<span class="special-character NonBreakingSpace">&#160;</span><span class="special-character NonBreakingSpace">&#160;</span><span class="total-examples">(3)</span></h2>
+    <div class="hideable">
+     <p><a name="1860624505"></a>Create a generic general linear method with two internal stages and three internal stages:</p>
+     <div id="998809726"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/I_2.png"
+         data-in-width="72"
+         data-in-height="19"
+         data-link="https://wolfram.com/xid/0e4ukzbsliolitc9v4-qsx8sw"
+         data-code="Files/GLM.en/i_2.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/O_1.png"
+         data-out-width="131"
+         data-out-height="90"
+         ></div>
+     <div class="ExLine"><a name="1077794428"></a><!-- --></div>
+     <p><a name="1561862745"></a>Construct a general linear method from coefficients:</p>
+     <div id="794423042"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/I_3.png"
+         data-in-width="290"
+         data-in-height="53"
+         data-link="https://wolfram.com/xid/0e4ukzbsliolitc9v4-ne9i00"
+         data-code="Files/GLM.en/i_3.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/O_2.png"
+         data-out-width="69"
+         data-out-height="80"
+         ></div>
+     <div class="ExLine"><a name="754001575"></a><!-- --></div>
+     <p><a name="931860217"></a>Convert the classical fourth order Runge<span class="special-character Dash">&#8211;</span>Kutta method into a general linear method:</p>
+     <div id="88062227"
+         class="clipboard-input"
+         data-in="In[1]:="
+         data-in-num="1"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/I_4.png"
+         data-in-width="107"
+         data-in-height="39"
+         data-link="https://wolfram.com/xid/0e4ukzbsliolitc9v4-bqpri9"
+         data-code="Files/GLM.en/i_4.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[1]="
+         data-out-num="1"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/O_3.png"
+         data-out-width="74"
+         data-out-height="104"
+         ></div>
+     <p><a name="387152030"></a>Convert the three-step Adams<span class="special-character Dash">&#8211;</span>Moulton method into a general linear method:</p>
+     <div id="926717144"
+         class="clipboard-input"
+         data-in="In[2]:="
+         data-in-num="2"
+         data-in-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/I_5.png"
+         data-in-width="171"
+         data-in-height="39"
+         data-link="https://wolfram.com/xid/0e4ukzbsliolitc9v4-pl01s6"
+         data-code="Files/GLM.en/i_5.txt"
+         ></div>
+     <div class="clipboard-output"
+         data-out="Out[2]="
+         data-out-num="2"
+         data-out-src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="Files/GLM.en/O_4.png"
+         data-out-width="69"
+         data-out-height="95"
+         ></div>
+    </div>
+   </div>
+   <div class="clear"><!-- --></div>
+  </div></section><section id="SeeAlso" class="related-links"><div class="inner">
+   <h1>See Also</h1>
+   <p class="inlineFunctionList"><span class="IF"><a class="package-symbol" href="../ref/GLMA.html">GLMA</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMB.html">GLMB</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMU.html">GLMU</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMV.html">GLMV</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMQ.html">GLMQ</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMC.html">GLMC</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMInternalStages.html">GLMInternalStages</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMExternalStages.html">GLMExternalStages</a></span><span class="special-character NonBreakingSpace">&#160;</span><span class="inlineSeparator"></span> <span class="IF"><a class="package-symbol" href="../ref/GLMP.html">GLMP</a></span></p>
+  </div></section><div class="TechNotesSection">Tech Notes</div><span class="special-character FilledVerySmallSquare">&#9642;</span><li>
+  <a href="../tutorial/GeneralLinearMethods.html">General Linear Methods</a>
+ </li><section id="RelatedGuides" class="related-links"><div class="inner">
+   <h1>Related Guides</h1>
+   <ul class="functionList">
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/GeneralLinearMethods.html">General Linear Methods</a>
+    </li>
+    <span class="special-character FilledVerySmallSquare">&#9642;</span>
+    <li>
+     <a href="../guide/IntegreatPackage.html">Integreat Package</a>
+    </li>
+   </ul>
+  </div></section>
+  
+
+  
+		</main>
+		<div id="_footer-offset"></div>
+		<div id="_footer"></div>
+		<script src="../../common/js/jquery/2.2.4/jquery.min.js"></script><script src="../../common/js/jquery/plugins/hoverintent/1.8.0/hoverintent.min.j2"></script><script src="../../common/js/clipboard/2.0/clipboard.js"></script><script src="../../common/js/clipboard/2.0/code-clipboard.js"></script><script src="../../common/framework/js/body.en.js"></script><script src="../../common/framework/js/head.en.js"></script><script src="../../language-assets/js/dropdowns.js"></script><script src="../../language-assets/js/global.js"></script><script src="../../language-assets/js/language-specific.js.en"></script><script src="../../language-assets/js/language.js"></script><script src="../../language-assets/js/temporary.js"></script><script src="../../language-assets/js/toggles.js"></script><script src="../../language-assets/js/tooltips.js"></script><script src="../../language-assets/js/workflows.js"></script>
+</body>
+</html>

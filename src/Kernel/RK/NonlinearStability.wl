@@ -16,10 +16,10 @@ rkMonotonicityMat[A_, b_, s_, r_] := Inverse[IdentityMatrix[s + 1] - ArrayFlatte
 RKAlgebraicStabilityMatrix[rk_RK, opts:OptionsPattern[RKB]] := rkAlgMat[RKA[rk], RKB[rk, opts], RKStages[rk]];
 
 
-RKAlgebraicallyStableQ[rk_RK, opts:OptionsPattern[RKB]] := PositiveSemidefiniteMatrixQ[RKAlgebraicStabilityMatrix[rk, opts]];
-
-
-RKSymplecticQ[rk_RK, opts:OptionsPattern[RKB]] := MatrixQ[RKAlgebraicStabilityMatrix[rk, opts], ZeroQ];
+RKAlgebraicallyStableQ[rk_RK, opts:OptionsPattern[RKB]] := And[
+	Element[RKB[rk], NonNegativeReals],
+	PositiveSemidefiniteMatrixQ[RKAlgebraicStabilityMatrix[rk, opts]]
+];
 
 
 RKAbsoluteMonotonicityRadius[rk_RK, opts:OptionsPattern[RKB]] := PiecewiseExpand[Max[

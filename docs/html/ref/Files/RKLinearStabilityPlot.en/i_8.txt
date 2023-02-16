@@ -1,0 +1,2 @@
+rk = RKCollocation[{0, 1}]
+RKLinearStabilityPlot[rk, -8, DenseOutput -> 1/2]

@@ -1,0 +1,2 @@
+lmm = LMMMilneSimpson[3]
+LMMErrorConstant[lmm]

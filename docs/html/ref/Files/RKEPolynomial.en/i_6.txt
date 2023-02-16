@@ -1,0 +1,5 @@
+rk = RK["RK4"]
+FullSimplify[
+ RKEPolynomial[rk, y] == 
+  Abs[RKLinearStabilityQ[rk, I y]]^2 - 
+   Abs[RKLinearStabilityP[rk, I y]]^2, y \[Element] Reals]

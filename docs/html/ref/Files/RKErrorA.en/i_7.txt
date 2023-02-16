@@ -1,0 +1,7 @@
+rk = RK[{
+    {0, 0},
+    {Subscript[c, 2], 0}
+   } , {Subscript[b, 1], Subscript[b, 2]}];
+min = Minimize[{RKErrorA[rk, 3], RKOrderConditions[rk, 2] == 0}, 
+  Variables[rk]]
+rk = rk /. Last[min]

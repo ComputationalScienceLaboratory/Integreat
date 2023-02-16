@@ -1,0 +1,3 @@
+rk = RKCollocation[{0, 1}];
+RKDenseOutput[rk]
+RKDenseOutput[rk^2]

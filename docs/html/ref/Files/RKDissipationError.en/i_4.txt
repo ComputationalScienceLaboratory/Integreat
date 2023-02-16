@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKDissipationError[rk, \[Nu], Stage -> 2]

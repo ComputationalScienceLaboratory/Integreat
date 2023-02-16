@@ -1,0 +1,1 @@
+Table[LMMAlpha[LMMBDF[i]], {i, 6}] // Grid

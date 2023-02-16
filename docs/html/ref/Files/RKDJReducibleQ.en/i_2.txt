@@ -1,0 +1,6 @@
+rk = RK[{
+   {Subscript[a, 1, 1], 0, 0},
+   {0, Subscript[a, 2, 2], 0},
+   {Subscript[a, 3, 1], 0, Subscript[a, 3, 3]}
+  } , {Subscript[b, 1], 0, Subscript[b, 3]}]
+RKDJReducibleQ[rk]

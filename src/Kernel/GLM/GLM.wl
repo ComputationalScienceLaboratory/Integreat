@@ -8,11 +8,6 @@ GLM::usage =
 	"GLM[rk, p] converts a Runge-Kutta method rk into a general linear method of order p.\n" <>
 	"GLM[rk] converts a Runge-Kutta method rk into a general linear method.\n" <>
 	"GLM[lmm] converts a linear multistep method lmm into a general linear method.";
-GLMCompose::usage =
-	"GLMCompose[glm1, \[Ellipsis], glmm] creates a general linear method from a step of glm1, \[Ellipsis], glmm in sequence using a step size h/m.\n" <>
-	"GLMCompose[{glm1, w1}, \[Ellipsis], {glmm, wm}] composes glm1, \[Ellipsis], glmm using step sizes w1*h, \[Ellipsis], wm*h, respectively.\n" <>
-	"glm1[glm2] composes a half step of glm1 with a half step of glm2.\n" <>
-	"glm^p composes p steps of glm."
 GLMDIMSIM::usage =
 	"GLMDIMSIM[A, B, v, Q, c] constructs a diagonally implicit multistage integration method from coefficients A, B, v (repeated row of V), Q, and abscissae c.\n" <>
 	"GLMDIMSIM[A, v, c] uses A, v, and c then deduces other coefficients from the assumption p=q=r=s.";
@@ -30,8 +25,12 @@ GLMC::usage = "GLMC[glm] returns the abscissae of glm.";
 GLMInternalStages::usage = "GLMInternalStages[glm] returns the number of internal stages in glm.";
 GLMExternalStages::usage = "GLMExternalStages[glm] returns the number of external stages in glm.";
 GLMP::usage = "GLMP[glm] returns the order to which external stages are expanded for glm.";
-GLMType::usage = "GLMType[glm] returns the type number of glm.";
 GLMTransform::usage = "GLMTransform[glm, T] Transforms glm into an equivalent form with the matrix T.";
+GLMCompose::usage =
+	"GLMCompose[glm1, \[Ellipsis], glmm] creates a general linear method from a step of glm1, \[Ellipsis], glmm in sequence using a step size h/m.\n" <>
+	"GLMCompose[{glm1, w1}, \[Ellipsis], {glmm, wm}] composes glm1, \[Ellipsis], glmm using step sizes w1*h, \[Ellipsis], wm*h, respectively.\n" <>
+	"glm1[glm2] composes a half step of glm1 with a half step of glm2.\n" <>
+	"glm^p composes p steps of glm.";
 
 
 GLMLinearStability::usage = "GLMLinearStability[rk, z] evaluates the linear stability matrix of glm at z=h*\[Lambda]. If z is a DirectedInfinity, then the value in the limit is returned.";
@@ -46,7 +45,6 @@ GLMOrderStarPlot::usage =
 	"GLMOrderStarPlot[glm, {zMin, zMax}] plots in a region with corners specified by the complex numbers zMin and zMax.";
 
 
-GLMPreconsistencyConditions::usage = "GLMPreconsistencyConditions[glm] returns the residuals of the preconsistency conditions for glm.";
 GLMOrderConditions::usage =
 	"GLMOrderConditions[glm, {p, q}] generates order conditions residuals of glm up to order p and stage order q.\n" <>
 	"GLMOrderConditions[glm, q] uses stage order q and p=GLMP[glm].\n" <>
@@ -60,14 +58,14 @@ Begin["`Private`"];
 Needs["Integreat`Internal`MathUtils`"];
 Needs["Integreat`Internal`Catalog`"];
 Needs["Integreat`Internal`Composition`"];
-DeclarePackage["Integreat`RK`", {"RK", "RKA", "RKB", "RKC", "RKStages", "RKOrder"}];
-DeclarePackage["Integreat`LMM`", {"LMM", "LMMAlpha", "LMMBeta", "LMMSteps"}];
+Needs["Integreat`RK`"];
+Needs["Integreat`LMM`"];
 
 <<Integreat`GLM`Core`;
 <<Integreat`GLM`Catalog`;
 <<Integreat`GLM`Validation`;
-<<Integreat`GLM`LinearStability`;
 <<Integreat`GLM`OrderConditions`;
+<<Integreat`GLM`LinearStability`;
 
 End[];
 

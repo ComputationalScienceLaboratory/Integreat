@@ -1,0 +1,2 @@
+RKDenseOutput[rk]
+RKOrder[rk, DenseOutput -> True]

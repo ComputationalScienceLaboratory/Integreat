@@ -1,0 +1,4 @@
+rk = RK["RK4"]
+RKLinearStability[rk, z] // Simplify
+RKLinearStabilityPlot[rk]
+RKAStable[rk, Stage -> 3]

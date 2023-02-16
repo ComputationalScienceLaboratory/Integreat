@@ -1,0 +1,6 @@
+Subscript[glm, 1] = GLMParallelEnsemble[{0, 1}]
+Subscript[glm, 2] = GLMTransform[Subscript[glm, 1], {
+   {1, 2},
+   {3, 4}
+  }]
+GLMOrder[Subscript[glm, 1]] == GLMOrder[Subscript[glm, 2]]

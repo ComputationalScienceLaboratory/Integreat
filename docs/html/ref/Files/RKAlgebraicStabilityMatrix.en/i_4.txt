@@ -1,0 +1,2 @@
+rk = RK["RK4"]
+RKAlgebraicStabilityMatrix[rk, Stage -> 1] // MatrixForm

@@ -1,22 +1,38 @@
 (* ::Package:: *)
 
 (* ::Section:: *)
+(*Private Members*)
+
+
+lmmStabilityPlot[lmm_, comp_, opts___] := With[{
+		stab = comp[
+			Norm[
+				(* Non-Root[...] solutions cause division by 0 and other numeric issues *)
+				SolveValues[LMMLinearStabilityPolynomial[lmm, w, z] == 0, w, Cubics -> False, Quartics -> False],
+				Infinity
+			]
+		]
+	},
+	ComplexRegionPlot[stab, opts, FrameLabel -> {"Re", "Im"}]
+];
+
+
+(* ::Section:: *)
 (*Package Definitions*)
 
 
 LMMLinearStabilityPolynomial[lmm_LMM, zeta_, mu_] := LMMAlphaGeneratingPolynomial[lmm, zeta] - mu * LMMBetaGeneratingPolynomial[lmm, zeta];
 
 
-(* TODO: remove dependence on GLM plotting *)
 LMMLinearStabilityPlot[
 	lmm_LMM,
-	bounds:(PatternSequence[] | _?NumericQ | {_?NumericQ, _?NumericQ}),
+	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, {-6 - 4I, 2 + 4I}],
 	opts:OptionsPattern[ComplexRegionPlot]
-] := GLMLinearStabilityPlot[GLM[lmm], bounds, opts];
+] := lmmStabilityPlot[lmm, LessEqualThan[1], {z, zMin, zMax}, opts];
 
 
 LMMOrderStarPlot[
 	lmm_LMM,
-	bounds:(PatternSequence[] | _?NumericQ | {_?NumericQ, _?NumericQ}),
+	Optional[{zMin_?NumericQ, zMax_?NumericQ} | zMin_?NumericQ, 4],
 	opts:OptionsPattern[ComplexRegionPlot]
-] := GLMOrderStarPlot[GLM[lmm], bounds, opts];
+] := lmmStabilityPlot[lmm, GreaterThan[Exp[Re[z]]], {z, zMin, zMax}, opts];
