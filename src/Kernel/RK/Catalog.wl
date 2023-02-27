@@ -4,10 +4,10 @@
 (*Private Members*)
 
 
-Erk2Fam[c2_, d1_] := RK[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];
+erk2Fam[c2_, d1_] := RK[{{0,0},{c2,0}}, {(2 c2-1)/(2 c2),1/(2 c2)}, {0,c2}, {d1, 1-d1}];
 
 
-Erk3Fam[c2_, c3_, d1_] := RK[
+erk3Fam[c2_, c3_, d1_] := RK[
 	{{0,0,0},{c2,0,0},{(c3 (3 (-1+c2) c2+c3))/(c2 (-2+3 c2)),((c2-c3) c3)/(c2 (-2+3 c2)),0}},
 	{(2-3 c2-3 c3+6 c2 c3)/(6 c2 c3),(2-3 c3)/(6 c2^2-6 c2 c3),(-2+3 c2)/(6 c2 c3-6 c3^2)},
 	{0,c2,c3},
@@ -25,13 +25,13 @@ AddCatalog[
 	(*Order 1*)
 	{"Euler's Method", "Forward Euler", "Explicit Euler", "FE", RK[{{0}}, {\[FormalTheta]}, {0}]},
 	(*Order 2*)
-	{"2 Stage Explicit, Order 2", "ERK 2(1)2P", Erk2Fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
-	{"Heun's Method", "Explicit Trapezoidal Rule", Erk2Fam[1, 1]},
-	{"Ralston 2", Erk2Fam[2/3, 1]},
-	{"Explicit Midpoint Rule", Erk2Fam[1/2, 1]},
+	{"2 Stage Explicit, Order 2", "ERK 2(1)2P", erk2Fam[Subscript[\[FormalC], 2], Subscript[\[FormalD], 1]]},
+	{"Heun's Method", "Explicit Trapezoidal Rule", erk2Fam[1, 1]},
+	{"Ralston 2", erk2Fam[2/3, 1]},
+	{"Explicit Midpoint Rule", erk2Fam[1/2, 1]},
 	(*Order 3*)
-	{"ERK 3(2)3P", "3 Stage Explicit, Order 3", Erk3Fam[Subscript[\[FormalC], 2], Subscript[\[FormalC], 3], Subscript[\[FormalD], 1]]},
-	{"Ralston 3", Erk3Fam[1/2, 3/4, 1/40]},
+	{"ERK 3(2)3P", "3 Stage Explicit, Order 3", erk3Fam[Subscript[\[FormalC], 2], Subscript[\[FormalC], 3], Subscript[\[FormalD], 1]]},
+	{"Ralston 3", erk3Fam[1/2, 3/4, 1/40]},
 	{"Bogacki-Shampine", "ode23", RK[RK[{{0,0,0,0},{1/2,0,0,0},{0,3/4,0,0},{2/9,1/3,4/9,0}}], {7/24,1/4,1/3,1/8}]},
 	(*Order 4*)
 	{"RK4", "Classical Runge-Kutta Method", "The Runge-Kutta Method", RK[{{0,0,0,0},{1/2,0,0,0},{0,1/2,0,0},{0,0,1,0}}, {1/6,1/3,1/3,1/6}]},
