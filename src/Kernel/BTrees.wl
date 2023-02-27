@@ -28,6 +28,7 @@ BTreeRoot::usage = "Get the root node of a tree";
 BTreeChildren::usage = "Get children of a tree and return as a Forest Space";
 
 BTreeFormalForm::usage = "Get the Formal Representation of the Tree";
+BTreeQ::usage = "Check if the argument is a BTree"
 
 
 (* ::Section:: *)
@@ -261,20 +262,23 @@ BTreeDAE /: Tree[HoldPattern[BTreeDAE[t_, _Integer]]] := toTree[t];
 BTreeDAE /: MakeBoxes[HoldPattern[BTreeDAE[t_, _Integer]], format_] := toBoxes[t, format];
 
 (*Linearization Properties*)
+BTree[0]:=BTree[\[FormalY]];
 BTree[t_ + s_]:= BTree[t] + BTree[s];
 BTree[t_*s_/;NumberQ[t]]:=t*BTree[s];
 BTree[t_*s_]:=BTree[t]*BTree[s];
 BTree[t_^q_]:=BTree[t]^q;
 
-BTreeN[t_ + s_,p__]:= BTreeN[t,p] + BTreeN[s,p];
-BTree[t_*s_/;NumberQ[t],p__]:=t*BTreeN[s,p];
-BTreeN[t_*s_,p__]:=BTreeN[t,p]*BTreeN[s,p];
-BTreeN[t_^q_/;NumberQ[q],p__]:=BTreeN[t,p]^q;
+BTreeN[0,p___]:=BTreeN[\[FormalY],p];
+BTreeN[t_ + s_,p___]:= BTreeN[t,p] + BTreeN[s,p];
+BTreeN[t_*s_/;NumberQ[t],p___]:=t*BTreeN[s,p];
+BTreeN[t_*s_,p___]:=BTreeN[t,p]*BTreeN[s,p];
+BTreeN[t_^q_/;NumberQ[q],p___]:=BTreeN[t,p]^q;
 
-BTreeDAE[t_ + s_,p__]:= BTreeDAE[t,p] + BTreeDAE[s,p];
-BTreeDAE[t_*s_/;NumberQ[t],p__]:=t*BTreeDAE[s,p];
-BTreeDAE[t_*s_,p__]:=BTreeDAE[t,p]*BTreeDAE[s,p];
-BTreeDAE[t_^q_/;NumberQ[q],p__]:=BTreeDAE[t,p]^q;
+BTreeDAE[0,p___]:=BTreeDAE[\[FormalY],p];
+BTreeDAE[t_ + s_,p___]:= BTreeDAE[t,p] + BTreeDAE[s,p];
+BTreeDAE[t_*s_/;NumberQ[t],p___]:=t*BTreeDAE[s,p];
+BTreeDAE[t_*s_,p___]:=BTreeDAE[t,p]*BTreeDAE[s,p];
+BTreeDAE[t_^q_/;NumberQ[q],p___]:=BTreeDAE[t,p]^q;
 
 BTreeOrder[(BTree | BTreeN | BTreeDAE)[t_, ___]] := treeOrder[t];
 SetAttributes[BTreeOrder, Listable];
@@ -288,18 +292,25 @@ SetAttributes[BTreeGamma, Listable];
 BTreeSigma[(BTree | BTreeN | BTreeDAE)[t_, ___]] := treeSigma[t];
 SetAttributes[BTreeSigma, Listable];
 
-BTreePrune[h_[t_,p__],h_[t_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=h[\[FormalY],p];
-BTreePrune[h_[t_,p__],h_[k_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=h[Expand[prune[t,k]],p];
+BTreePrune[h_[t_,p___],h_[t_,p___]]/;BTreeQ[h]:=h[\[FormalY],p];
+BTreePrune[h_[t_,p___],h_[k_,p___]]/;BTreeQ[h]:=h[Expand[prune[t,k]],p];
 
-BTreeContract[h_[t_,p__],h_[k_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=h[Expand[contract[t,k]],p];
+BTreeContract[h_[t_,p___],h_[k_,p___]]/;BTreeQ[h]:=h[Expand[contract[t,k]],p];
 
-BTreeSubTrees[h_[t_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=Map[h[#,p]&,Complement[DeleteDuplicates[subTrees[t]], {t}]];
+BTreeSubTrees[h_[t_,p___]]/;BTreeQ[h]:=Map[h[#,p]&,Complement[DeleteDuplicates[subTrees[t]], {t}]];
 
-BTreeRoot[h_[t_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=h[getRoot[t],p];
+BTreeRoot[h_[t_,p___]]/;BTreeQ[h]:=h[getRoot[t],p];
+SetAttributes[BTreeRoot, Listable];
 
-BTreeChildren[h_[t_,p__]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=h[getChildren[t],p];
+BTreeChildren[h_[t_,p___]]/;BTreeQ[h]:=h[getChildren[t],p];
+SetAttributes[BTreeChildren, Listable];
 
-BTreeFormalForm[h_[t_,___]]/;(AnyTrue[{BTree,BTreeN,BTreeDAE},h===#&]):=t;
+BTreeFormalForm[h_[t_,___]]/;BTreeQ[h]:=t;
+SetAttributes[BTreeFormalForm, Listable];
+
+BTreeQ[(BTree | BTreeN | BTreeDAE)[t_,___]]:=True;
+BTreeQ[(BTree | BTreeN | BTreeDAE)]:=True;
+BTreeQ[h_]:=False;
 
 
 (* ::Section:: *)
