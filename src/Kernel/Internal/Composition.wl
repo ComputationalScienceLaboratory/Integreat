@@ -1,23 +1,12 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
-(*Usage*)
-
-
 BeginPackage["Integreat`Internal`Composition`"];
 
-AddComposition::usage = "AddComposition[type, op, composer] defines op and overloads the power function for type to provide composision via composer.";
 
-
-(* ::Section:: *)
-(*Private Members*)
+AddComposition
 
 
 Begin["`Private`"];
-
-
-(* ::Section:: *)
-(*Package Definitions*)
 
 
 AddComposition[type_Symbol, op_Symbol, composer_] := (
@@ -28,9 +17,7 @@ AddComposition[type_Symbol, op_Symbol, composer_] := (
 );
 
 
-(* ::Section:: *)
-(*End Package*)
-
-
 End[];
+
+
 EndPackage[];

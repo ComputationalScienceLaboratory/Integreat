@@ -3,8 +3,7 @@
 BeginPackage["Integreat`Internal`Catalog`"];
 
 
-Integreat`Internal`Catalog::usage = "Package containing functions for using method catalogs";
-AddCatalog::usage = "Adds catalog and search functionality to a symbol";
+AddCatalog
 
 
 Begin["`Private`"];
@@ -17,4 +16,6 @@ AddCatalog[type_Symbol, c__List] := (
 
 
 End[];
+
+
 EndPackage[];
