@@ -4,6 +4,7 @@
 help = "Usage:\n" <>
 	"Integreat.wls build [--skip-docs]\n" <>
 	"Integreat.wls install [--skip-docs]\n" <>
+	"Integreat.wls load\n" <>
 	"Integreat.wls docs\n" <>
 	"Integreat.wls uninstall\n" <>
 	"Integreat.wls clean";
@@ -28,6 +29,7 @@ build[] := If[
 Switch[$ScriptCommandLine[[2]],
 	"build", build[],
 	"install", PacletInstall[build[], ForceVersionInstall -> True],
+	"load", Print["PacletDirectoryLoad[\"" <> ExpandFileName[srcDir] <> "\"]"],
 	"docs", PacletDocumentationBuild[srcDir, docsDir, "HTML"],
 	"uninstall", PacletUninstall["Integreat"],
 	"clean", Scan[DeleteDirectory[#, DeleteContents -> True] &, {buildDir, docsDir}],
