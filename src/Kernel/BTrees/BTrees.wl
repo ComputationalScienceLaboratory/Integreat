@@ -33,7 +33,7 @@ Begin["`Private`"];
 
 <<Integreat`BTrees`Core`;
 <<Integreat`BTrees`IntegerProperties`;
-<<Integreat`BTrees`Subtrees`;
+<<Integreat`BTrees`Algebra`;
 
 End[];
 

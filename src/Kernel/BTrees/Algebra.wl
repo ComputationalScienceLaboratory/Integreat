@@ -5,7 +5,7 @@
 
 
 (*Inner sub tree function for only formal expansions*)
-innerBSubtrees[t_]:=Complement[DeleteDuplicates[butcherSubtrees[t]], {t}];
+innerBSubtrees[t_]:=Complement[DeleteDuplicates[subTrees[t]], {t}];
  
  (*Expand out power terms in a list to individual terms*)
 listPowerRemove[x_]:=Flatten[Replace[x,{Power[y_,p_] :>ConstantArray[y,p]},{0,1}]];
@@ -21,6 +21,9 @@ outerACE[op_,t_List,k_List] := Sum[op[First[t],k[[i]]]*outerACE[op,Drop[t,1],Del
 
 (*Given a list of trees with powers in entries get the factorial of each power and product*)
 factorialProd[t_]:=Times@@(#!&/@Replace[Cases[t,_Power,{0,1}],{Power[y_,p_] :>p},{0,1}]);
+
+(*Given a Polynomial it will map a function to each varaible*)
+PolynomialMap[f_,poly_]:=FromCoefficientRules[CoefficientRules[poly],f/@Variables[poly]];
 
 
 getRoot[t_Symbol]:=t;
@@ -76,32 +79,13 @@ contract[t_^p_,k_^q_]:=If[p==q,contract[t,k]^p,0];
 (*Package Definitions*)
 
 
-(*Linearization Properties*)
-(* TODO: try to remove *)
-BTree[0]:=BTree[\[FormalY]];
-BTree[t_ + s_]:= BTree[t] + BTree[s];
-BTree[t_*s_/;NumberQ[t]]:=t*BTree[s];
-BTree[t_*s_]:=BTree[t]*BTree[s];
-BTree[t_^q_]:=BTree[t]^q;
-
-BTreeN[0,p___]:=BTreeN[\[FormalY],p];
-BTreeN[t_ + s_,p___]:= BTreeN[t,p] + BTreeN[s,p];
-BTreeN[t_*s_/;NumberQ[t],p___]:=t*BTreeN[s,p];
-BTreeN[t_*s_,p___]:=BTreeN[t,p]*BTreeN[s,p];
-BTreeN[t_^q_/;NumberQ[q],p___]:=BTreeN[t,p]^q;
-
-BTreeDAE[0,p___]:=BTreeDAE[\[FormalY],p];
-BTreeDAE[t_ + s_,p___]:= BTreeDAE[t,p] + BTreeDAE[s,p];
-BTreeDAE[t_*s_/;NumberQ[t],p___]:=t*BTreeDAE[s,p];
-BTreeDAE[t_*s_,p___]:=BTreeDAE[t,p]*BTreeDAE[s,p];
-BTreeDAE[t_^q_/;NumberQ[q],p___]:=BTreeDAE[t,p]^q;
+BTreePrune[h_[t_,p___],h_[t_,p___]]:=1;
+BTreePrune[h_[t_,p___],h_[\[FormalY],p___]]:=h[t,p];
+BTreePrune[h_[t_,p___],h_[k_,p___]]:=With[{poly = Expand[prune[t,k]]},If[NumericQ[poly],poly,PolynomialMap[h[#,p]&,poly]]];
 
 
-BTreePrune[h_[t_,p___],h_[t_,p___]]:=h[\[FormalY],p];
-BTreePrune[h_[t_,p___],h_[k_,p___]]:=h[Expand[prune[t,k]],p];
-
-
-BTreeContract[h_[t_,p___],h_[k_,p___]]:=h[Expand[contract[t,k]],p];
+BTreeContract[h_[\[FormalY],p___],h_[\[FormalY],p___]]:=h[\[FormalY],p];
+BTreeContract[h_[t_,p___],h_[k_,p___]]:=With[{poly = Expand[contract[t,k]]},If[NumericQ[poly],poly,PolynomialMap[h[#,p]&,poly]]];
 
 
 BTreeSubTrees[h_[t_,p___]]:=Map[h[#,p]&,Complement[DeleteDuplicates[subTrees[t]], {t}]];
@@ -111,5 +95,6 @@ BTreeRoot[h_[t_,p___]]:=h[getRoot[t],p];
 SetAttributes[BTreeRoot, Listable];
 
 
-BTreeChildren[h_[t_,p___]]:=h[getChildren[t],p];
+BTreeChildren[h_[_Symbol | _Subscript,p___]]:=h[\[FormalY],p];
+BTreeChildren[h_[t_[k_],p___]]:=PolynomialMap[h[#,p]&,Expand[getChildren[t]]];
 SetAttributes[BTreeChildren, Listable];

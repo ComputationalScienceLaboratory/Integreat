@@ -133,4 +133,10 @@ BTreeDAE /: MakeBoxes[HoldPattern[r:BTreeDAE[t_, _Integer]], format_] := With[{b
 
 
 BTreeQ[BTree[_] | BTreeN[_, _] | BTreeDAE[_, _]] := True;
+BTreeQ[BTree | BTreeN | BTreeDAE] := True;
 BTreeQ[_] := False;
+
+
+BTreeFormalForm[h_[t_,___]]/;BTreeQ[h]:=t;
+BTreeFormalForm[h_]/;NumericQ[h]:=h;
+SetAttributes[BTreeFormalForm, Listable];
