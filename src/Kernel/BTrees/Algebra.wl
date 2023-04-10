@@ -59,7 +59,7 @@ prune[t_^p_,k_^q_]:=If[p>=q,Binomial[p,q]*prune[t,k]^(q)*prune[t,1]^(p-q),0];
 
 
 contract[t_,k_]:=If[getRoot[t]===getRoot[k],t,0];
-contract[t_,k_[u_]]:=If[getRoot[t]===k,Total[#*innerTreeSub[ Flatten[linearCombFlattenToList[Expand[prune[t,#]]]],u]&/@innerBSubtrees[t],2],0];
+contract[t_,k_[u_]]:=If[getRoot[t]===k,Total[#*innerContract[ Flatten[linearCombToList[Expand[prune[t,#]]]],u]&/@innerBSubtrees[t],2],0];
 innerContract[tl_,u_]:=contract[#,u]&/@tl;
 contract[t_Times,k_]:=0;
 contract[t_,k_Times]:=0;
